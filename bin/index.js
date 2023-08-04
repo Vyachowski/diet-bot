@@ -1,11 +1,12 @@
 import { getCurrentTime, hasPassedGivenDays, mergeAndSumObjects, multiplyObjectValues, camelCaseToText } from '../src/functions.js';
-import Connector from '../src/parser.js';
+import Connector from '../src/connector.js';
 
 class Diet {
-  constructor(menuFilePath = `${workingDirectory}/data/menu.json`, ingredientsFilePath = `${workingDirectory}/data/ingredients.json`, configFilePath = `${workingDirectory}/data/config.json`) {
-    this._menu = readJsonFile(menuFilePath);
-    this._ingredients = readJsonFile(ingredientsFilePath);
-    this._config = readJsonFile(configFilePath);
+  constructor() {
+    this._connector = new Connector();
+    this._dishes = this._connector.getDishes();
+    this._ingredients = this._connector.getIngredients();
+    this._config = this._connector.getConfig();
     this._menuDuration = 3;
   }
 
@@ -23,10 +24,10 @@ class Diet {
 
   createRandomMenu() {
     return {
-      breakfast: Diet.getRandomMeal(this._menu.breakfast),
-      snack: Diet.getRandomMeal(this._menu.snack),
-      lunch: Diet.getRandomMeal(this._menu.lunch),
-      dinner: Diet.getRandomMeal(this._menu.dinner)
+      breakfast: Diet.getRandomMeal(this._dishes.breakfast),
+      snack: Diet.getRandomMeal(this._dishes.snack),
+      lunch: Diet.getRandomMeal(this._dishes.lunch),
+      dinner: Diet.getRandomMeal(this._dishes.dinner)
     };
    }
 
@@ -77,17 +78,17 @@ class Diet {
     }
     this._config.date = getCurrentTime();
     this._config.menu = this.createRandomMenu();
-    writeJsonFile('data/config.json', this._config);
+    this._connector.setConfig(this._config);
   }
 
   setIngredientsList() {
     this._config.ingredientsList = this.createIngredientsList();
-    writeJsonFile('data/config.json', this._config);
+    this._connector.setConfig(this._config);
   }
 
   setGroceryList() {
     this._config.groceryList = this.createGroceryList();
-    writeJsonFile('data/config.json', this._config);
+    this._connector.setConfig(this._config);
   }
 
   displayMenu() {

@@ -50,5 +50,3 @@ export default class Connector {
   // Set config
   setConfig = (data) => Connector.writeJsonFile(Connector.configFilePath, data); // => Update config JSON
 }
-
-const connector = new Connector('json');
