@@ -12,19 +12,25 @@ bot.start((ctx) => {
 
 bot.command('get_menu', (ctx) => {
   diet.setMenu();
-  const menuText = diet.displayMenu();
+  const menuText = diet.getMenu();
   ctx.reply(menuText);
 });
 
-bot.command('get_menu', (ctx) => {
+bot.command('get_grocery_list', (ctx) => {
   diet.setMenu();
-  const menuText = diet.displayMenu();
+  const menuText = diet.getGroceryList();
   ctx.reply(menuText);
 });
 
 bot.action('get_menu', (ctx) => {
   diet.setMenu();
-  const menuText = diet.displayMenu();
+  const menuText = diet.getMenu();
+  ctx.reply(menuText);
+});
+
+bot.action('get_grocery_list', (ctx) => {
+  diet.setMenu();
+  const menuText = diet.getGroceryList();
   ctx.reply(menuText);
 });
 

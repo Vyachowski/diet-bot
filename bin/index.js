@@ -115,6 +115,33 @@ class Diet {
     }
   }
 
+  getMenu() {
+    const menu = {
+      "For breakfast · 🥓 · 🧇 · 🥞 · 🍳": this._config.menu.breakfast,
+      "For snack · 🍎 · 🍪 · 🥨 · 🍫 · ": this._config.menu.snack,
+      "For lunch · 🍽️ · 🥪 · 🍱 · 😋 ": this._config.menu.lunch,
+      "For dinner · 🥘 · 🍲 · 🥣 · 🥗 ": this._config.menu.dinner,
+    };
+    const currentMenuArray = Object.entries(menu).map(([mealName, dish]) =>
+        `| ${mealName}\n| ${dish.name.toUpperCase()}\n\n${objectToTextColumn(
+          dish.ingredients
+        )}\n\n`
+    );
+    const currentMenu = currentMenuArray.join('');
+    return currentMenu;
+  }
+
+  getGroceryList() {
+    const groceryListArray = this._config.groceryList;
+    const groceryListColumns = groceryListArray.map(({ section, productAmount }) =>
+        `| ${section.toUpperCase()}\n\n${productAmount
+          .map((product) => objectToTextColumn(product))
+          .join("\n")}\n\n`
+        );
+    const groceryList = groceryListColumns.join('');
+    return groceryList;
+  }
+
   displayMenu() {
     const menu = {
       "For breakfast · 🥓 · 🧇 · 🥞 · 🍳": this._config.menu.breakfast,
