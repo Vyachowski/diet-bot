@@ -1,4 +1,10 @@
-import { getCurrentTime, hasPassedGivenDays, mergeAndSumObjects, multiplyObjectValues, objectToTextColumn } from '../src/functions.js';
+import {
+  getCurrentTime,
+  hasPassedGivenDays,
+  mergeAndSumObjects,
+  multiplyObjectValues,
+  objectToTextColumn,
+} from '../src/functions.js';
 import Connector from '../src/connector.js';
 
 class Diet {
@@ -17,27 +23,35 @@ class Diet {
       const name = meal.name;
       const portions = meal.portions ?? 1;
       const ingredients = meal.ingredients ?? meal;
-      return {name, portions, ingredients}
+      return { name, portions, ingredients };
     }
     return null;
-  };
+  }
 
   _createRandomMenu() {
     return {
       breakfast: Diet.getRandomMeal(this._dishes.breakfast),
       snack: Diet.getRandomMeal(this._dishes.snack),
       lunch: Diet.getRandomMeal(this._dishes.lunch),
-      dinner: Diet.getRandomMeal(this._dishes.dinner)
+      dinner: Diet.getRandomMeal(this._dishes.dinner),
     };
-   }
+  }
 
-   _createIngredientsList() {
+  _createIngredientsList() {
     const breakfastIngredients = this._config.menu.breakfast.ingredients;
     const lunchIngredients = this._config.menu.lunch.ingredients;
     const snackIngredients = this._config.menu.snack.ingredients;
     const dinnerIngredients = this._config.menu.dinner.ingredients;
-    const allIngredients = mergeAndSumObjects(breakfastIngredients, lunchIngredients, snackIngredients, dinnerIngredients);
-    const ingredientsList = multiplyObjectValues(allIngredients, this._menuDuration);
+    const allIngredients = mergeAndSumObjects(
+      breakfastIngredients,
+      lunchIngredients,
+      snackIngredients,
+      dinnerIngredients
+    );
+    const ingredientsList = multiplyObjectValues(
+      allIngredients,
+      this._menuDuration
+    );
     return ingredientsList;
   }
 
@@ -54,21 +68,19 @@ class Diet {
       return {
         section,
         products: allIngredientsList
-          .filter(([ , properties]) => properties.section === section)
+          .filter(([, properties]) => properties.section === section)
           .map(([product]) => product),
       };
     });
-    const groceryList = ingredientsBySection.map(
-      ({ section, products }) => {
-        const productAmount = products
-          .map((product) => {
-            if (ingredientsList[product] !== undefined)
-              return { [product]: ingredientsList[product] };
-          })
-          .filter((product) => product !== undefined);
-        return { section, productAmount };
-      }
-    );
+    const groceryList = ingredientsBySection.map(({ section, products }) => {
+      const productAmount = products
+        .map((product) => {
+          if (ingredientsList[product] !== undefined)
+            return { [product]: ingredientsList[product] };
+        })
+        .filter((product) => product !== undefined);
+      return { section, productAmount };
+    });
     return groceryList;
   }
 
@@ -78,7 +90,7 @@ class Diet {
   }
 
   setMenu() {
-    if (!(hasPassedGivenDays(this._config.date, this._menuDuration))) {
+    if (!hasPassedGivenDays(this._config.date, this._menuDuration)) {
       console.log('Menu is still up-to-date');
       return;
     }
@@ -99,11 +111,11 @@ class Diet {
       this._config.groceryList = this._createGroceryList();
       this._connector.setConfig(this._config);
     } catch (error) {
-      console.error("Error while setting the grocery list:", error);
+      console.error('Error while setting the grocery list:', error);
     } finally {
-      console.log("Grocery list successfully set");
+      console.log('Grocery list successfully set');
     }
-  }  
+  }
 
   displayMenu() {
     const menu = {
@@ -112,12 +124,24 @@ class Diet {
       'For lunch · 🍽️ · 🥪 · 🍱 · 😋 ': this._config.menu.lunch,
       'For dinner · 🥘 · 🍲 · 🥣 · 🥗 ': this._config.menu.dinner,
     };
-    Object.entries(menu).forEach(([mealName, dish]) => console.log(`| ${mealName}\n| ${dish.name.toUpperCase()}\n\n${objectToTextColumn(dish.ingredients)}\n`));
+    Object.entries(menu).forEach(([mealName, dish]) =>
+      console.log(
+        `| ${mealName}\n| ${dish.name.toUpperCase()}\n\n${objectToTextColumn(
+          dish.ingredients
+        )}\n`
+      )
+    );
   }
 
   displayGroceryList() {
     const groceryListArray = this._config.groceryList;
-    groceryListArray.forEach(({section, productAmount}) => console.log(`| ${section.toUpperCase()}\n\n${productAmount.map((product) => objectToTextColumn(product)).join('\n')}\n`));
+    groceryListArray.forEach(({ section, productAmount }) =>
+      console.log(
+        `| ${section.toUpperCase()}\n\n${productAmount
+          .map((product) => objectToTextColumn(product))
+          .join('\n')}\n`
+      )
+    );
   }
 }
 

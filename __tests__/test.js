@@ -5,4 +5,4 @@ const diet = new Diet();
 // diet.setMenu();
 // diet.setGroceryList();
 // diet.displayMenu();
-// diet.displayGroceryList();
+diet.displayGroceryList();
