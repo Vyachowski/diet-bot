@@ -1,4 +1,4 @@
-import fs from "node:fs";
+import fs from 'node:fs';
 
 export default class Connector {
   // Basic settings
@@ -8,21 +8,21 @@ export default class Connector {
   static configFilePath = `${Connector.workingDirectory}/src/data/config.json`;
 
   // Selecting a data source
-  constructor(dataSource = "json") {
+  constructor(dataSource = 'json') {
     this.dataSource = dataSource;
   }
 
   // Read a JSON file
   static readJsonFile(filePath) {
     try {
-      const fileContent = fs.readFileSync(filePath, "utf8");
+      const fileContent = fs.readFileSync(filePath, 'utf8');
       const jsonObject = JSON.parse(fileContent, (key, value) => {
         const parsedValue = parseFloat(value);
         return !isNaN(parsedValue) ? parsedValue : value;
       });
       return jsonObject;
     } catch (error) {
-      console.error("Error reading file or converting JSON:", error);
+      console.error('Error reading file or converting JSON:', error);
       throw error;
     }
   }
@@ -31,9 +31,9 @@ export default class Connector {
   static writeJsonFile(filePath, data) {
     try {
       const jsonData = JSON.stringify(data, null, 2);
-      fs.writeFileSync(filePath, jsonData, "utf8");
+      fs.writeFileSync(filePath, jsonData, 'utf8');
     } catch (error) {
-      console.error("Error writing file:", error);
+      console.error('Error writing file:', error);
       throw error;
     }
   }
