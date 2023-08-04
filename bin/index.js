@@ -79,6 +79,7 @@ class Diet {
 
   setMenu() {
     if (!(hasPassedGivenDays(this._config.date, this._menuDuration))) {
+      console.log('Menu is still up-to-date');
       return;
     }
     try {
@@ -119,12 +120,5 @@ class Diet {
     groceryListArray.forEach(({section, productAmount}) => console.log(`| ${section.toUpperCase()}\n\n${productAmount.map((product) => objectToTextColumn(product)).join('\n')}\n`));
   }
 }
-
-const diet = new Diet();
-
-// diet.setMenu();
-// diet.setGroceryList();
-// diet.displayMenu();
-diet.displayGroceryList();
 
 export default Diet;

@@ -1,5 +1,5 @@
 {
-  "date": 1691143232,
+  "date": 1691150071,
   "menu": {
     "breakfast": {
       "name": "Banana-Cottage Boat",
@@ -12,10 +12,10 @@
       }
     },
     "snack": {
-      "name": "Peanut",
+      "name": "Bamba",
       "portions": 1,
       "ingredients": {
-        "peanut": 30
+        "bamba": 50
       }
     },
     "lunch": {
@@ -52,7 +52,7 @@
     "tuna": 270,
     "garlicClove": 21,
     "oliveOil": 150,
-    "peanut": 90,
+    "bamba": 150,
     "salmonFrozen": 600,
     "saladMix": 900,
     "cherry": 210
@@ -91,15 +91,16 @@
         },
         {
           "almond": 60
-        },
-        {
-          "peanut": 90
         }
       ]
     },
     {
       "section": "chips section",
-      "productAmount": []
+      "productAmount": [
+        {
+          "bamba": 150
+        }
+      ]
     },
     {
       "section": "pasta section",
