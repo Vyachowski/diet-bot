@@ -113,8 +113,11 @@ class Diet {
 
 const diet = new Diet();
 
+// diet.setMenu();
 // diet.createGroceryList();
-diet.setGroceryList();
+// diet.setIngredientsList();
+// diet.setGroceryList();
 // diet.displayMenu();
+// diet.displayGroceryList();
 
 export default Diet;
