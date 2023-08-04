@@ -92,15 +92,11 @@ class Diet {
   }
 
   displayMenu() {
-    const breakfast = this._config.menu.breakfast;
-    const snack = this._config.menu.snack;
-    const lunch = this._config.menu.lunch;
-    const dinner = this._config.menu.dinner;
     const menu = {
-      "For breakfast · 🥓 · 🧇 · 🥞 · 🍳": breakfast,
-      "For snack · 🍎 · 🍪 · 🥨 · 🍫 · ": snack,
-      "For lunch · 🍽️ · 🥪 · 🍱 · 😋 ": lunch,
-      "For dinner · 🥘 · 🍲 · 🥣 · 🥗 ": dinner,
+      "For breakfast · 🥓 · 🧇 · 🥞 · 🍳": this._config.menu.breakfast,
+      "For snack · 🍎 · 🍪 · 🥨 · 🍫 · ": this._config.menu.snack,
+      "For lunch · 🍽️ · 🥪 · 🍱 · 😋 ": this._config.menu.lunch,
+      "For dinner · 🥘 · 🍲 · 🥣 · 🥗 ": this._config.menu.dinner,
     };
     Object.entries(menu).forEach(([name, meal]) => console.log(`${name}\n\n${JSON.stringify(meal.name).replace(/"/gi, '').toUpperCase()}\n\n${camelCaseToText(JSON.stringify(meal.ingredients).slice(1, -1).replace(/"/gi, '').replace(/,/gi,'\n').replace(/:/gi,': '))}\n\n`));
   }
