@@ -1,6 +1,5 @@
 import { getCurrentTime, hasPassedGivenDays, mergeAndSumObjects, multiplyObjectValues, camelCaseToText } from '../src/functions.js';
-import { readJsonFile, writeJsonFile } from '../src/parser.js';
-const workingDirectory = process.cwd();
+import Connector from '../src/parser.js';
 
 class Diet {
   constructor(menuFilePath = `${workingDirectory}/data/menu.json`, ingredientsFilePath = `${workingDirectory}/data/ingredients.json`, configFilePath = `${workingDirectory}/data/config.json`) {
