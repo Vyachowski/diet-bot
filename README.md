@@ -7,14 +7,19 @@ Easy-to-use helper for maintain a healthy diet.
 Telegram bot with favourite meals, that can provide a weekly grocery list and menu for a week.
 
 - [x] Your own menu with favorite meals
-- [ ] Maintain calrie intake
 - [ ] Get a grocery list for easy shopping
+- [ ] Maintain calorie intake
 
 ## Getting Started
 
-Now only available from a command line
+Now only available from a Node.js...
+
 ### Dependencies
 
+JS version:
+* Node.js
+
+Python version:
 * Postgresql
 * Python3
 
@@ -32,13 +37,13 @@ Slava Haikin
 ## Version History
 
 * 0.2
-    * In progress...
-    <!-- * See [release history](https://github.com/Vyachowski/git-quickstart/releases/tag/v0.2)  -->
+    * Connector to a database
+    * Adding new recipes via telegram interface
 * 0.1
     * Initial Release
-    * Database with favorite meals
     * On-demand grocery list
     * On-demand menu for a week
+    * JSON files with a data
 
 ## License
 
