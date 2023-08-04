@@ -112,12 +112,13 @@ class Diet {
       'For dinner · 🥘 · 🍲 · 🥣 · 🥗 ': this._config.menu.dinner,
     };
     Object.entries(menu).forEach(([mealName, dish]) => console.log(`| ${mealName}\n| ${dish.name.toUpperCase()}\n\n${objectToTextColumn(dish.ingredients)}\n`));
-    // Object.entries(menu).forEach(([name, meal]) => console.log(`${name}\n\n${JSON.stringify(meal.name).replace(/"/gi, '').toUpperCase()}\n\n${camelCaseToText(JSON.stringify(meal.ingredients).slice(1, -1).replace(/"/gi, '').replace(/,/gi,'\n').replace(/:/gi,': '))}\n\n`));
   }
 
   displayGroceryList() {
     const groceryListArray = this._config.groceryList;
-    groceryListArray.forEach(({section, productAmount}) => console.log(`${section.toUpperCase()}\n\n${JSON.stringify(productAmount).replace(/"/gi, '').toUpperCase()}\n\n`));
+    console.log(groceryListArray)
+    groceryListArray.forEach(({section, productAmount}) => console.log(`${section.toUpperCase()}\n\n${productAmount.map((product) => objectToTextColumn(product)).join('\n')}\n`));
+    // groceryListArray.forEach(({section, productAmount}) => console.log(`${section.toUpperCase()}\n\n${JSON.stringify(productAmount).replace(/"/gi, '').toUpperCase()}\n\n`));
   }
 }
 
@@ -125,7 +126,7 @@ const diet = new Diet();
 
 // diet.setMenu();
 // diet.setGroceryList();
-diet.displayMenu();
-// diet.displayGroceryList();
+// diet.displayMenu();
+diet.displayGroceryList();
 
 export default Diet;

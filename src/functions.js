@@ -37,18 +37,18 @@ function multiplyObjectValues(obj, multiplier) {
   return obj;
 }
 
-function camelCaseToText (text) {
-  const normalizedText = text.split(/(?=[A-Z])/).map(s => s.toLowerCase()).join(' ');
-  return normalizedText.charAt(0).toUpperCase() + normalizedText.slice(1);
-}
+// function camelCaseToText (text) {
+//   const normalizedText = text.split(/(?=[A-Z])/).map(s => s.toLowerCase()).join(' ');
+//   return normalizedText.charAt(0).toUpperCase() + normalizedText.slice(1);
+// }
 
-function formatKey(key) {
-  return key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1').toLowerCase();
+function camelCaseTextToNormal(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1).replace(/([A-Z])/g, ' $1').toLowerCase();
 }
 
 function objectToTextColumn(obj) {
   const entries = Object.entries(obj);
-  const normalizedTextSorted = entries.map(([name, value]) => [formatKey(name), value]).toSorted();
+  const normalizedTextSorted = entries.map(([name, value]) => [camelCaseTextToNormal(name), value]).toSorted();
   const textColumn = normalizedTextSorted.join('g \n').replaceAll(',',': ') + 'g';
   return textColumn;
 }
@@ -58,7 +58,5 @@ export {
   hasPassedGivenDays,
   mergeAndSumObjects,
   multiplyObjectValues,
-  camelCaseToText,
-  formatKey,
   objectToTextColumn
 };
