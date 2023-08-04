@@ -1,5 +1,5 @@
 {
-  "date": 1691140412,
+  "date": 1691143232,
   "menu": {
     "breakfast": {
       "name": "Banana-Cottage Boat",
@@ -12,10 +12,10 @@
       }
     },
     "snack": {
-      "name": "Apple",
+      "name": "Peanut",
       "portions": 1,
       "ingredients": {
-        "apple": 70
+        "peanut": 30
       }
     },
     "lunch": {
@@ -52,7 +52,7 @@
     "tuna": 270,
     "garlicClove": 21,
     "oliveOil": 150,
-    "apple": 210,
+    "peanut": 90,
     "salmonFrozen": 600,
     "saladMix": 900,
     "cherry": 210
@@ -63,9 +63,6 @@
       "productAmount": [
         {
           "banana": 300
-        },
-        {
-          "apple": 210
         },
         {
           "onionWhite": 225
@@ -94,6 +91,9 @@
         },
         {
           "almond": 60
+        },
+        {
+          "peanut": 90
         }
       ]
     },

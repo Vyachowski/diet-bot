@@ -22,7 +22,7 @@ class Diet {
     return null;
   };
 
-  createRandomMenu() {
+  _createRandomMenu() {
     return {
       breakfast: Diet.getRandomMeal(this._dishes.breakfast),
       snack: Diet.getRandomMeal(this._dishes.snack),
@@ -31,7 +31,7 @@ class Diet {
     };
    }
 
-   createIngredientsList() {
+   _createIngredientsList() {
     const breakfastIngredients = this._config.menu.breakfast.ingredients;
     const lunchIngredients = this._config.menu.lunch.ingredients;
     const snackIngredients = this._config.menu.snack.ingredients;
@@ -41,7 +41,7 @@ class Diet {
     return ingredientsList;
   }
 
-  createGroceryList() {
+  _createGroceryList() {
     const allIngredientsList = Object.entries(this._ingredients);
     const ingredientsList = this._config.ingredientsList;
     const sections = allIngredientsList.reduce((acc, [, properties]) => {
@@ -72,24 +72,37 @@ class Diet {
     return groceryList;
   }
 
+  _setIngredientsList() {
+    this._config.ingredientsList = this._createIngredientsList();
+    this._connector.setConfig(this._config);
+  }
+
   setMenu() {
     if (!(hasPassedGivenDays(this._config.date, this._menuDuration))) {
       return;
     }
-    this._config.date = getCurrentTime();
-    this._config.menu = this.createRandomMenu();
-    this._connector.setConfig(this._config);
-  }
-
-  setIngredientsList() {
-    this._config.ingredientsList = this.createIngredientsList();
-    this._connector.setConfig(this._config);
+    try {
+      this._config.date = getCurrentTime();
+      this._config.menu = this._createRandomMenu();
+      this._connector.setConfig(this._config);
+    } catch (error) {
+      console.error('Error while setting the menu:', error);
+    } finally {
+      console.log('Menu successfully created');
+    }
   }
 
   setGroceryList() {
-    this._config.groceryList = this.createGroceryList();
-    this._connector.setConfig(this._config);
-  }
+    try {
+      this._config.ingredientsList = this._createIngredientsList();
+      this._config.groceryList = this._createGroceryList();
+      this._connector.setConfig(this._config);
+    } catch (error) {
+      console.error("Error while setting the grocery list:", error);
+    } finally {
+      console.log("Grocery list successfully set");
+    }
+  }  
 
   displayMenu() {
     const menu = {
@@ -110,8 +123,6 @@ class Diet {
 const diet = new Diet();
 
 // diet.setMenu();
-// diet.createGroceryList();
-// diet.setIngredientsList();
 // diet.setGroceryList();
 // diet.displayMenu();
 // diet.displayGroceryList();
