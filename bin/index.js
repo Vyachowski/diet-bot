@@ -44,7 +44,7 @@ class Diet {
   createGroceryList() {
     const allIngredientsList = Object.entries(this._ingredients);
     const ingredientsList = this._config.ingredientsList;
-    const sections = allIngredientsList.reduce((acc, [product, properties]) => {
+    const sections = allIngredientsList.reduce((acc, [, properties]) => {
       if (!acc.includes(properties.section)) {
         acc.push(properties.section);
       }
