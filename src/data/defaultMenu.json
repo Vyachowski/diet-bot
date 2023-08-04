@@ -1,0 +1,57 @@
+{
+  "breakfast": [{
+    "name": "Banana-Cottage Boat",
+    "portions": 1,
+    "ingredients": {
+      "banana": 1,
+      "cottage": 200,
+      "granola": 30,
+      "seeds": 30
+      }
+  }],
+  "snack": [
+    { 
+      "name": "Apple",
+      "portions": 1,
+      "ingredients": {
+        "apple": 1
+      }
+    },
+    { 
+      "name": "Bamba",
+      "portions": 1,
+      "ingredients": {
+        "bamba": 1
+      }
+    },
+    { 
+      "name": "Peanut",
+      "portions": 1,
+      "ingredients": {
+        "peanut": 30
+      }
+    }
+  ],
+  "lunch": [{
+    "name": "Pasta Tuna",
+    "portions": 1,
+    "ingredients": {
+      "talyatelle": 200,
+      "onion": 0.5,
+      "olive": 7,
+      "tuna": 90,
+      "garlic": 1,
+      "oliveOil": 30
+    }
+  }],
+  "dinner": [{
+    "name": "Salmon with salad",
+    "portions": 1,
+    "ingredients": {
+      "salmon": 200,
+      "saladMix": 300,
+      "cherry": 70,
+      "oliveOil": 20
+    }
+  }]
+}

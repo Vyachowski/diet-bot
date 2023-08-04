@@ -1,0 +1,29 @@
+{
+  "name": "bity-smarty",
+  "version": "1.0.0",
+  "description": "A small bot for providing a week diet and purchase list",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vyachowski/bity-smarty.git"
+  },
+  "keywords": [
+    "bot",
+    "diet",
+    "healthy"
+  ],
+  "author": "Slava Haikin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vyachowski/bity-smarty/issues"
+  },
+  "homepage": "https://github.com/Vyachowski/bity-smarty#readme",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "telegraf": "^4.12.2"
+  }
+}
