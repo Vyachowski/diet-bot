@@ -3,10 +3,10 @@
     "name": "Banana-Cottage Boat",
     "portions": 1,
     "ingredients": {
-      "banana": 1,
+      "banana": 100,
       "cottage": 200,
       "granola": 30,
-      "seeds": 30
+      "almond": 20
       }
   }],
   "snack": [
@@ -14,14 +14,14 @@
       "name": "Apple",
       "portions": 1,
       "ingredients": {
-        "apple": 1
+        "apple": 70
       }
     },
     { 
       "name": "Bamba",
       "portions": 1,
       "ingredients": {
-        "bamba": 1
+        "bamba": 50
       }
     },
     { 
@@ -37,10 +37,10 @@
     "portions": 1,
     "ingredients": {
       "talyatelle": 200,
-      "onion": 0.5,
-      "olive": 7,
+      "onionWhite": 75,
+      "olive": 30,
       "tuna": 90,
-      "garlic": 1,
+      "garlicClove": 7,
       "oliveOil": 30
     }
   }],
@@ -48,7 +48,7 @@
     "name": "Salmon with salad",
     "portions": 1,
     "ingredients": {
-      "salmon": 200,
+      "salmonFrozen": 200,
       "saladMix": 300,
       "cherry": 70,
       "oliveOil": 20
