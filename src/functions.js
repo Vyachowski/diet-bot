@@ -42,10 +42,23 @@ function camelCaseToText (text) {
   return normalizedText.charAt(0).toUpperCase() + normalizedText.slice(1);
 }
 
+function formatKey(key) {
+  return key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1').toLowerCase();
+}
+
+function objectToTextColumn(obj) {
+  const entries = Object.entries(obj);
+  const normalizedTextSorted = entries.map(([name, value]) => [formatKey(name), value]).toSorted();
+  const textColumn = normalizedTextSorted.join('g \n').replaceAll(',',': ') + 'g';
+  return textColumn;
+}
+
 export {
   getCurrentTime,
   hasPassedGivenDays,
   mergeAndSumObjects,
   multiplyObjectValues,
-  camelCaseToText
+  camelCaseToText,
+  formatKey,
+  objectToTextColumn
 };

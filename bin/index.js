@@ -1,4 +1,4 @@
-import { getCurrentTime, hasPassedGivenDays, mergeAndSumObjects, multiplyObjectValues, camelCaseToText } from '../src/functions.js';
+import { getCurrentTime, hasPassedGivenDays, mergeAndSumObjects, multiplyObjectValues, objectToTextColumn } from '../src/functions.js';
 import Connector from '../src/connector.js';
 
 class Diet {
@@ -106,12 +106,13 @@ class Diet {
 
   displayMenu() {
     const menu = {
-      "For breakfast · 🥓 · 🧇 · 🥞 · 🍳": this._config.menu.breakfast,
-      "For snack · 🍎 · 🍪 · 🥨 · 🍫 · ": this._config.menu.snack,
-      "For lunch · 🍽️ · 🥪 · 🍱 · 😋 ": this._config.menu.lunch,
-      "For dinner · 🥘 · 🍲 · 🥣 · 🥗 ": this._config.menu.dinner,
+      'For breakfast · 🥓 · 🧇 · 🥞 · 🍳': this._config.menu.breakfast,
+      'For snack · 🍎 · 🍪 · 🥨 · 🍫 · ': this._config.menu.snack,
+      'For lunch · 🍽️ · 🥪 · 🍱 · 😋 ': this._config.menu.lunch,
+      'For dinner · 🥘 · 🍲 · 🥣 · 🥗 ': this._config.menu.dinner,
     };
-    Object.entries(menu).forEach(([name, meal]) => console.log(`${name}\n\n${JSON.stringify(meal.name).replace(/"/gi, '').toUpperCase()}\n\n${camelCaseToText(JSON.stringify(meal.ingredients).slice(1, -1).replace(/"/gi, '').replace(/,/gi,'\n').replace(/:/gi,': '))}\n\n`));
+    Object.entries(menu).forEach(([mealName, dish]) => console.log(`| ${mealName}\n| ${dish.name.toUpperCase()}\n\n${objectToTextColumn(dish.ingredients)}\n`));
+    // Object.entries(menu).forEach(([name, meal]) => console.log(`${name}\n\n${JSON.stringify(meal.name).replace(/"/gi, '').toUpperCase()}\n\n${camelCaseToText(JSON.stringify(meal.ingredients).slice(1, -1).replace(/"/gi, '').replace(/,/gi,'\n').replace(/:/gi,': '))}\n\n`));
   }
 
   displayGroceryList() {
@@ -124,7 +125,7 @@ const diet = new Diet();
 
 // diet.setMenu();
 // diet.setGroceryList();
-// diet.displayMenu();
+diet.displayMenu();
 // diet.displayGroceryList();
 
 export default Diet;
