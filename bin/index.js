@@ -116,8 +116,7 @@ class Diet {
 
   displayGroceryList() {
     const groceryListArray = this._config.groceryList;
-    console.log(groceryListArray)
-    groceryListArray.forEach(({section, productAmount}) => console.log(`${section.toUpperCase()}\n\n${productAmount.map((product) => objectToTextColumn(product)).join('\n')}\n`));
+    groceryListArray.forEach(({section, productAmount}) => console.log(`| ${section.toUpperCase()}\n\n${productAmount.map((product) => objectToTextColumn(product)).join('\n')}\n`));
   }
 }
 
