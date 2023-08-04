@@ -4,8 +4,8 @@ import {
   mergeAndSumObjects,
   multiplyObjectValues,
   objectToTextColumn,
-} from '../src/functions.js';
-import Connector from '../src/connector.js';
+} from "../src/functions.js";
+import Connector from "../src/connector.js";
 
 class Diet {
   constructor() {
@@ -58,29 +58,27 @@ class Diet {
   _createGroceryList() {
     const allIngredientsList = Object.entries(this._ingredients);
     const ingredientsList = this._config.ingredientsList;
-    const sections = allIngredientsList.reduce((acc, [, properties]) => {
-      if (!acc.includes(properties.section)) {
-        acc.push(properties.section);
-      }
-      return acc;
-    }, []);
+
+    const sections = [
+      ...new Set(
+        allIngredientsList.map(([, properties]) => properties.section)
+      ),
+    ];
+
     const ingredientsBySection = sections.map((section) => {
-      return {
-        section,
-        products: allIngredientsList
-          .filter(([, properties]) => properties.section === section)
-          .map(([product]) => product),
-      };
+      const products = allIngredientsList
+        .filter(([, properties]) => properties.section === section)
+        .map(([product]) => product);
+      return { section, products };
     });
+
     const groceryList = ingredientsBySection.map(({ section, products }) => {
       const productAmount = products
-        .map((product) => {
-          if (ingredientsList[product] !== undefined)
-            return { [product]: ingredientsList[product] };
-        })
-        .filter((product) => product !== undefined);
+        .filter((product) => ingredientsList[product] !== undefined)
+        .map((product) => ({ [product]: ingredientsList[product] }));
       return { section, productAmount };
     });
+
     return groceryList;
   }
 
@@ -91,7 +89,7 @@ class Diet {
 
   setMenu() {
     if (!hasPassedGivenDays(this._config.date, this._menuDuration)) {
-      console.log('Menu is still up-to-date');
+      console.log("Menu is still up-to-date");
       return;
     }
     try {
@@ -99,9 +97,9 @@ class Diet {
       this._config.menu = this._createRandomMenu();
       this._connector.setConfig(this._config);
     } catch (error) {
-      console.error('Error while setting the menu:', error);
+      console.error("Error while setting the menu:", error);
     } finally {
-      console.log('Menu successfully created');
+      console.log("Menu successfully created");
     }
   }
 
@@ -111,18 +109,18 @@ class Diet {
       this._config.groceryList = this._createGroceryList();
       this._connector.setConfig(this._config);
     } catch (error) {
-      console.error('Error while setting the grocery list:', error);
+      console.error("Error while setting the grocery list:", error);
     } finally {
-      console.log('Grocery list successfully set');
+      console.log("Grocery list successfully set");
     }
   }
 
   displayMenu() {
     const menu = {
-      'For breakfast · 🥓 · 🧇 · 🥞 · 🍳': this._config.menu.breakfast,
-      'For snack · 🍎 · 🍪 · 🥨 · 🍫 · ': this._config.menu.snack,
-      'For lunch · 🍽️ · 🥪 · 🍱 · 😋 ': this._config.menu.lunch,
-      'For dinner · 🥘 · 🍲 · 🥣 · 🥗 ': this._config.menu.dinner,
+      "For breakfast · 🥓 · 🧇 · 🥞 · 🍳": this._config.menu.breakfast,
+      "For snack · 🍎 · 🍪 · 🥨 · 🍫 · ": this._config.menu.snack,
+      "For lunch · 🍽️ · 🥪 · 🍱 · 😋 ": this._config.menu.lunch,
+      "For dinner · 🥘 · 🍲 · 🥣 · 🥗 ": this._config.menu.dinner,
     };
     Object.entries(menu).forEach(([mealName, dish]) =>
       console.log(
@@ -139,7 +137,7 @@ class Diet {
       console.log(
         `| ${section.toUpperCase()}\n\n${productAmount
           .map((product) => objectToTextColumn(product))
-          .join('\n')}\n`
+          .join("\n")}\n`
       )
     );
   }
