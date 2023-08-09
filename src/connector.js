@@ -1,15 +1,29 @@
+import { error } from 'node:console';
 import fs from 'node:fs';
+import { MongoClient, ServerApiVersion } from 'mongodb';
+import {telegraf_token, mongo_token} from '../src/data/token.js'
 
 export default class Connector {
   // Basic settings
   static workingDirectory = process.cwd();
-  static dishesFilePath = `${Connector.workingDirectory}/src/data/dishes.json`;
-  static ingredientsFilePath = `${Connector.workingDirectory}/src/data/ingredients.json`;
-  static configFilePath = `${Connector.workingDirectory}/src/data/config.json`;
 
   // Selecting a data source
-  constructor(dataSource = 'json') {
+  constructor(dataSource = 'mongodb') {
     this.dataSource = dataSource;
+    this.dishesFilePath = `${Connector.workingDirectory}/src/data/dishes.json`;
+    this.ingredientsFilePath = `${Connector.workingDirectory}/src/data/ingredients.json`;
+    this.configFilePath = `${Connector.workingDirectory}/src/data/config.json`;
+    this.client = new MongoClient(mongo_token, {
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      }
+    });
+    this.database = this.client.db('Bity_smarty');
+    this.dishesCollection = this.database.collection('dishes');
+    this.ingredientsCollection = this.database.collection('ingredients');
+    this.configCollection = this.database.collection('config');
   }
 
   // Read a JSON file
@@ -39,13 +53,91 @@ export default class Connector {
   }
 
   // Get dishes list
-  getDishes = () => Connector.readJsonFile(Connector.dishesFilePath); // => { breakfast: [ ... ], snack: [ ... ], ... }
+  async getDishes() {
+    let response;
+
+    try {
+      switch (this.dataSource) {
+        case 'json':
+          response = Connector.readJsonFile(this.dishesFilePath);
+          break;
+        case 'mongodb':
+          await this.client.connect()
+          const responseWithId = await this.dishesCollection.findOne();
+          ({_id, ...response} = responseWithId);
+          break;
+        default:
+          throw new Error('Data source is not specified');
+      }
+    } catch (error) {
+      console.error('An error occurred while accessing data:', error);
+      throw error;
+    } finally {
+      if (this.client.isConnected()) {
+        await this.client.close();
+      }
+    }
+
+   return response;
+  }
 
   // Get ingredients list
-  getIngredients = () => Connector.readJsonFile(Connector.ingredientsFilePath); // => { banana: { alternateUnit: 'piece', section: 'fresh produce' }, ... }
+  async getIngredients() {
+    let response;
+
+    try {
+      switch (this.dataSource) {
+        case 'json':
+          response = Connector.readJsonFile(this.ingredientsFilePath);
+          break;
+        case 'mongodb':
+          await this.client.connect()
+          const responseWithId = await this.ingredientsCollection.findOne();
+          ({_id, ...response} = responseWithId);
+          break;
+        default:
+          throw new Error('Data source is not specified');
+      }
+    } catch (error) {
+      console.error('An error occurred while accessing data:', error);
+      throw error;
+    } finally {
+      if (this.client.isConnected()) {
+        await this.client.close();
+      }
+    }
+
+   return response;
+  }
 
   // Get config
-  getConfig = () => Connector.readJsonFile(Connector.configFilePath); // => { date: 1690922005, menu: { ... }, ingredientsList: {...}, groceryList: [ ... ] }
+  async getConfig() {
+    let response;
+
+    try {
+      switch (this.dataSource) {
+        case 'json':
+          response = Connector.readJsonFile(this.ingredientsFilePath);
+          break;
+        case 'mongodb':
+          await this.client.connect()
+          const responseWithId = await this.configCollection.findOne();
+          ({_id, ...response} = responseWithId);
+          break;
+        default:
+          throw new Error('Data source is not specified');
+      }
+    } catch (error) {
+      console.error('An error occurred while accessing data:', error);
+      throw error;
+    } finally {
+      if (this.client.isConnected()) {
+        await this.client.close();
+      }
+    }
+
+   return response;
+  }
 
   // Set config
   setConfig = (data) => Connector.writeJsonFile(Connector.configFilePath, data); // => Update config JSON

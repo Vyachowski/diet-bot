@@ -1,8 +1,20 @@
-import Diet from "../bin/index.js";
+import Connector from '../src/connector.js';
 
-const diet = new Diet();
+// Test getDishes()
+const connector = new Connector('json');
+const dishes = await connector.getDishes();
+console.log(dishes);
 
-// diet.setMenu();
-// diet.setGroceryList();
-// diet.displayMenu();
-diet.displayGroceryList();
+
+
+
+
+
+
+
+// const diet = new Diet();
+
+// // diet.setMenu();
+// // diet.setGroceryList();
+// // diet.displayMenu();
+// diet.displayGroceryList();
