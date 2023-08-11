@@ -3,6 +3,8 @@ import { MongoClient, ServerApiVersion } from 'mongodb';
 import { mongo_token } from './data/token.js';
 import path from 'node:path';
 import { objectValuesToNumber } from './functions.js';
+import mongojs from 'mongojs';
+import monk from 'monk';
 
 export default class Connector {
   // Basic settings
@@ -18,17 +20,22 @@ export default class Connector {
     this.ingredientsFilePath = `${Connector.workingDirectory}/src/data/ingredients.json`;
     this.configFilePath = `${Connector.workingDirectory}/src/data/config.json`;
     if (dataSource === 'mongodb') {
-      this.client = new MongoClient(mongo_token, {
-        serverApi: {
-          version: ServerApiVersion.v1,
-          strict: true,
-          deprecationErrors: true,
-        },
-      });
-      this.database = this.client.db('Bity_smarty');
-      this.dishesCollection = this.database.collection('dishes');
-      this.ingredientsCollection = this.database.collection('ingredients');
-      this.configCollection = this.database.collection('config');
+      // this.client = new MongoClient(mongo_token, {
+      //   serverApi: {
+      //     version: ServerApiVersion.v1,
+      //     strict: true,
+      //     deprecationErrors: true,
+      //   },
+      // });
+      // this.database = this.client.db('Bity_smarty');
+      // this.database = mongojs(mongo_token); //, 'Bity_smarty'
+      // this.dishesCollection = this.database.collection('dishes');
+      // this.ingredientsCollection = this.database.collection('ingredients');
+      // this.configCollection = this.database.collection('config');
+      this.database = monk(mongo_token); 
+      this.dishesCollection = this.database.get('dishes');
+      this.ingredientsCollection = this.database.get('ingredients');
+      this.configCollection = this.database.get('config');
     }
   }
 
@@ -80,18 +87,16 @@ export default class Connector {
   }
 
   // Get ingredients list
-  getIngredients() {
+  async getIngredients() {
     try {
       switch (this.dataSource) {
         case 'json':
           return Connector.readJsonFile(this.ingredientsFilePath);
         case 'mongodb':
-          return this.client.connect().then(async () => {
-            const responseWithId = await this.ingredientsCollection.findOne();
-            const { _id, ...response } = responseWithId;
-            await this.client.close();
-            return response;
-          });
+            const responseWithId = this.ingredientsCollection.findOne();
+            // const { _id, ...response } = responseWithId;
+            this.database.close()
+            return responseWithId;
         default:
           throw new Error('Data source is not specified');
       }
@@ -150,3 +155,9 @@ export default class Connector {
     }
   }
 }
+
+
+const connect = new Connector('mongodb');
+
+// // console.log(connect.dishesCollection)
+console.log(connect.getIngredients())
