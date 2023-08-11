@@ -170,3 +170,5 @@ node_modules
 token.js
 .DS_Store
 default_settings
+__fixtures__/
+__tests__/

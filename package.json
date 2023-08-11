@@ -2,10 +2,11 @@
   "name": "bity-smarty",
   "version": "1.0.0",
   "description": "A small bot for providing a week diet and purchase list",
-  "main": "index.js",
+  "main": "bin/index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "bot": "node src/bot.js"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,61 @@
 {
-  "date": 1691153409,
+  "banana": {
+    "alternateUnit": "piece",
+    "section": "fresh produce"
+  },
+  "apple": {
+    "alternateUnit": "piece",
+    "section": "fresh produce"
+  },
+  "onionWhite": {
+    "alternateUnit": "piece",
+    "section": "fresh produce"
+  },
+  "garlicClove": {
+    "alternateUnit": "pieces",
+    "section": "fresh produce"
+  },
+  "saladMix": {
+    "section": "fresh produce"
+  },
+  "cherryTomato": {
+    "alternateUnit": "pieces",
+    "section": "fresh produce"
+  },
+  "cottage": {
+    "section": "dairy section"
+  },
+  "granola": {
+    "section": "nuts section"
+  },
+  "almond": {
+    "section": "nuts section"
+  },
+  "bamba": {
+    "alternateUnit": "pieces",
+    "section": "chips section"
+  },
+  "peanut": {
+    "section": "nuts section"
+  },
+  "talyatelle": {
+    "section": "pasta section"
+  },
+  "olive": {
+    "alternateUnit": "pieces",
+    "section": "grocery section"
+  },
+  "tunaCanned": {
+    "alternateUnit": "pieces",
+    "section": "grocery section"
+  },
+  "oliveOil": {
+    "section": "grocery section"
+  },
+  "salmonFrozen": {
+    "section": "frozen foods"
+  },
+  "date": 1691748169,
   "menu": {
     "breakfast": {
       "name": "Banana-Cottage Boat",
@@ -40,94 +96,5 @@
         "oliveOil": 20
       }
     }
-  },
-  "ingredientsList": {
-    "banana": 300,
-    "cottage": 600,
-    "granola": 90,
-    "almond": 60,
-    "talyatelle": 600,
-    "onionWhite": 225,
-    "olive": 90,
-    "tuna": 270,
-    "garlicClove": 21,
-    "oliveOil": 150,
-    "bamba": 150,
-    "salmonFrozen": 600,
-    "saladMix": 900,
-    "cherry": 210
-  },
-  "groceryList": [
-    {
-      "section": "fresh produce",
-      "productAmount": [
-        {
-          "banana": 300
-        },
-        {
-          "onionWhite": 225
-        },
-        {
-          "garlicClove": 21
-        },
-        {
-          "saladMix": 900
-        }
-      ]
-    },
-    {
-      "section": "dairy section",
-      "productAmount": [
-        {
-          "cottage": 600
-        }
-      ]
-    },
-    {
-      "section": "nuts section",
-      "productAmount": [
-        {
-          "granola": 90
-        },
-        {
-          "almond": 60
-        }
-      ]
-    },
-    {
-      "section": "chips section",
-      "productAmount": [
-        {
-          "bamba": 150
-        }
-      ]
-    },
-    {
-      "section": "pasta section",
-      "productAmount": [
-        {
-          "talyatelle": 600
-        }
-      ]
-    },
-    {
-      "section": "grocery section",
-      "productAmount": [
-        {
-          "olive": 90
-        },
-        {
-          "oliveOil": 150
-        }
-      ]
-    },
-    {
-      "section": "frozen foods",
-      "productAmount": [
-        {
-          "salmonFrozen": 600
-        }
-      ]
-    }
-  ]
+  }
 }

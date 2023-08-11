@@ -87,7 +87,7 @@ class Diet {
     this._connector.setConfig(this._config);
   }
 
-  setMenu() {
+  async setMenu() {
     if (!hasPassedGivenDays(this._config.date, this._menuDuration)) {
       console.log("Menu is still up-to-date");
       return;
@@ -95,7 +95,7 @@ class Diet {
     try {
       this._config.date = getCurrentTime();
       this._config.menu = this._createRandomMenu();
-      this._connector.setConfig(this._config);
+      await this._connector.setConfig(this._config);
     } catch (error) {
       console.error("Error while setting the menu:", error);
     } finally {

@@ -1,6 +1,6 @@
 import { Telegraf, Markup } from "telegraf";
-import Diet from "../../bin/index.js";
-import {telegraf_token} from '../data/token.js';
+import Diet from "../bin/index.js";
+import {telegraf_token} from './data/token.js';
 
 const bot = new Telegraf(telegraf_token);
 const diet = new Diet();
