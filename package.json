@@ -5,7 +5,7 @@
   "main": "bin/index.js",
   "type": "module",
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --detectOpenHandles",
     "check-coverage": "NODE_OPTIONS=--experimental-vm-modules npx jest --coverage",
     "bot": "node src/bot.js"
   },

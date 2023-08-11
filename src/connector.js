@@ -67,6 +67,7 @@ export default class Connector {
               .then(async () => {
                 const responseWithId = await this.dishesCollection.findOne();
                 const { _id, ...response } = responseWithId;
+                this.client.close()
                 return response;
               });
         default:
@@ -90,6 +91,7 @@ export default class Connector {
             await this.client.connect();
             const responseWithId = await this.ingredientsCollection.findOne();
             const { _id, ...response } = responseWithId;
+            this.client.close()
             return response;
           })();
         default:
@@ -112,6 +114,7 @@ export default class Connector {
               .then(async ()=> {
                 const responseWithId = await this.configCollection.findOne();
                 let {_id, ...response} = responseWithId;
+                this.client.close()
                 return response;
               });
         default:
