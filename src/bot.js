@@ -1,35 +1,37 @@
 import { Telegraf, Markup } from "telegraf";
 import Diet from "../../bin/index.js";
-import telegraf_token from '../data/token.js';
+import {telegraf_token} from '../data/token.js';
 
 const bot = new Telegraf(telegraf_token);
 const diet = new Diet();
 
 bot.start((ctx) => {
   console.log('started:', ctx.from.id)
-  return ctx.reply('Hi! Do you want to create a new menu?', Markup.inlineKeyboard([Markup.button.callback('Get menu', 'get_menu')]));
+  return ctx.reply('Hi! Do you want to create a new menu?', Markup.inlineKeyboard(
+      [Markup.button.callback('Get menu', 'menu')]
+  ));
 });
 
-bot.command('get_menu', (ctx) => {
-  diet.setMenu();
+bot.command('menu', async (ctx) => {
+  await diet.setMenu()
   const menuText = diet.getMenu();
   ctx.reply(menuText);
 });
 
-bot.command('get_grocery_list', (ctx) => {
-  diet.setMenu();
+bot.command('grocery_list', async (ctx) => {
+  await diet.setMenu();
   const menuText = diet.getGroceryList();
   ctx.reply(menuText);
 });
 
-bot.action('get_menu', (ctx) => {
-  diet.setMenu();
+bot.action('menu', async (ctx) => {
+  await diet.setMenu();
   const menuText = diet.getMenu();
   ctx.reply(menuText);
 });
 
-bot.action('get_grocery_list', (ctx) => {
-  diet.setMenu();
+bot.action('grocery_list', async (ctx) => {
+  await diet.setMenu();
   const menuText = diet.getGroceryList();
   ctx.reply(menuText);
 });

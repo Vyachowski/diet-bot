@@ -1,5 +1,7 @@
 import Connector from '../src/connector.js';
 
+
+npm i --save-dev jest
 // Test getDishes()
 const connector = new Connector('json');
 const dishes = await connector.getDishes();
