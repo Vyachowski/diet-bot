@@ -164,7 +164,7 @@ class Diet {
       console.log(
         `| ${section.toUpperCase()}\n\n${productAmount
           .map((product) => objectToTextColumn(product))
-          .join("\n")}\n`
+          .join('\n')}\n`
       )
     );
   }

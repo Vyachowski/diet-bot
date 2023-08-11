@@ -1,7 +1,6 @@
-import { error } from 'node:console';
 import fs from 'node:fs';
 import { MongoClient, ServerApiVersion } from 'mongodb';
-import {telegraf_token, mongo_token} from '../src/data/token.js'
+import {mongo_token} from './data/token.js'
 
 export default class Connector {
   // Basic settings
@@ -140,5 +139,33 @@ export default class Connector {
   }
 
   // Set config
-  setConfig = (data) => Connector.writeJsonFile(Connector.configFilePath, data); // => Update config JSON
+  // setConfig = (data) => Connector.writeJsonFile(Connector.configFilePath, data); // => Update config JSON
+
+
+  async setConfig(data) {
+
+    try {
+      switch (this.dataSource) {
+        case 'json':
+          Connector.writeJsonFile(this.configFilePath, data);
+          break;
+        case 'mongodb':
+          await this.client.connect()
+          await this.configCollection.deleteMany({});
+          await this.configCollection.insertMany(data);
+          break;
+        default:
+          throw new Error('Data source is not specified');
+      }
+    } catch (error) {
+      console.error('An error occurred while accessing data or connecting to the database:', error);
+      throw error;
+    } finally {
+      if (this.client.isConnected()) {
+        await this.client.close();
+        console.log('Config successfully set!')
+      }
+    }
+  }
+
 }
