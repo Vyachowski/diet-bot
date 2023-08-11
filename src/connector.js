@@ -67,7 +67,7 @@ export default class Connector {
               .then(async () => {
                 const responseWithId = await this.dishesCollection.findOne();
                 const { _id, ...response } = responseWithId;
-                this.client.close()
+                await this.client.close()
                 return response;
               });
         default:
@@ -79,7 +79,6 @@ export default class Connector {
     }
   }
 
-
   // Get ingredients list
   getIngredients() {
     try {
@@ -87,13 +86,13 @@ export default class Connector {
         case 'json':
           return Connector.readJsonFile(this.ingredientsFilePath);
         case 'mongodb':
-          return (async () => {
-            await this.client.connect();
+          return this.client.connect()
+          .then(async () => {
             const responseWithId = await this.ingredientsCollection.findOne();
             const { _id, ...response } = responseWithId;
-            this.client.close()
+            await this.client.close()
             return response;
-          })();
+          });
         default:
           throw new Error('Data source is not specified');
       }
@@ -114,7 +113,7 @@ export default class Connector {
               .then(async ()=> {
                 const responseWithId = await this.configCollection.findOne();
                 let {_id, ...response} = responseWithId;
-                this.client.close()
+                await this.client.close()
                 return response;
               });
         default:
@@ -137,7 +136,7 @@ export default class Connector {
             await this.client.connect()
             await this.configCollection.deleteMany({});
             await this.configCollection.insertMany(data);
-            this.client.close()
+            await this.client.close()
           })();
         default:
           throw new Error('Data source is not specified');
