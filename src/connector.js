@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import { MongoClient, ServerApiVersion } from 'mongodb';
-import {mongo_token} from './data/token.js'
+import { mongo_token } from './data/token.js';
 import path from 'node:path';
+import { objectValuesToNumber } from './functions.js';
 
 export default class Connector {
   // Basic settings
@@ -9,6 +10,9 @@ export default class Connector {
 
   // Selecting a data source
   constructor(dataSource = 'json') {
+    if (dataSource !== 'json' && dataSource !== 'mongodb') {
+      throw new Error("Data source should be either 'json' or 'mongodb'");
+    }
     this.dataSource = dataSource;
     this.dishesFilePath = `${Connector.workingDirectory}/src/data/dishes.json`;
     this.ingredientsFilePath = `${Connector.workingDirectory}/src/data/ingredients.json`;
@@ -19,7 +23,7 @@ export default class Connector {
           version: ServerApiVersion.v1,
           strict: true,
           deprecationErrors: true,
-        }
+        },
       });
       this.database = this.client.db('Bity_smarty');
       this.dishesCollection = this.database.collection('dishes');
@@ -33,14 +37,11 @@ export default class Connector {
     try {
       const absoluteFilePath = path.resolve(filePath);
       const fileContent = fs.readFileSync(absoluteFilePath, 'utf8');
-      const jsonObject = JSON.parse(fileContent, (key, value) => {
-        const parsedValue = parseFloat(value);
-        return !isNaN(parsedValue) ? parsedValue : value;
-      });
+      const jsonObject = JSON.parse(fileContent, objectValuesToNumber);
       return jsonObject;
     } catch (error) {
-        console.error('Error reading file or converting JSON:', error);
-        throw error;
+      console.error('Error reading file or converting JSON:', error);
+      throw error;
     }
   }
 
@@ -51,8 +52,8 @@ export default class Connector {
       const jsonData = JSON.stringify(data, null, 2);
       fs.writeFileSync(absoluteFilePath, jsonData, 'utf8');
     } catch (error) {
-        console.error('Error writing file:', error);
-        throw error;
+      console.error('Error writing file:', error);
+      throw error;
     }
   }
 
@@ -63,19 +64,18 @@ export default class Connector {
         case 'json':
           return Connector.readJsonFile(this.dishesFilePath);
         case 'mongodb':
-          return this.client.connect()
-              .then(async () => {
-                const responseWithId = await this.dishesCollection.findOne();
-                const { _id, ...response } = responseWithId;
-                await this.client.close()
-                return response;
-              });
+          return this.client.connect().then(async () => {
+            const responseWithId = await this.dishesCollection.findOne();
+            const { _id, ...response } = responseWithId;
+            await this.client.close();
+            return response;
+          });
         default:
           throw new Error('Data source is not specified');
       }
     } catch (error) {
-        console.error('An error occurred while accessing data:', error);
-        throw error;
+      console.error('An error occurred while accessing data:', error);
+      throw error;
     }
   }
 
@@ -86,20 +86,19 @@ export default class Connector {
         case 'json':
           return Connector.readJsonFile(this.ingredientsFilePath);
         case 'mongodb':
-          return this.client.connect()
-          .then(async () => {
+          return this.client.connect().then(async () => {
             const responseWithId = await this.ingredientsCollection.findOne();
             const { _id, ...response } = responseWithId;
-            await this.client.close()
+            await this.client.close();
             return response;
           });
         default:
           throw new Error('Data source is not specified');
       }
     } catch (error) {
-        console.error('An error occurred while accessing data:', error);
-        throw error;
-      }
+      console.error('An error occurred while accessing data:', error);
+      throw error;
+    }
   }
 
   // Get config
@@ -109,19 +108,18 @@ export default class Connector {
         case 'json':
           return Connector.readJsonFile(this.configFilePath);
         case 'mongodb':
-          return this.client.connect()
-              .then(async ()=> {
-                const responseWithId = await this.configCollection.findOne();
-                let {_id, ...response} = responseWithId;
-                await this.client.close()
-                return response;
-              });
+          return this.client.connect().then(async () => {
+            const responseWithId = await this.configCollection.findOne();
+            let { _id, ...response } = responseWithId;
+            await this.client.close();
+            return response;
+          });
         default:
           throw new Error('Data source is not specified');
       }
     } catch (error) {
-        console.error('An error occurred while accessing data:', error);
-        throw error;
+      console.error('An error occurred while accessing data:', error);
+      throw error;
     }
   }
 
@@ -133,20 +131,22 @@ export default class Connector {
           break;
         case 'mongodb':
           return (async () => {
-            await this.client.connect()
+            await this.client.connect();
             await this.configCollection.deleteMany({});
             await this.configCollection.insertMany(data);
-            await this.client.close()
+            await this.client.close();
           })();
         default:
           throw new Error('Data source is not specified');
       }
     } catch (error) {
-        console.error('An error occurred while accessing data or connecting to the database:', error);
-        throw error;
+      console.error(
+        'An error occurred while accessing data or connecting to the database:',
+        error
+      );
+      throw error;
     } finally {
-      console.log('Menu successfully updated')
+      console.log('Menu successfully updated');
     }
   }
-
 }

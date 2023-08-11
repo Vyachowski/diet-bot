@@ -4,7 +4,7 @@ function getCurrentTime() {
 }
 
 function hasPassedGivenDays(targetTime, daysToCheck = 10) {
-  if (targetTime === null || targetTime === undefined) {
+  if (!targetTime) {
     return true;
   }
 
@@ -30,26 +30,35 @@ function mergeAndSumObjects(...objects) {
 
 function multiplyObjectValues(obj, multiplier) {
   for (let key in obj) {
-    if (typeof obj[key] === 'number') {
+    if (typeof obj[key] === "number") {
       obj[key] *= multiplier;
     }
   }
   return obj;
 }
 
-// function camelCaseToText (text) {
-//   const normalizedText = text.split(/(?=[A-Z])/).map(s => s.toLowerCase()).join(' ');
-//   return normalizedText.charAt(0).toUpperCase() + normalizedText.slice(1);
-// }
+function objectValuesToNumber(key, value) {
+  const parsedValue = parseFloat(value);
+  return !isNaN(parsedValue) ? parsedValue : value;
+}
 
 function camelCaseTextToNormal(text) {
-  return text.charAt(0).toUpperCase() + text.slice(1).replace(/([A-Z])/g, ' $1').toLowerCase();
+  return (
+    text.charAt(0).toUpperCase() +
+    text
+      .slice(1)
+      .replace(/([A-Z])/g, " $1")
+      .toLowerCase()
+  );
 }
 
 function objectToTextColumn(obj) {
   const entries = Object.entries(obj);
-  const normalizedTextSorted = entries.map(([name, value]) => [camelCaseTextToNormal(name), value]).toSorted();
-  const textColumn = normalizedTextSorted.join('g \n').replaceAll(',',': ') + 'g';
+  const normalizedTextSorted = entries
+    .map(([name, value]) => [camelCaseTextToNormal(name), value])
+    .toSorted();
+  const textColumn =
+    normalizedTextSorted.join("g \n").replaceAll(",", ": ") + "g";
   return textColumn;
 }
 
@@ -58,5 +67,6 @@ export {
   hasPassedGivenDays,
   mergeAndSumObjects,
   multiplyObjectValues,
-  objectToTextColumn
+  objectToTextColumn,
+  objectValuesToNumber,
 };
