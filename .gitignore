@@ -172,3 +172,4 @@ token.js
 default_settings
 __fixtures__/
 __tests__/
+coverage/

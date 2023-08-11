@@ -106,7 +106,7 @@ export default class Connector {
     try {
       switch (this.dataSource) {
         case 'json':
-          return Connector.readJsonFile(this.ingredientsFilePath);
+          return Connector.readJsonFile(this.configFilePath);
         case 'mongodb':
           return this.client.connect()
               .then(async ()=> {

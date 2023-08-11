@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "check-coverage": "NODE_OPTIONS=--experimental-vm-modules npx jest --coverage",
     "bot": "node src/bot.js"
   },
   "repository": {
