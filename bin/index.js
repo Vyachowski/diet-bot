@@ -9,11 +9,19 @@ import Connector from "../src/connector.js";
 
 class Diet {
   constructor() {
-    this._connector = new Connector();
-    this._dishes = this._connector.getDishes();
-    this._ingredients = this._connector.getIngredients();
-    this._config = this._connector.getConfig();
+    this._connector = new Connector('mongodb');
     this._menuDuration = 3;
+    if (this._connector.dataSource === 'json') {
+      this._dishes = this._connector.getDishes();
+      this._ingredients = this._connector.getIngredients();
+      this._config = this._connector.getConfig();
+    }
+  }
+
+  async init() {
+    this._dishes = await this._connector.getDishes();
+    this._ingredients = await this._connector.getIngredients();
+    this._config = await this._connector.getConfig();
   }
 
   static getRandomMeal(mealVariants) {
@@ -87,7 +95,7 @@ class Diet {
     this._connector.setConfig(this._config);
   }
 
-  async setMenu() {
+  setMenu() {
     if (!hasPassedGivenDays(this._config.date, this._menuDuration)) {
       console.log("Menu is still up-to-date");
       return;
@@ -95,7 +103,7 @@ class Diet {
     try {
       this._config.date = getCurrentTime();
       this._config.menu = this._createRandomMenu();
-      await this._connector.setConfig(this._config);
+      this._connector.setConfig(this._config);
     } catch (error) {
       console.error("Error while setting the menu:", error);
     } finally {
@@ -171,3 +179,13 @@ class Diet {
 }
 
 export default Diet;
+
+
+async function main() {
+  const diet  = new Diet();
+  await diet.init(); // Дождаться инициализации
+  console.log(diet.setMenu());
+  console.log(diet.displayMenu());
+}
+
+main();

@@ -96,5 +96,94 @@
         "oliveOil": 20
       }
     }
-  }
+  },
+  "ingredientsList": {
+    "banana": 300,
+    "cottage": 600,
+    "granola": 90,
+    "almond": 60,
+    "talyatelle": 600,
+    "onionWhite": 225,
+    "olive": 90,
+    "tuna": 270,
+    "garlicClove": 21,
+    "oliveOil": 150,
+    "bamba": 150,
+    "salmonFrozen": 600,
+    "saladMix": 900,
+    "cherry": 210
+  },
+  "groceryList": [
+    {
+      "section": "fresh produce",
+      "productAmount": [
+        {
+          "banana": 300
+        },
+        {
+          "onionWhite": 225
+        },
+        {
+          "garlicClove": 21
+        },
+        {
+          "saladMix": 900
+        }
+      ]
+    },
+    {
+      "section": "dairy section",
+      "productAmount": [
+        {
+          "cottage": 600
+        }
+      ]
+    },
+    {
+      "section": "nuts section",
+      "productAmount": [
+        {
+          "granola": 90
+        },
+        {
+          "almond": 60
+        }
+      ]
+    },
+    {
+      "section": "chips section",
+      "productAmount": [
+        {
+          "bamba": 150
+        }
+      ]
+    },
+    {
+      "section": "pasta section",
+      "productAmount": [
+        {
+          "talyatelle": 600
+        }
+      ]
+    },
+    {
+      "section": "grocery section",
+      "productAmount": [
+        {
+          "olive": 90
+        },
+        {
+          "oliveOil": 150
+        }
+      ]
+    },
+    {
+      "section": "frozen foods",
+      "productAmount": [
+        {
+          "salmonFrozen": 600
+        }
+      ]
+    }
+  ]
 }
