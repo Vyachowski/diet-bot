@@ -137,8 +137,8 @@ export default class Connector {
             await this.client.connect()
             await this.configCollection.deleteMany({});
             await this.configCollection.insertMany(data);
+            this.client.close()
           })();
-          break;
         default:
           throw new Error('Data source is not specified');
       }
