@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { MongoClient, ServerApiVersion } from 'mongodb';
-import { mongo_token } from './data/token.js';
+import { mongo_local } from './data/token.js';
 import path from 'node:path';
 import { objectValuesToNumber } from './functions.js';
 
