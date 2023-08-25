@@ -6,14 +6,14 @@ export default class Connector {
   static workingDirectory = process.cwd();
 
   // Selecting a data source
-  constructor(dataSource = "json") {
+  constructor(user_id, dataSource = "json") {
     if (dataSource !== "json" && dataSource !== "mongodb") {
       throw new Error("Data source should be either 'json' or 'mongodb'");
     }
     this.dataSource = dataSource;
     this.dishesFilePath = `${Connector.workingDirectory}/src/data/dishes.json`;
     this.ingredientsFilePath = `${Connector.workingDirectory}/src/data/ingredients.json`;
-    this.configFilePath = `${Connector.workingDirectory}/src/data/config.json`;
+    this.configFilePath = `${Connector.workingDirectory}/src/data/config_${user_id}.json`;
   }
 
   // Read a JSON file
