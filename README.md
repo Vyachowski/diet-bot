@@ -37,10 +37,10 @@ Slava Haikin
 
 ## Version History
 
-* 0.2
+* v1.1
     * Adding recipes to dishes
     * Adding new recipes via telegram interface
-* 0.1
+* v1.0
     * Initial Release
     * On-demand grocery list
     * On-demand menu for a week
