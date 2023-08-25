@@ -5,7 +5,7 @@ import {telegraf_token} from './data/token.js';
 const bot = new Telegraf(telegraf_token);
 
 bot.start((ctx) => {
-  return ctx.reply('Hi! Do you want to create a new menu?', Markup.inlineKeyboard(
+  return ctx.reply('Hi!Do you want to create a new menu?', Markup.inlineKeyboard(
       [Markup.button.callback('Get menu', 'menu')]
   ));
 });
@@ -18,7 +18,12 @@ bot.command('menu', (ctx) => {
   if (diet) {
     diet.setMenu();
     const menuText = diet.getMenu();
-    ctx.reply(menuText);
+    ctx.reply(menuText, Markup.inlineKeyboard(
+      [
+        Markup.button.callback('Get grocery list', 'grocery'),
+        Markup.button.callback('Show available dishes', 'dishes'),
+      ]
+    ));
   }
 });
 
@@ -52,6 +57,19 @@ bot.action('grocery', (ctx) => {
 bot.action('dishes', (ctx) => {
   const diet = new Diet(ctx.from.id);
   const menuText = diet.getDishes();
+  ctx.reply(menuText);
+});
+
+bot.hears('Show menu', (ctx) => {
+  const diet = new Diet(ctx.from.id);
+  const menuText = diet.getMenu();
+  ctx.reply(menuText);
+});
+
+bot.hears('Show grocery', (ctx) => {
+  const diet = new Diet(ctx.from.id);
+  diet.setGroceryList();
+  const menuText = diet.getGroceryList();
   ctx.reply(menuText);
 });
 
