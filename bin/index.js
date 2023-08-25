@@ -99,15 +99,23 @@ class Diet {
 
   setGroceryList() {
     try {
+      if (!hasPassedGivenDays(this._config.menuCreated, this._menuDuration)) {
+        console.log("Menu is still up-to-date");
+        const ingredientList = this._createIngredientsList();
+        this._config.currentGroceryList = this._createGroceryList(ingredientList);
+        this._connector.setUserConfig(this._config);
+        console.log("Grocery list successfully set");
+        return true;
+      }
       this.setMenu();
       const ingredientList = this._createIngredientsList();
       this._config.currentGroceryList = this._createGroceryList(ingredientList);
       this._connector.setUserConfig(this._config);
+      console.log("Grocery list successfully set");
+      return true;
     } catch (error) {
       console.error("Error while setting the grocery list:", error);
-    } finally {
-      console.log("Grocery list successfully set");
-    }
+    };
   }
 
   getMenu() {

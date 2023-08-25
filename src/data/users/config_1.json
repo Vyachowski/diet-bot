@@ -1,5 +1,5 @@
 {
-  "menuCreated": 1692960423,
+  "menuCreated": 1692960492,
   "currentMenu": {
     "breakfast": {
       "name": "Banana-Cottage Boat",
@@ -11,9 +11,9 @@
       }
     },
     "snack": {
-      "name": "Apple",
+      "name": "Bamba",
       "ingredients": {
-        "apple": 70
+        "bamba": 50
       }
     },
     "lunch": {
@@ -37,15 +37,12 @@
       }
     }
   },
-  "groceryList": [
+  "currentGroceryList": [
     {
       "section": "fresh produce",
       "productAmount": [
         {
           "banana": 300
-        },
-        {
-          "apple": 210
         },
         {
           "onionWhite": 225
@@ -79,7 +76,11 @@
     },
     {
       "section": "chips section",
-      "productAmount": []
+      "productAmount": [
+        {
+          "bamba": 150
+        }
+      ]
     },
     {
       "section": "pasta section",
