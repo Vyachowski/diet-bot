@@ -37,10 +37,10 @@ class Diet {
   }
 
   _createIngredientsList() {
-    const breakfastIngredients = this._config.menu.breakfast.ingredients;
-    const lunchIngredients = this._config.menu.lunch.ingredients;
-    const snackIngredients = this._config.menu.snack.ingredients;
-    const dinnerIngredients = this._config.menu.dinner.ingredients;
+    const breakfastIngredients = this._config.currentMenu.breakfast.ingredients;
+    const lunchIngredients = this._config.currentMenu.lunch.ingredients;
+    const snackIngredients = this._config.currentMenu.snack.ingredients;
+    const dinnerIngredients = this._config.currentMenu.dinner.ingredients;
     const allIngredients = mergeAndSumObjects(
       breakfastIngredients,
       lunchIngredients,
@@ -54,9 +54,9 @@ class Diet {
     return ingredientsList;
   }
 
-  _createGroceryList() {
+  _createGroceryList(ingredients) {
     const allIngredientsList = Object.entries(this._ingredients);
-    const ingredientsList = this._config.ingredientsList;
+    const ingredientsList = ingredients;
 
     const sections = [
       ...new Set(
@@ -81,19 +81,14 @@ class Diet {
     return groceryList;
   }
 
-  // _setIngredientsList() {
-  //   this._config.ingredientsList = this._createIngredientsList();
-  //   this._connector.setUserConfig(this._config);
-  // }
-
   setMenu() {
-    if (!hasPassedGivenDays(this._config.date, this._menuDuration)) {
+    if (!hasPassedGivenDays(this._config.menuCreated, this._menuDuration)) {
       console.log("Menu is still up-to-date");
       return false;
     }
     try {
-      this._config.date = getCurrentTime();
-      this._config.menu = this._createRandomMenu();
+      this._config.menuCreated = getCurrentTime();
+      this._config.currentMenu = this._createRandomMenu();
       this._connector.setUserConfig(this._config);
       console.log("Menu successfully created");
       return true;
@@ -104,8 +99,9 @@ class Diet {
 
   setGroceryList() {
     try {
-      this._config.ingredientsList = this._createIngredientsList();
-      this._config.groceryList = this._createGroceryList();
+      this.setMenu();
+      const ingredientList = this._createIngredientsList();
+      this._config.currentGroceryList = this._createGroceryList(ingredientList);
       this._connector.setUserConfig(this._config);
     } catch (error) {
       console.error("Error while setting the grocery list:", error);
@@ -116,10 +112,10 @@ class Diet {
 
   getMenu() {
     const menu = {
-      "For breakfast · 🥓 · 🧇 · 🥞 · 🍳": this._config.menu.breakfast,
-      "For snack · 🍎 · 🍪 · 🥨 · 🍫 · ": this._config.menu.snack,
-      "For lunch · 🍽️ · 🥪 · 🍱 · 😋 ": this._config.menu.lunch,
-      "For dinner · 🥘 · 🍲 · 🥣 · 🥗 ": this._config.menu.dinner,
+      "For breakfast · 🥓 · 🧇 · 🥞 · 🍳": this._config.currentMenu.breakfast,
+      "For snack · 🍎 · 🍪 · 🥨 · 🍫 · ": this._config.currentMenu.snack,
+      "For lunch · 🍽️ · 🥪 · 🍱 · 😋 ": this._config.currentMenu.lunch,
+      "For dinner · 🥘 · 🍲 · 🥣 · 🥗 ": this._config.currentMenu.dinner,
     };
     const currentMenuArray = Object.entries(menu).map(([mealName, dish]) =>
         `| ${mealName}\n| ${dish.name.toUpperCase()}\n\n${objectToTextColumn(
@@ -131,7 +127,7 @@ class Diet {
   };
 
   getGroceryList() {
-    const groceryListArray = this._config.groceryList;
+    const groceryListArray = this._config.currentGroceryList;
     const groceryListColumns = groceryListArray.map(({ section, productAmount }) =>
         `| ${section.toUpperCase()}\n\n${productAmount
           .map((product) => objectToTextColumn(product))
@@ -143,10 +139,10 @@ class Diet {
 
   displayMenu() {
     const menu = {
-      "For breakfast · 🥓 · 🧇 · 🥞 · 🍳": this._config.menu.breakfast,
-      "For snack · 🍎 · 🍪 · 🥨 · 🍫 · ": this._config.menu.snack,
-      "For lunch · 🍽️ · 🥪 · 🍱 · 😋 ": this._config.menu.lunch,
-      "For dinner · 🥘 · 🍲 · 🥣 · 🥗 ": this._config.menu.dinner,
+      "For breakfast · 🥓 · 🧇 · 🥞 · 🍳": this._config.currentMenu.breakfast,
+      "For snack · 🍎 · 🍪 · 🥨 · 🍫 · ": this._config.currentMenu.snack,
+      "For lunch · 🍽️ · 🥪 · 🍱 · 😋 ": this._config.currentMenu.lunch,
+      "For dinner · 🥘 · 🍲 · 🥣 · 🥗 ": this._config.currentMenu.dinner,
     };
     Object.entries(menu).forEach(([mealName, dish]) =>
       console.log(
@@ -158,7 +154,7 @@ class Diet {
   };
 
   displayGroceryList() {
-    const groceryListArray = this._config.groceryList;
+    const groceryListArray = this._config.currentGroceryList;
     groceryListArray.forEach(({ section, productAmount }) =>
       console.log(
         `| ${section.toUpperCase()}\n\n${productAmount
@@ -172,3 +168,4 @@ class Diet {
 export default Diet;
 
 const diet = new Diet(1);
+diet.setGroceryList();

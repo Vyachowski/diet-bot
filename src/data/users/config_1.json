@@ -1,3 +1,112 @@
 {
-  
+  "menuCreated": 1692960423,
+  "currentMenu": {
+    "breakfast": {
+      "name": "Banana-Cottage Boat",
+      "ingredients": {
+        "banana": 100,
+        "cottage": 200,
+        "granola": 30,
+        "almond": 20
+      }
+    },
+    "snack": {
+      "name": "Apple",
+      "ingredients": {
+        "apple": 70
+      }
+    },
+    "lunch": {
+      "name": "Pasta Tuna",
+      "ingredients": {
+        "talyatelle": 200,
+        "onionWhite": 75,
+        "olive": 30,
+        "tuna": 90,
+        "garlicClove": 7,
+        "oliveOil": 30
+      }
+    },
+    "dinner": {
+      "name": "Salmon with salad",
+      "ingredients": {
+        "salmonFrozen": 200,
+        "saladMix": 300,
+        "cherry": 70,
+        "oliveOil": 20
+      }
+    }
+  },
+  "groceryList": [
+    {
+      "section": "fresh produce",
+      "productAmount": [
+        {
+          "banana": 300
+        },
+        {
+          "apple": 210
+        },
+        {
+          "onionWhite": 225
+        },
+        {
+          "garlicClove": 21
+        },
+        {
+          "saladMix": 900
+        }
+      ]
+    },
+    {
+      "section": "dairy section",
+      "productAmount": [
+        {
+          "cottage": 600
+        }
+      ]
+    },
+    {
+      "section": "nuts section",
+      "productAmount": [
+        {
+          "granola": 90
+        },
+        {
+          "almond": 60
+        }
+      ]
+    },
+    {
+      "section": "chips section",
+      "productAmount": []
+    },
+    {
+      "section": "pasta section",
+      "productAmount": [
+        {
+          "talyatelle": 600
+        }
+      ]
+    },
+    {
+      "section": "grocery section",
+      "productAmount": [
+        {
+          "olive": 90
+        },
+        {
+          "oliveOil": 150
+        }
+      ]
+    },
+    {
+      "section": "frozen foods",
+      "productAmount": [
+        {
+          "salmonFrozen": 600
+        }
+      ]
+    }
+  ]
 }
