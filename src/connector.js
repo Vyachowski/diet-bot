@@ -17,7 +17,6 @@ export default class Connector {
     this.configFilePath = `${Connector.workingDirectory}/src/data/users/config_${this.user}.json`;
   }
 
-  // Read a JSON file
   static readJsonFile(filePath) {
     try {
       const absoluteFilePath = path.resolve(filePath);
@@ -30,7 +29,6 @@ export default class Connector {
     }
   }
 
-  // Write a JSON file
   static writeJsonFile(filePath, data) {
     try {
       const absoluteFilePath = path.resolve(filePath);
@@ -42,7 +40,6 @@ export default class Connector {
     }
   }
 
-  // Get dishes list
   getDishes() {
     let response = {};
 
@@ -60,7 +57,6 @@ export default class Connector {
     }
   }
 
-  // Get ingredients list
   getIngredients() {
     let response = {};
     
@@ -78,7 +74,6 @@ export default class Connector {
     }
   }
 
-  // Get config
   getUserConfig() {
     let response = {};
     

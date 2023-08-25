@@ -174,6 +174,3 @@ class Diet {
 };
 
 export default Diet;
-
-const diet = new Diet(1);
-diet.setGroceryList();
