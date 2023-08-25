@@ -14,7 +14,7 @@ class Diet {
     if (this._connector.dataSource === 'json') {
       this._dishes = this._connector.getDishes();
       this._ingredients = this._connector.getIngredients();
-      this._config = this._connector.getConfig();
+      this._config = this._connector.getUserConfig();
     }
   }
 
@@ -83,7 +83,7 @@ class Diet {
 
   // _setIngredientsList() {
   //   this._config.ingredientsList = this._createIngredientsList();
-  //   this._connector.setConfig(this._config);
+  //   this._connector.setUserConfig(this._config);
   // }
 
   setMenu() {
@@ -94,7 +94,7 @@ class Diet {
     try {
       this._config.date = getCurrentTime();
       this._config.menu = this._createRandomMenu();
-      this._connector.setConfig(this._config);
+      this._connector.setUserConfig(this._config);
       console.log("Menu successfully created");
       return true;
     } catch (error) {
@@ -106,7 +106,7 @@ class Diet {
     try {
       this._config.ingredientsList = this._createIngredientsList();
       this._config.groceryList = this._createGroceryList();
-      this._connector.setConfig(this._config);
+      this._connector.setUserConfig(this._config);
     } catch (error) {
       console.error("Error while setting the grocery list:", error);
     } finally {
@@ -170,3 +170,5 @@ class Diet {
 };
 
 export default Diet;
+
+const diet = new Diet(1);

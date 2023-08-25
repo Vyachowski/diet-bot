@@ -44,7 +44,7 @@ export default class Connector {
 
   // Get dishes list
   getDishes() {
-    const response = {};
+    let response = {};
 
     try {
       switch (this.dataSource) {
@@ -62,7 +62,7 @@ export default class Connector {
 
   // Get ingredients list
   getIngredients() {
-    const response = {};
+    let response = {};
     
     try {
       switch (this.dataSource) {
@@ -80,7 +80,7 @@ export default class Connector {
 
   // Get config
   getUserConfig() {
-    const response = {};
+    let response = {};
     
     try {
       switch (this.dataSource) {
