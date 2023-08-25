@@ -14,7 +14,7 @@ export default class Connector {
     this.dataSource = dataSource;
     this.dishesFilePath = `${Connector.workingDirectory}/src/data/dishes.json`;
     this.ingredientsFilePath = `${Connector.workingDirectory}/src/data/ingredients.json`;
-    this.configFilePath = `${Connector.workingDirectory}/src/data/config_${this.user}.json`;
+    this.configFilePath = `${Connector.workingDirectory}/src/data/users/config_${this.user}.json`;
   }
 
   // Read a JSON file

@@ -1,7 +1,6 @@
 {
   "breakfast": [{
     "name": "Banana-Cottage Boat",
-    "portions": 1,
     "ingredients": {
       "banana": 100,
       "cottage": 200,
@@ -12,21 +11,18 @@
   "snack": [
     { 
       "name": "Apple",
-      "portions": 1,
       "ingredients": {
         "apple": 70
       }
     },
     { 
       "name": "Bamba",
-      "portions": 1,
       "ingredients": {
         "bamba": 50
       }
     },
     { 
       "name": "Peanut",
-      "portions": 1,
       "ingredients": {
         "peanut": 30
       }
@@ -34,7 +30,6 @@
   ],
   "lunch": [{
     "name": "Pasta Tuna",
-    "portions": 1,
     "ingredients": {
       "talyatelle": 200,
       "onionWhite": 75,
@@ -46,7 +41,6 @@
   }],
   "dinner": [{
     "name": "Salmon with salad",
-    "portions": 1,
     "ingredients": {
       "salmonFrozen": 200,
       "saladMix": 300,

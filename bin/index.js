@@ -22,10 +22,7 @@ class Diet {
     if (mealVariants.length > 0) {
       const index = Math.floor(mealVariants.length * Math.random());
       const meal = mealVariants[index];
-      const name = meal.name;
-      const portions = meal.portions ?? 1;
-      const ingredients = meal.ingredients ?? meal;
-      return { name, portions, ingredients };
+      return meal;
     }
     return null;
   }
@@ -84,25 +81,25 @@ class Diet {
     return groceryList;
   }
 
-  _setIngredientsList() {
-    this._config.ingredientsList = this._createIngredientsList();
-    this._connector.setConfig(this._config);
-  }
+  // _setIngredientsList() {
+  //   this._config.ingredientsList = this._createIngredientsList();
+  //   this._connector.setConfig(this._config);
+  // }
 
   setMenu() {
     if (!hasPassedGivenDays(this._config.date, this._menuDuration)) {
       console.log("Menu is still up-to-date");
-      return;
+      return false;
     }
     try {
       this._config.date = getCurrentTime();
       this._config.menu = this._createRandomMenu();
       this._connector.setConfig(this._config);
+      console.log("Menu successfully created");
+      return true;
     } catch (error) {
       console.error("Error while setting the menu:", error);
-    } finally {
-      console.log("Menu successfully created");
-    }
+    };
   }
 
   setGroceryList() {
