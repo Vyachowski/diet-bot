@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { MongoClient, ServerApiVersion } from 'mongodb';
-import { mongo_token } from './data/token.js';
+import { mongo_local } from './data/token.js';
 import path from 'node:path';
 import { objectValuesToNumber } from './functions.js';
 import mongojs from 'mongojs';
@@ -32,7 +32,7 @@ export default class Connector {
       // this.dishesCollection = this.database.collection('dishes');
       // this.ingredientsCollection = this.database.collection('ingredients');
       // this.configCollection = this.database.collection('config');
-      this.database = monk(mongo_token); 
+      this.database = monk(mongo_local); 
       this.dishesCollection = this.database.get('dishes');
       this.ingredientsCollection = this.database.get('ingredients');
       this.configCollection = this.database.get('config');
