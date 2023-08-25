@@ -5,7 +5,6 @@ import { objectValuesToNumber } from "./functions.js";
 export default class Connector {
   static workingDirectory = process.cwd();
 
-  // Selecting a data source
   constructor(user_id, dataSource = "json") {
     if (dataSource !== "json" && dataSource !== "mongodb") {
       throw new Error("Data source should be either 'json' or 'mongodb'");
@@ -43,13 +42,13 @@ export default class Connector {
     }
   }
 
-  getDishes() {
+  getData(filePath) {
     let response = {};
 
     try {
       switch (this.dataSource) {
         case "json":
-          response = Connector.readJsonFile(this.dishesFilePath);
+          response = Connector.readJsonFile(filePath);
           return response;
         default:
           throw new Error("Data source is not specified");
@@ -57,42 +56,20 @@ export default class Connector {
     } catch (error) {
       console.error("An error occurred while accessing data:", error);
       throw error;
-    }
-  }
+    };
+  };
+
+  getDishes() {
+    return this.getData(this.dishesFilePath);
+  };
 
   getIngredients() {
-    let response = {};
-    
-    try {
-      switch (this.dataSource) {
-        case "json":
-          response = Connector.readJsonFile(this.ingredientsFilePath);
-          return response;
-        default:
-          throw new Error("Data source is not specified");
-      }
-    } catch (error) {
-      console.error("An error occurred while accessing data:", error);
-      throw error;
-    }
-  }
+    return this.getData(this.ingredientsFilePath);
+  };
 
   getUserConfig() {
-    let response = {};
-    
-    try {
-      switch (this.dataSource) {
-        case "json":
-          response = Connector.readJsonFile(this.configFilePath);
-          return response;
-        default:
-          throw new Error("Data source is not specified");
-      }
-    } catch (error) {
-      console.error("An error occurred while accessing data:", error);
-      throw error;
-    }
-  }
+    return this.getData(this.configFilePath);
+  };
 
   setUserConfig(data) {
     try {
