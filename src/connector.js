@@ -15,6 +15,9 @@ export default class Connector {
     this.dishesFilePath = `${Connector.workingDirectory}/src/data/dishes.json`;
     this.ingredientsFilePath = `${Connector.workingDirectory}/src/data/ingredients.json`;
     this.configFilePath = `${Connector.workingDirectory}/src/data/users/config_${this.user}.json`;
+    if (!fs.existsSync(this.configFilePath)) {
+      fs.writeFileSync(this.configFilePath, '{}');
+    }
   }
 
   static readJsonFile(filePath) {

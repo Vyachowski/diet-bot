@@ -47,5 +47,10 @@
       "cherry": 70,
       "oliveOil": 20
     }
-  }]
+  }],
+  "cheatmeal": [
+    { 
+      "name": "McFlurry"
+    }
+  ]
 }

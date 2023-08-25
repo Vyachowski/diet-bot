@@ -145,6 +145,23 @@ class Diet {
     return groceryList;
   }
 
+  getDishes() {
+    const dishes = {
+      "1️⃣ Breakfast dishes": this._dishes.breakfast,
+      "2️⃣ Snack dishes:": this._dishes.snack,
+      "3️⃣ Lunch dishes:": this._dishes.lunch,
+      "4️⃣ Dinner dishes:": this._dishes.dinner,
+      "🌟 Cheatmeal variants:": this._dishes.cheatmeal,
+    };
+
+    const dishesArray = Object.entries(dishes).map(([meal, dishes]) =>
+        `${meal}\n${dishes.map(dish => dish.name).join(', ')}\n\n`
+    );
+
+    const dishesText = dishesArray.join('');
+    return dishesText;
+  }
+
   displayMenu() {
     const menu = {
       "For breakfast · 🥓 · 🧇 · 🥞 · 🍳": this._config.currentMenu.breakfast,
