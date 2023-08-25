@@ -10,10 +10,11 @@ export default class Connector {
     if (dataSource !== "json" && dataSource !== "mongodb") {
       throw new Error("Data source should be either 'json' or 'mongodb'");
     }
+    this.user = user_id; 
     this.dataSource = dataSource;
     this.dishesFilePath = `${Connector.workingDirectory}/src/data/dishes.json`;
     this.ingredientsFilePath = `${Connector.workingDirectory}/src/data/ingredients.json`;
-    this.configFilePath = `${Connector.workingDirectory}/src/data/config_${user_id}.json`;
+    this.configFilePath = `${Connector.workingDirectory}/src/data/config_${this.user}.json`;
   }
 
   // Read a JSON file
@@ -78,7 +79,7 @@ export default class Connector {
   }
 
   // Get config
-  getUserConfig(id) {
+  getUserConfig() {
     const response = {};
     
     try {
@@ -95,7 +96,7 @@ export default class Connector {
     }
   }
 
-  setUserConfig(id, data) {
+  setUserConfig(data) {
     try {
       switch (this.dataSource) {
         case "json":

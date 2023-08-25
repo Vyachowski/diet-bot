@@ -8,20 +8,14 @@ import {
 import Connector from "../src/connector.js";
 
 class Diet {
-  constructor() {
-    this._connector = new Connector('mongodb');
+  constructor(user_id) {
+    this._connector = new Connector(user_id);
     this._menuDuration = 3;
     if (this._connector.dataSource === 'json') {
       this._dishes = this._connector.getDishes();
       this._ingredients = this._connector.getIngredients();
       this._config = this._connector.getConfig();
     }
-  }
-
-  async init() {
-    this._dishes = await this._connector.getDishes();
-    this._ingredients = await this._connector.getIngredients();
-    this._config = await this._connector.getConfig();
   }
 
   static getRandomMeal(mealVariants) {
@@ -137,7 +131,7 @@ class Diet {
     );
     const currentMenu = currentMenuArray.join('');
     return currentMenu;
-  }
+  };
 
   getGroceryList() {
     const groceryListArray = this._config.groceryList;
@@ -164,7 +158,7 @@ class Diet {
         )}\n`
       )
     );
-  }
+  };
 
   displayGroceryList() {
     const groceryListArray = this._config.groceryList;
@@ -175,17 +169,7 @@ class Diet {
           .join('\n')}\n`
       )
     );
-  }
-}
+  };
+};
 
 export default Diet;
-
-
-async function main() {
-  const diet  = new Diet();
-  await diet.init(); // Дождаться инициализации
-  console.log(diet.setMenu());
-  console.log(diet.displayMenu());
-}
-
-main();
