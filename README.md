@@ -1,13 +1,14 @@
-# Bity Smarty 
+# Simple diet bot
 
-Easy-to-use helper for maintain a healthy diet.
+Easy-to-use helper for maintain a healthy diet. Bot uses your favorite dishes list and provides you 
+menu for a 3 days and a grocery list for this menu.
 
 ## Description
 
 Telegram bot with favourite meals, that can provide a weekly grocery list and menu for a week.
 
 - [x] Your own menu with favorite meals
-- [ ] Get a grocery list for easy shopping
+- [x] Get a grocery list for easy shopping
 - [ ] Maintain calorie intake
 
 ## Getting Started
@@ -37,7 +38,7 @@ Slava Haikin
 ## Version History
 
 * 0.2
-    * Connector to a database
+    * Adding recipes to dishes
     * Adding new recipes via telegram interface
 * 0.1
     * Initial Release
