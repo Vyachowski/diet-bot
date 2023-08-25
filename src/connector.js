@@ -103,7 +103,6 @@ export default class Connector {
         default:
           throw new Error("Data source is not specified");
       }
-      console.log("User config file successfully updated");
       return true;
     } catch (error) {
       console.error(

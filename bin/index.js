@@ -83,14 +83,12 @@ class Diet {
 
   setMenu() {
     if (!hasPassedGivenDays(this._config.menuCreated, this._menuDuration)) {
-      console.log("Menu is still up-to-date");
       return false;
     }
     try {
       this._config.menuCreated = getCurrentTime();
       this._config.currentMenu = this._createRandomMenu();
       this._connector.setUserConfig(this._config);
-      console.log("Menu successfully created");
       return true;
     } catch (error) {
       console.error("Error while setting the menu:", error);
@@ -100,18 +98,15 @@ class Diet {
   setGroceryList() {
     try {
       if (!hasPassedGivenDays(this._config.menuCreated, this._menuDuration)) {
-        console.log("Menu is still up-to-date");
         const ingredientList = this._createIngredientsList();
         this._config.currentGroceryList = this._createGroceryList(ingredientList);
         this._connector.setUserConfig(this._config);
-        console.log("Grocery list successfully set");
         return true;
       }
       this.setMenu();
       const ingredientList = this._createIngredientsList();
       this._config.currentGroceryList = this._createGroceryList(ingredientList);
       this._connector.setUserConfig(this._config);
-      console.log("Grocery list successfully set");
       return true;
     } catch (error) {
       console.error("Error while setting the grocery list:", error);
@@ -125,12 +120,14 @@ class Diet {
       "For lunch · 🍽️ · 🥪 · 🍱 · 😋 ": this._config.currentMenu.lunch,
       "For dinner · 🥘 · 🍲 · 🥣 · 🥗 ": this._config.currentMenu.dinner,
     };
+
     const currentMenuArray = Object.entries(menu).map(([mealName, dish]) =>
         `| ${mealName}\n| ${dish.name.toUpperCase()}\n\n${objectToTextColumn(
           dish.ingredients
         )}\n\n`
     );
     const currentMenu = currentMenuArray.join('');
+
     return currentMenu;
   };
 
@@ -157,8 +154,8 @@ class Diet {
     const dishesArray = Object.entries(dishes).map(([meal, dishes]) =>
         `${meal}\n${dishes.map(dish => dish.name).join(', ')}\n\n`
     );
-
     const dishesText = dishesArray.join('');
+    
     return dishesText;
   }
 
