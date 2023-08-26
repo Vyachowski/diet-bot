@@ -18,10 +18,8 @@ The easiest way to use a deployed bot is directly [from telegram](https://t.me/b
 
 ### Dependencies
 
-JS version:
 * Node.js
 * Telegraf
-
 
 ### Executing program
 
