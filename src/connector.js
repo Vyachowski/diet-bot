@@ -1,6 +1,5 @@
 import fs from "node:fs";
-import path from "node:path";
-import { objectValuesToNumber } from "./functions.js";
+import { readJsonFile, writeJsonFile } from "./functions.js";
 
 export default class Connector {
   static workingDirectory = process.cwd();
@@ -19,74 +18,41 @@ export default class Connector {
     }
   }
 
-  static readJsonFile(filePath) {
+  static getDataFromJSON(filePath) {
     try {
-      const absoluteFilePath = path.resolve(filePath);
-      const fileContent = fs.readFileSync(absoluteFilePath, "utf8");
-      const jsonObject = JSON.parse(fileContent, objectValuesToNumber);
-      return jsonObject;
+        return readJsonFile(filePath);
     } catch (error) {
-      console.error("Error reading file or converting JSON:", error);
+      console.error("An error occurred while accessing data: ", error);
       throw error;
-    }
-  }
+    };
+  };
 
-  static writeJsonFile(filePath, data) {
+  static setDataToJSON(filePath, data) {
     try {
-      const absoluteFilePath = path.resolve(filePath);
-      const jsonData = JSON.stringify(data, null, 2);
-      fs.writeFileSync(absoluteFilePath, jsonData, "utf8");
-    } catch (error) {
-      console.error("Error writing file:", error);
-      throw error;
-    }
-  }
-
-  getData(filePath) {
-    let response = {};
-
-    try {
-      switch (this.dataSource) {
-        case "json":
-          response = Connector.readJsonFile(filePath);
-          return response;
-        default:
-          throw new Error("Data source is not specified");
-      }
-    } catch (error) {
-      console.error("An error occurred while accessing data:", error);
+      writeJsonFile(filePath, data);
+      return true;
+  } catch (error) {
+      console.error(
+        "An error occurred while accessing data: ",
+        error
+      );
       throw error;
     };
   };
 
   getDishes() {
-    return this.getData(this.dishesFilePath);
+    return Connector.getDataFromJSON(this.dishesFilePath);
   };
 
   getIngredients() {
-    return this.getData(this.ingredientsFilePath);
+    return Connector.getDataFromJSON(this.ingredientsFilePath);
   };
 
   getUserConfig() {
-    return this.getData(this.configFilePath);
+    return Connector.getDataFromJSON(this.configFilePath);
   };
 
   setUserConfig(data) {
-    try {
-      switch (this.dataSource) {
-        case "json":
-          Connector.writeJsonFile(this.configFilePath, data);
-          break;
-        default:
-          throw new Error("Data source is not specified");
-      }
-      return true;
-    } catch (error) {
-      console.error(
-        "An error occurred while accessing data or connecting to the database:",
-        error
-      );
-      throw error;
-    };
+    return Connector.setDataToJSON(this.configFilePath, data);
   };
 };

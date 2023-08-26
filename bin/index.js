@@ -113,37 +113,37 @@ class Diet {
     };
   }
 
-  getMenu() {
-    const menu = {
+  getMenuText() {
+    const menuData = {
       "For breakfast · 🥓 · 🧇 · 🥞 · 🍳": this._config.currentMenu.breakfast,
       "For snack · 🍎 · 🍪 · 🥨 · 🍫 · ": this._config.currentMenu.snack,
       "For lunch · 🍽️ · 🥪 · 🍱 · 😋 ": this._config.currentMenu.lunch,
       "For dinner · 🥘 · 🍲 · 🥣 · 🥗 ": this._config.currentMenu.dinner,
     };
 
-    const currentMenuArray = Object.entries(menu).map(([mealName, dish]) =>
+    const menu = Object.entries(menuData).map(([mealName, dish]) =>
         `| ${mealName}\n| ${dish.name.toUpperCase()}\n\n${objectToTextColumn(
           dish.ingredients
         )}\n\n`
     );
-    const currentMenu = currentMenuArray.join('');
+    const menuText = menu.join('');
 
-    return currentMenu;
+    return menuText;
   };
 
-  getGroceryList() {
-    const groceryListArray = this._config.currentGroceryList;
-    const groceryListColumns = groceryListArray.map(({ section, productAmount }) =>
+  getGroceryListText() {
+    const groceryListData = this._config.currentGroceryList;
+    const groceryListColumns = groceryListData.map(({ section, productAmount }) =>
         `| ${section.toUpperCase()}\n\n${productAmount
           .map((product) => objectToTextColumn(product))
           .join("\n")}\n\n`
         );
-    const groceryList = groceryListColumns.join('');
-    return groceryList;
+    const groceryListText = groceryListColumns.join('');
+    return groceryListText;
   }
 
-  getDishes() {
-    const dishes = {
+  getDishesText() {
+    const dishesData = {
       "1️⃣ Breakfast dishes": this._dishes.breakfast,
       "2️⃣ Snack dishes:": this._dishes.snack,
       "3️⃣ Lunch dishes:": this._dishes.lunch,
@@ -151,40 +151,20 @@ class Diet {
       "🌟 Cheatmeal variants:": this._dishes.cheatmeal,
     };
 
-    const dishesArray = Object.entries(dishes).map(([meal, dishes]) =>
+    const dishes = Object.entries(dishesData).map(([meal, dishes]) =>
         `${meal}\n${dishes.map(dish => dish.name).join(', ')}\n\n`
     );
-    const dishesText = dishesArray.join('');
+    const dishesText = dishes.join('');
     
     return dishesText;
-  }
-
-  displayMenu() {
-    const menu = {
-      "For breakfast · 🥓 · 🧇 · 🥞 · 🍳": this._config.currentMenu.breakfast,
-      "For snack · 🍎 · 🍪 · 🥨 · 🍫 · ": this._config.currentMenu.snack,
-      "For lunch · 🍽️ · 🥪 · 🍱 · 😋 ": this._config.currentMenu.lunch,
-      "For dinner · 🥘 · 🍲 · 🥣 · 🥗 ": this._config.currentMenu.dinner,
-    };
-    Object.entries(menu).forEach(([mealName, dish]) =>
-      console.log(
-        `| ${mealName}\n| ${dish.name.toUpperCase()}\n\n${objectToTextColumn(
-          dish.ingredients
-        )}\n`
-      )
-    );
-  };
-
-  displayGroceryList() {
-    const groceryListArray = this._config.currentGroceryList;
-    groceryListArray.forEach(({ section, productAmount }) =>
-      console.log(
-        `| ${section.toUpperCase()}\n\n${productAmount
-          .map((product) => objectToTextColumn(product))
-          .join('\n')}\n`
-      )
-    );
   };
 };
 
 export default Diet;
+
+const diet = new Diet(1);
+
+diet.setMenu();
+console.log(diet.getMenuText());
+diet.setGroceryList();
+console.log(diet.getGroceryListText());

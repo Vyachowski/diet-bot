@@ -1,3 +1,6 @@
+import path from "node:path";
+import fs from "node:fs";
+
 function getCurrentTime() {
   const today = Math.floor(Date.now() / 1000);
   return today;
@@ -60,7 +63,31 @@ function objectToTextColumn(obj) {
   const textColumn =
     normalizedTextSorted.join("g \n").replaceAll(",", ": ") + "g";
   return textColumn;
-}
+};
+
+function readJsonFile(filePath) {
+  try {
+    const absoluteFilePath = path.resolve(filePath);
+    const fileContent = fs.readFileSync(absoluteFilePath, "utf8");
+    const jsonObject = JSON.parse(fileContent, objectValuesToNumber);
+    return jsonObject;
+  } catch (error) {
+    console.error("Error reading file or converting JSON:", error);
+    throw error;
+  }
+};
+
+function writeJsonFile(filePath, data) {
+  try {
+    const absoluteFilePath = path.resolve(filePath);
+    const jsonData = JSON.stringify(data, null, 2);
+    fs.writeFileSync(absoluteFilePath, jsonData, "utf8");
+    return true;
+  } catch (error) {
+      console.error("Error writing file:", error);
+      throw error;
+    };
+};
 
 export {
   getCurrentTime,
@@ -68,5 +95,6 @@ export {
   mergeAndSumObjects,
   multiplyObjectValues,
   objectToTextColumn,
-  objectValuesToNumber,
+  readJsonFile,
+  writeJsonFile,
 };
