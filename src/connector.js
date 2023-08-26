@@ -52,6 +52,10 @@ export default class Connector {
     return Connector.getDataFromJSON(this.configFilePath);
   };
 
+  setDishes(data) {
+    return Connector.setDataToJSON(this.dishesFilePath, data);
+  };
+
   setUserConfig(data) {
     return Connector.setDataToJSON(this.configFilePath, data);
   };

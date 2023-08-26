@@ -16,7 +16,7 @@ class Diet {
       this._ingredients = this._connector.getIngredients();
       this._config = this._connector.getUserConfig();
     }
-  }
+  };
 
   static getRandomMeal(mealVariants) {
     if (mealVariants.length > 0) {
@@ -25,7 +25,7 @@ class Diet {
       return meal;
     }
     return null;
-  }
+  };
 
   _createRandomMenu() {
     return {
@@ -34,7 +34,17 @@ class Diet {
       lunch: Diet.getRandomMeal(this._dishes.lunch),
       dinner: Diet.getRandomMeal(this._dishes.dinner),
     };
-  }
+  };
+
+  //  [['banana', 30], ['pineapple', 60]]
+  _createDish(dishName, ingredientsList) {
+    const ingredients = Object.fromEntries(ingredientsList);
+    return {"name": dishName, ingredients};
+  };
+
+  _createIngredient(name, section) {
+    return { [name]: {"section": section} };
+  };  
 
   _createIngredientsList() {
     const breakfastIngredients = this._config.currentMenu.breakfast.ingredients;
@@ -52,7 +62,7 @@ class Diet {
       this._menuDuration
     );
     return ingredientsList;
-  }
+  };
 
   _createGroceryList(ingredients) {
     const allIngredientsList = Object.entries(this._ingredients);
@@ -79,7 +89,7 @@ class Diet {
     });
 
     return groceryList;
-  }
+  };
 
   setMenu() {
     if (!hasPassedGivenDays(this._config.menuCreated, this._menuDuration)) {
@@ -93,7 +103,7 @@ class Diet {
     } catch (error) {
       console.error("Error while setting the menu:", error);
     };
-  }
+  };
 
   setGroceryList() {
     try {
@@ -111,7 +121,7 @@ class Diet {
     } catch (error) {
       console.error("Error while setting the grocery list:", error);
     };
-  }
+  };
 
   getMenuText() {
     const menuData = {
@@ -140,7 +150,7 @@ class Diet {
         );
     const groceryListText = groceryListColumns.join('');
     return groceryListText;
-  }
+  };
 
   getDishesText() {
     const dishesData = {
@@ -161,3 +171,6 @@ class Diet {
 };
 
 export default Diet;
+
+// const diet = new Diet(1);
+// console.log(diet._createingredient('orange', 'fresh produce'));
