@@ -171,7 +171,6 @@ class Diet {
 
   addDish(meal, name, ingredients) {
     const currentDishesList = this._dishes;
-    console.log(currentDishesList);
     const mealTypes = ['breakfast', 'dinner', 'lunch', 'snack', 'cheatmeal'];
 
     if (mealTypes.includes(meal)) {
@@ -186,6 +185,6 @@ class Diet {
 
 export default Diet;
 
-const diet = new Diet(1);
+// const diet = new Diet(1);
 // console.log(diet._createingredient('orange', 'fresh produce'));
-diet.addDish('breakfast', 'Rice boiled hard boiled', {'rice': 100, 'water': 400, 'salt': 2});
+// diet.addDish('breakfast', 'Rice boiled hard boiled', {'rice': 100, 'water': 400, 'salt': 2});
