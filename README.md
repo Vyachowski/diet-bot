@@ -19,14 +19,12 @@ Now only available from a Node.js...
 
 JS version:
 * Node.js
+* Telegraf
 
-Python version:
-* Postgresql
-* Python3
 
 ### Executing program
 
-Telegram bot will be available soon...
+[Telegram bot is available now!](https://t.me/bity_smarty_bot)
 
 ## Authors
 

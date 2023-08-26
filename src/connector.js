@@ -8,7 +8,7 @@ export default class Connector {
   constructor(user_id, dataSource = "json") {
     if (dataSource !== "json" && dataSource !== "mongodb") {
       throw new Error("Data source should be either 'json' or 'mongodb'");
-    }
+    };
     this.user = user_id; 
     this.dataSource = dataSource;
     this.dishesFilePath = `${Connector.workingDirectory}/src/data/dishes.json`;
