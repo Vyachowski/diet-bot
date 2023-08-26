@@ -13,7 +13,8 @@ Telegram bot with favourite meals, that can provide a weekly grocery list and me
 
 ## Getting Started
 
-Now only available from a Node.js...
+The easiest way to use a deployed bot is directly [from telegram](https://t.me/bity_smarty_bot), but you can also deploy to your own server. 
+<!-- Here is a way to create a copy -->
 
 ### Dependencies
 
