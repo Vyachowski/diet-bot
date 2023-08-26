@@ -161,10 +161,3 @@ class Diet {
 };
 
 export default Diet;
-
-const diet = new Diet(1);
-
-diet.setMenu();
-console.log(diet.getMenuText());
-diet.setGroceryList();
-console.log(diet.getGroceryListText());

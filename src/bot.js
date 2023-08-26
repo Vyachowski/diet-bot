@@ -20,7 +20,7 @@ bot.command('menu', (ctx) => {
   const diet = new Diet(ctx.from.id);
   if (diet) {
     diet.setMenu();
-    const menuText = diet.getMenu();
+    const menuText = diet.getMenuText();
     ctx.reply(menuText, Markup.inlineKeyboard(
       [
         Markup.button.callback('Get grocery list', 'grocery'),
@@ -33,46 +33,46 @@ bot.command('menu', (ctx) => {
 bot.command('grocery', (ctx) => {
   const diet = new Diet(ctx.from.id);
   diet.setGroceryList();
-  const menuText = diet.getGroceryList();
+  const menuText = diet.getGroceryListText();
   ctx.reply(menuText);
 });
 
 bot.command('dishes', (ctx) => {
   const diet = new Diet(ctx.from.id);
-  const menuText = diet.getDishes();
+  const menuText = diet.getDishesText();
   ctx.reply(menuText);
 });
 
 bot.action('menu', (ctx) => {
   const diet = new Diet(ctx.from.id);
   diet.setMenu();
-  const menuText = diet.getMenu();
+  const menuText = diet.getMenuText();
   ctx.reply(menuText);
 });
 
 bot.action('grocery', (ctx) => {
   const diet = new Diet(ctx.from.id);
   diet.setGroceryList();
-  const menuText = diet.getGroceryList();
+  const menuText = diet.getGroceryListText();
   ctx.reply(menuText);
 });
 
 bot.action('dishes', (ctx) => {
   const diet = new Diet(ctx.from.id);
-  const menuText = diet.getDishes();
+  const menuText = diet.getDishesText();
   ctx.reply(menuText);
 });
 
 bot.hears('menu', (ctx) => {
   const diet = new Diet(ctx.from.id);
-  const menuText = diet.getMenu();
+  const menuText = diet.getMenuText();
   ctx.reply(menuText);
 });
 
 bot.hears('grocery', (ctx) => {
   const diet = new Diet(ctx.from.id);
   diet.setGroceryList();
-  const menuText = diet.getGroceryList();
+  const menuText = diet.getGroceryListText();
   ctx.reply(menuText);
 });
 
