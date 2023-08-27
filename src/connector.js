@@ -16,7 +16,7 @@ export default class Connector {
     if (!fs.existsSync(this.configFilePath)) {
       fs.writeFileSync(this.configFilePath, '{}');
     }
-  }
+  };
 
   static getDataFromJSON(filePath) {
     try {

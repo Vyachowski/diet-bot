@@ -101,7 +101,7 @@ class Diet {
       this._connector.setUserConfig(this._config);
       return true;
     } catch (error) {
-      console.error("Error while setting the menu:", error);
+        console.error("Error while setting the menu:", error);
     };
   };
 
@@ -119,7 +119,7 @@ class Diet {
       this._connector.setUserConfig(this._config);
       return true;
     } catch (error) {
-      console.error("Error while setting the grocery list:", error);
+        console.error("Error while setting the grocery list:", error);
     };
   };
 
@@ -172,9 +172,10 @@ class Diet {
   addDish(meal, name, ingredients) {
     const currentDishesList = this._dishes;
     const mealTypes = ['breakfast', 'dinner', 'lunch', 'snack', 'cheatmeal'];
+    const newDish = {'name': name, 'ingredients': ingredients};
 
     if (mealTypes.includes(meal)) {
-      currentDishesList[meal].push({'name': name, 'ingredients': ingredients});
+      currentDishesList[meal].push(newDish);
       this._connector.setDishes(currentDishesList);
       return true;
     } else {

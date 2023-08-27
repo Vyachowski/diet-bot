@@ -174,3 +174,4 @@ __fixtures__/
 __tests__/
 coverage/
 users
+*.xmind
