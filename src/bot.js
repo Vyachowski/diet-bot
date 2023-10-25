@@ -14,7 +14,7 @@ bot.start((ctx) => {
   ));
 });
 
-bot.help((ctx) => ctx.reply('Every menus is up-do-date during three days,\
+bot.help((ctx) => ctx.reply('Every menu is up-do-date during three days,\
  then you will be able to create a new one'))
 
 bot.command('menu', (ctx) => {
