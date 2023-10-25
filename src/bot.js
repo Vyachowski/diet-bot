@@ -14,7 +14,7 @@ bot.start((ctx) => {
   ));
 });
 
-bot.help((ctx) => ctx.reply('Every menu is up-do-date during three days,\
+bot.help((ctx) => ctx.reply('Every menus is up-do-date during three days,\
  then you will be able to create a new one'))
 
 bot.command('menu', (ctx) => {
@@ -124,7 +124,7 @@ bot.on(message('text'), (ctx) => {
   mealInfo.name = dishName;
 
   ctx.reply(`Please provide the ingredients for ${dishName} in the format "Ingredient 1: grams, Ingredient 2: grams".`);
-  
+
 });
 
 bot.launch();
