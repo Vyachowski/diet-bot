@@ -6,7 +6,7 @@ import {telegraf_token} from './data/token.js';
 const bot = new Telegraf(telegraf_token);
 
 bot.start((ctx) => {
-  ctx.reply('Hi!', Markup.keyboard(
+  ctx.reply('Hi!!', Markup.keyboard(
       [Markup.button.text('Add dish')]
   ).resize());
   ctx.reply('Do you want to create a new menu?', Markup.inlineKeyboard(
