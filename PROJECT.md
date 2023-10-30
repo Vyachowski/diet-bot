@@ -33,8 +33,11 @@ The main goal of this project is to create a special bot that can provide an int
 
 ### Version 0.2 – Basic functionality
 
-Just a simple bot that can provide a week menu and a grocery list from preloaded menu.
+Features:
+1. Provide a week menu from preloaded set to database
+2. Provide a grocery list
 
+Programming tasks:
 * Create a data module with preloaded menu
 * Create a part of data access module with ability to provide a data
 * Telegram bot that fetch a data and display it in a bot
