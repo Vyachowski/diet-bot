@@ -1,6 +1,5 @@
 function getCurrentTime() {
-  const today = Math.floor(Date.now() / 1000);
-  return today;
+  return Math.floor(Date.now() / 1000);
 }
 
 function hasPassedGivenDays(targetTime, daysToCheck = 10) {
@@ -57,9 +56,7 @@ function objectToTextColumn(obj) {
   const normalizedTextSorted = entries
     .map(([name, value]) => [camelCaseTextToNormal(name), value])
     .toSorted();
-  const textColumn =
-    normalizedTextSorted.join("g \n").replaceAll(",", ": ") + "g";
-  return textColumn;
+  return normalizedTextSorted.join("g \n").replaceAll(",", ": ") + "g";
 }
 
 export {
@@ -70,3 +67,4 @@ export {
   objectToTextColumn,
   objectValuesToNumber,
 };
+
