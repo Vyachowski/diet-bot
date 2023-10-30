@@ -4,9 +4,12 @@
   "description": "Bity Smarty – a small bot for providing a week diet and grocery list",
   "main": "bin/index.js",
   "type": "module",
+  "engines": {
+    "node": ">=21.1.0"
+  },
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --detectOpenHandles",
-    "lint": "npx eslint ."
+    "lint": "npx eslint data-module"
   },
   "repository": {
     "type": "git",
@@ -30,5 +33,9 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-perfectionist": "^2.2.0",
     "prettier": "3.0.3"
+  },
+  "dependencies": {
+    "mongodb": "6.2",
+    "mongoose": "^7.6.3"
   }
 }
