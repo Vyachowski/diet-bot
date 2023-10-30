@@ -1,10 +1,10 @@
 # Project description
-
 ## Goals
 
 First of all this project was created for educational purposes, so I will not use a lot of third-party libraries (like lodash).
 
 The main goal of this project is to create a special bot that can provide an international menu, that can be cooked with a small amount of time (less than an hour per day).
+Also this diet should be healthy, including all recommended nutrients and tasty of course :)
 
 ## Structure
 
@@ -33,11 +33,11 @@ The main goal of this project is to create a special bot that can provide an int
 
 ### Version 0.2 – Basic functionality
 
-Features:
+#### Features:
 1. Provide a week menu from preloaded set to database
 2. Provide a grocery list
 
-Programming tasks:
+#### Programming tasks:
 * Create a data module with preloaded menu
 * Create a part of data access module with ability to provide a data
 * Telegram bot that fetch a data and display it in a bot
