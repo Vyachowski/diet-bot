@@ -37,8 +37,8 @@ Slava Haikin
 ## Version History
 
 * 0.2
-    * Connector to a database
-    * Adding new recipes via telegram interface
+    * Basic Menu with one variant for every meal
+    * Telegram bot with ability to provide a grocery list and menu
 * 0.1
     * Initial Release
     * On-demand grocery list
