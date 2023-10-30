@@ -5,7 +5,8 @@
   "main": "bin/index.js",
   "type": "module",
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --detectOpenHandles"
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --detectOpenHandles",
+    "lint": "npx eslint ."
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "eslint": "^8.52.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-perfectionist": "^2.2.0",
     "prettier": "3.0.3"
   }
 }
