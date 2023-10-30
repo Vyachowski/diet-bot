@@ -4,7 +4,7 @@
 First of all this project was created for educational purposes, so I will not use a lot of third-party libraries (like lodash).
 
 The main goal of this project is to create a special bot that can provide an international menu, that can be cooked with a small amount of time (less than an hour per day).
-Also this diet should be healthy, including all recommended nutrients and tasty of course :)
+Also, this diet should be healthy, including all recommended nutrients and tasty of course :)
 
 ## Structure
 
