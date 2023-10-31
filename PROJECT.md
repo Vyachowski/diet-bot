@@ -6,6 +6,12 @@ First of all this project was created for educational purposes, so I will not us
 The main goal of this project is to create a special bot that can provide an international menu, that can be cooked with a small amount of time (less than an hour per day).
 Also, this diet should be healthy, including all recommended nutrients and tasty of course :)
 
+Some restrictions for this project:
+* The dishes should be able to be stored in fridge (or particularly in a freezer)
+* Options for a mono diet, or usually one dish for three days (not in a row, but per week)
+* Low cooking or zero cooking recipes
+* Ru and Eng version, of course :)
+
 ## Structure
 
 ### 1. Data Module

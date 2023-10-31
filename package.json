@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --detectOpenHandles",
-    "lint": "npx eslint data-module"
+    "lint": "npx eslint data-module",
+    "lintit": "npx eslint --fix data-module"
   },
   "repository": {
     "type": "git",

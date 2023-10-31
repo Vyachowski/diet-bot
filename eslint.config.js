@@ -1,4 +1,3 @@
-import perfectionistLineLength from 'eslint-plugin-perfectionist/configs/recommended-line-length'
 import eslintConfigPrettier from "eslint-config-prettier";
 import perfectionist from 'eslint-plugin-perfectionist';
 import { FlatCompat } from "@eslint/eslintrc";
@@ -16,7 +15,6 @@ const compat = new FlatCompat({
 // noinspection JSUnusedGlobalSymbols
 export default [
   ...compat.extends("airbnb-base"),
-  perfectionistLineLength,
   eslintConfigPrettier,
   {
     files: ["src/**/*.js"],
@@ -31,10 +29,6 @@ export default [
       ],
     plugins: {
       perfectionist,
-    },
-    rules: {
-      semi: "error",
-      'perfectionist/sort-interfaces': 'error',
     },
   }
 ];
