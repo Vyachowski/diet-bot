@@ -40,7 +40,7 @@ class Database {
 
   getRandomMealByType(mealType) {
     if (!this.mealTypes.includes(mealType)) {
-      throw new Error('Select one of the valid meal types: breakfast, snack, lunch, dinner');
+      throw new Error('Select one of the valid meal types: \'breakfast\', \'snack\', \'lunch\', \'dinner\'');
     }
 
     let mealsByType = [];
