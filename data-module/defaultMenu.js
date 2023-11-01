@@ -18,6 +18,13 @@ export const peanutOvernightOatsBreakfast = {
     "Cover it with a lid and chill in the fridge for at least two hours (better overnight)",
     "Grab a spoon, add you toppings and dig in!",
   ],
+  energy: 378,
+  nutrients: {
+    carbohydrates: 54,
+    protein: 17,
+    fat: 11,
+    sodium: 0.08,
+  },
   storageTimeInHours: 120,
 };
 
@@ -41,6 +48,13 @@ export const appleOvernightOatsBreakfast = {
     "Cover it with a lid and chill in the fridge for at least two hours (better overnight)",
     "Grab a spoon, add you toppings and dig in!",
   ],
+  energy: 378,
+  nutrients: {
+    carbohydrates: 54,
+    protein: 17,
+    fat: 11,
+    sodium: 0.08,
+  },
   storageTimeInHours: 120,
 };
 
@@ -59,6 +73,13 @@ export const bananaOvernightOatsBreakfast = {
     ["hazelnuts", 20],
     ["chocolate", 20],
   ],
+  energy: 378,
+  nutrients: {
+    carbohydrates: 54,
+    protein: 17,
+    fat: 11,
+    sodium: 0.08,
+  },
   recipe: [
     "Combine old fashioned oats, seeds, yoghurt and vanilla extract, sweetener and milk (it is convenient to make it in a glass) with all basic ingredients",
     "Cover it with a lid and chill in the fridge for at least two hours (better overnight)",

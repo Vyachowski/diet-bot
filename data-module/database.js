@@ -56,10 +56,18 @@ class Database {
         type: Array,
         required: true,
       },
+      energy: {
+        type: Number,
+        required: false,
+      },
+      nutrients: {
+        type: Object,
+        required: false,
+      },
       storageTimeInHours: {
         type: Number,
         required: false,
-      }
+      },
     });
     this.mealModel = mongoose.model("Meal", mealSchema);
 
