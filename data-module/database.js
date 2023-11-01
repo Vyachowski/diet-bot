@@ -44,7 +44,7 @@ class Database {
         type: String,
         required: true,
       },
-      type: {
+      course: {
         type: Array,
         required: true,
       },
@@ -106,7 +106,7 @@ class Database {
   setDefaultMenu() {
     this.mealModel.create({
       name: "Peanut Butter & Jelly Overnight Oats",
-      type: ["breakfast"],
+      course: ["breakfast"],
       ingredients: [
         ["rolled oats", 50],
         ["milk", 100],

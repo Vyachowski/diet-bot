@@ -1,6 +1,7 @@
+// Breakfasts
 export const peanutOvernightOatsBreakfast = {
   name: "Peanut Butter & Jelly Overnight Oats",
-  type: ["breakfast"],
+  course: ["breakfast"],
   ingredients: [
     ["rolled oats", 50],
     ["milk", 100],
@@ -30,7 +31,7 @@ export const peanutOvernightOatsBreakfast = {
 
 export const appleOvernightOatsBreakfast = {
   name: "Apple pie Overnight Oats",
-  type: ["breakfast"],
+  course: ["breakfast"],
   ingredients: [
     ["rolled oats", 50],
     ["milk", 100],
@@ -60,7 +61,7 @@ export const appleOvernightOatsBreakfast = {
 
 export const bananaOvernightOatsBreakfast = {
   name: "Banana & Nutella Overnight Oats",
-  type: ["breakfast"],
+  course: ["breakfast"],
   ingredients: [
     ["rolled oats", 50],
     ["milk", 100],
@@ -87,3 +88,39 @@ export const bananaOvernightOatsBreakfast = {
   ],
   storageTimeInHours: 120,
 };
+
+// Snacks
+export const bambaSnack = {
+  name: "Bamba",
+  course: ["snack"],
+  ingredients: [
+    ["bamba", 80],
+  ],
+  energy: 427,
+  nutrients: {
+    carbohydrates: 39.2,
+    protein: 13.6,
+    fat: 24,
+    sodium: 0.03,
+  },
+  recipe: [],
+  storageTimeInHours: 1200,
+};
+
+export const peanutsSnack = {
+  name: "Fried Peanuts",
+  course: ["snack"],
+  ingredients: [
+    ["peanuts", 44],
+  ],
+  energy: 237,
+  nutrients: {
+    carbohydrates: 7.1,
+    protein: 9.7,
+    fat: 21,
+    sodium: 0.04,
+  },
+  recipe: [],
+  storageTimeInHours: 1200,
+};
+
