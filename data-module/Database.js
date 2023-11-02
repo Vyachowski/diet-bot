@@ -4,7 +4,7 @@ import defaultMenu from "./defaultMenu.js";
 class Database {
   constructor() {
     this.connectionUri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/diet-bot?retryWrites=true&w=majority`;
-    this.mealTypes = ["breakfast", "snack", "lunch", "dinner"];
+    this.meals = ["breakfast", "snack", "lunch", "afternoon snack", "dinner"];
     this.shopDepartments = [
       "fresh",
       "chips",
@@ -16,7 +16,28 @@ class Database {
       "frozen products",
       "beverages",
     ];
-    this.connect().then(() => true); // auto-connect on creating instance
+  }
+
+  async connect() {
+    try {
+      await mongoose.connect(this.connectionUri);
+      this.initModels();
+      return true;
+    } catch (error) {
+      throw new Error(`Error connecting to the database: ${error.message}`);
+    }
+  }
+
+  // eslint-disable-next-line
+  async disconnect() {
+    try {
+      await mongoose.disconnect();
+      return true;
+    } catch (error) {
+      throw new Error(
+        `Error disconnecting from the database: ${error.message}`,
+      );
+    }
   }
 
   initModels() {
@@ -62,37 +83,15 @@ class Database {
     this.ingredientModel = mongoose.model("Ingredient", ingredientSchema);
   }
 
-  async connect() {
-    try {
-      await mongoose.connect(this.connectionUri);
-      this.initModels();
-      return true;
-    } catch (error) {
-      throw new Error(`Error connecting to the database: ${error.message}`);
-    }
-  }
-
-  // eslint-disable-next-line
-  async disconnect() {
-    try {
-      await mongoose.disconnect();
-      return true;
-    } catch (error) {
-      throw new Error(
-        `Error disconnecting from the database: ${error.message}`,
-      );
-    }
-  }
-
-  async getRandomMealByType(mealType) {
-    if (!this.mealTypes.includes(mealType)) {
-      throw new Error(`Select one of the valid meal types: ${this.mealTypes}`);
+  async getRandomMealByType(meal) {
+    if (!this.meals.includes(meal)) {
+      throw new Error(`Select one of the valid meal types: ${this.meals}`);
     }
 
     let randomMeal;
 
     try {
-      const mealsByType = await this.mealModel.find({ type: mealType });
+      const mealsByType = await this.mealModel.find({ course: meal });
       const randomMealNumber = Math.floor(Math.random() * mealsByType.length);
       randomMeal = mealsByType[randomMealNumber];
     } catch (error) {
@@ -115,10 +114,20 @@ class Database {
     }
   }
 
-  setDefaultMenu() {
-    defaultMenu.forEach(async (dish) => {
-      await this.setNewDish(dish);
-    })
+  async setDefaultMenu() {
+    const promises = defaultMenu.map(async (dish) => {
+      try {
+        await this.setNewDish(dish);
+        return true;
+      } catch (error) {
+        throw new Error(
+          `Error setting data to the database: ${error.message}`,
+        );
+      }
+    });
+
+    await Promise.all(promises);
+    return true;
   }
 }
 
