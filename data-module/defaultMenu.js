@@ -125,30 +125,6 @@ const peanutsSnack = {
   storageTimeInHours: 1200,
 };
 
-const lemonPossetSnack = {
-  name: "Lemon Posset",
-  ingredients: [
-    ["lemon", 1],
-    ["sugar", 50],
-    ["heavy cream (33%)", 200],
-  ],
-  nutrients: {
-    calories: 215.8,
-    carbohydrates: 15,
-    protein: 1.6,
-    fat: 16.7,
-  },
-  recipe: [
-    "For this dessert, you'll need lemons. More specifically, lemon juice. One lemon should yield about 70ml of juice.",
-    "You'll also need heavy cream and sugar. The higher the quality and fat content of the cream (I used 33%), the thicker your posset will be.",
-    "Pour the cream into a saucepan, add sugar, bring to a boil, and keep it on the heat for 3 minutes, stirring continuously.",
-    "Now turn off the heat, pour in the lemon juice, vigorously stirring the mixture. The cream will start to thicken. Taste it, and if necessary, add more lemon juice or sugar. The posset should be sweet, creamy, with a distinct lemon flavor.",
-    "Let the mixture cool for about 5 minutes, then chill for at least 3-5 hours, preferably overnight. If you plan to serve it as a standalone dessert, divide it into individual molds, cover with plastic wrap, and refrigerate. Serve with crispy cookies or wafers. If serving as ice cream, freeze it.",
-    "Posset is also used as a filling for cakes; in that case, chill it in the refrigerator for several hours.",
-  ],
-  storageTimeInHours: 78,
-};
-
 // Lunch
 const chickenSaladLunch = {
   name: "Light Chicken Salad",
@@ -207,6 +183,32 @@ const chickenAvocadoToastLunch = {
     "Serve immediately or refrigerate for later consumption.",
   ],
   storageTimeInHours: 24,
+};
+
+// Afternoon snack
+const lemonPossetAfternoonSnack = {
+  name: "Lemon Posset",
+  course: ["afternoon snack"],
+  ingredients: [
+    ["lemon", 1],
+    ["sugar", 50],
+    ["heavy cream (33%)", 200],
+  ],
+  nutrients: {
+    calories: 215.8,
+    carbohydrates: 15,
+    protein: 1.6,
+    fat: 16.7,
+  },
+  recipe: [
+    "For this dessert, you'll need lemons. More specifically, lemon juice. One lemon should yield about 70ml of juice.",
+    "You'll also need heavy cream and sugar. The higher the quality and fat content of the cream (I used 33%), the thicker your posset will be.",
+    "Pour the cream into a saucepan, add sugar, bring to a boil, and keep it on the heat for 3 minutes, stirring continuously.",
+    "Now turn off the heat, pour in the lemon juice, vigorously stirring the mixture. The cream will start to thicken. Taste it, and if necessary, add more lemon juice or sugar. The posset should be sweet, creamy, with a distinct lemon flavor.",
+    "Let the mixture cool for about 5 minutes, then chill for at least 3-5 hours, preferably overnight. If you plan to serve it as a standalone dessert, divide it into individual molds, cover with plastic wrap, and refrigerate. Serve with crispy cookies or wafers. If serving as ice cream, freeze it.",
+    "Posset is also used as a filling for cakes; in that case, chill it in the refrigerator for several hours.",
+  ],
+  storageTimeInHours: 78,
 };
 
 // Dinner
@@ -313,7 +315,7 @@ const defaultMenu = [
   bananaOvernightOatsBreakfast,
   bambaSnack,
   peanutsSnack,
-  lemonPossetSnack,
+  lemonPossetAfternoonSnack,
   chickenSaladLunch,
   grilledSalmonDinner,
   chickenAvocadoToastLunch,
