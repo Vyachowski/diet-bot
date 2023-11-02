@@ -73,6 +73,15 @@ class Database {
     });
     this.mealModel = mongoose.model("Meal", mealSchema);
 
+    const currentMenuSchema = new mongoose.Schema({
+      breakfast: Object,
+      snack: Object,
+      lunch: Object,
+      afternoonSnack: Object,
+      dinner: Object,
+    });
+    this.currentMenuModel = mongoose.model("CurrentMenu", currentMenuSchema);
+
     const ingredientSchema = new mongoose.Schema({
       name: String,
       energy: Number, // calories per 100 gram
@@ -128,6 +137,17 @@ class Database {
 
     await Promise.all(promises);
     return true;
+  }
+
+  async setCurrentMenu(menu) {
+    try {
+      await this.currentMenuModel.create(menu);
+      return true;
+    } catch (error) {
+      throw new Error(
+        `Error setting data to the database: ${error.message}`,
+      );
+    }
   }
 }
 

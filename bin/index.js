@@ -12,8 +12,9 @@ async function getRandomMenu() {
   for (const meal of meals) {
     newMenu[meal] = await db.getRandomMealByType(meal);
   }
+  await db.setCurrentMenu(newMenu);
 
-  return newMenu;
+  return newMenu
 }
 
 getRandomMenu().then(r => console.log(Object.entries(r)));
