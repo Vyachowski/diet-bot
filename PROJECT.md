@@ -40,8 +40,10 @@ Some restrictions for this project:
 ### Version 0.2 – Basic functionality
 
 #### Features:
-1. Provide a week menu from preloaded set to database
-2. Provide a grocery list
+1. Provide a 3-days menu from preloaded set to database
+2. Provide a grocery list for this menu
+3. One user only
+
 
 #### Programming tasks:
 * Create a data module with preloaded menu
