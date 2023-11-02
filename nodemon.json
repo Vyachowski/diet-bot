@@ -1,0 +1,8 @@
+{
+  "watch": [
+    "bin/",
+    ".env"
+  ],
+  "ext": ".js",
+  "exec": "node --env-file=.env bin/index.js"
+}
