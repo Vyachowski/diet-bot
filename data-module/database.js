@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import defaultMenu from "./defaultMenu.js";
 
 class Database {
   constructor() {
@@ -15,27 +16,7 @@ class Database {
       "frozen products",
       "beverages",
     ];
-    this.connect(); // auto-connect on creating instance
-  }
-
-  async getRandomMealByType(mealType) {
-    if (!this.mealTypes.includes(mealType)) {
-      throw new Error(`Select one of the valid meal types: ${this.mealTypes}`);
-    }
-
-    let randomMeal;
-
-    try {
-      const mealsByType = await this.mealModel.find({ type: mealType });
-      const randomMealNumber = Math.floor(Math.random() * mealsByType.length);
-      randomMeal = mealsByType[randomMealNumber];
-    } catch (error) {
-      throw new Error(
-        `Error fetching data from the database: ${error.message}`,
-      );
-    }
-
-    return randomMeal;
+    this.connect().then(() => true); // auto-connect on creating instance
   }
 
   initModels() {
@@ -103,28 +84,41 @@ class Database {
     }
   }
 
+  async getRandomMealByType(mealType) {
+    if (!this.mealTypes.includes(mealType)) {
+      throw new Error(`Select one of the valid meal types: ${this.mealTypes}`);
+    }
+
+    let randomMeal;
+
+    try {
+      const mealsByType = await this.mealModel.find({ type: mealType });
+      const randomMealNumber = Math.floor(Math.random() * mealsByType.length);
+      randomMeal = mealsByType[randomMealNumber];
+    } catch (error) {
+      throw new Error(
+        `Error fetching data from the database: ${error.message}`,
+      );
+    }
+
+    return randomMeal;
+  }
+
+  async setNewDish(dish) {
+    try {
+      await this.mealModel.create(dish);
+      return true;
+    } catch (error) {
+      throw new Error(
+        `Error setting data to the database: ${error.message}`,
+      );
+    }
+  }
+
   setDefaultMenu() {
-    this.mealModel.create({
-      name: "Peanut Butter & Jelly Overnight Oats",
-      course: ["breakfast"],
-      ingredients: [
-        ["rolled oats", 50],
-        ["milk", 100],
-        ["greek yogurt", 50],
-        ["cha seeds", 5],
-        ["date syrup", 15],
-        ["vanilla extract", 3],
-        ["strawberry jam", 15],
-        ["creamy peanut butter", 15],
-        ["strawberry", 50],
-        ["peanuts", 40],
-      ],
-      recipe: [
-        "Combine old fashioned oats, seeds, yoghurt and vanilla extract, sweetener and milk (it is convenient to make it in a glass) with all basic ingredients",
-        "Cover it with a lid and chill in the fridge for at least two hours (better overnight)",
-        "Grab a spoon, add you toppings and dig in!",
-      ],
-    });
+    defaultMenu.forEach(async (dish) => {
+      await this.setNewDish(dish);
+    })
   }
 }
 

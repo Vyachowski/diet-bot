@@ -320,3 +320,5 @@ const defaultMenu = [
   panFriedCodDinner,
   tunaPastaDinner,
 ];
+
+export default defaultMenu;
