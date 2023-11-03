@@ -41,11 +41,13 @@ Some restrictions for this project:
 
 #### Features:
 1. Provide a 3-days menu from preloaded set to database
-2. Provide a grocery list for this menu
-3. One user only
-
+2. A plain grocery list without grouping in sections
+3. Recipes only for multi cooker
+4. English version
+5. One user only
 
 #### Programming tasks:
 * Create a data module with preloaded menu
 * Create a part of data access module with ability to provide a data
 * Telegram bot that fetch a data and display it in a bot
+* Third-party API (spoonacular) connector 
