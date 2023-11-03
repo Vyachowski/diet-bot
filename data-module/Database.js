@@ -69,7 +69,7 @@ class Database {
         type: Number,
         required: false,
       },
-    });
+    }, { versionKey: false });
     this.dishModel = mongoose.model("Dish", dishSchema);
 
     const currentMenuSchema = new mongoose.Schema({
@@ -78,7 +78,7 @@ class Database {
       lunch: Object,
       afternoonSnack: Object,
       dinner: Object,
-    });
+    }, { versionKey: false });
     this.currentMenuModel = mongoose.model("CurrentMenu", currentMenuSchema);
 
     const ingredientSchema = new mongoose.Schema({
@@ -87,7 +87,7 @@ class Database {
       alternateMeasureUnit: Array,
       unitsConversionRate: Number, // in 100 grams 1 cup of rolled oats
       department: String,
-    });
+    }, { versionKey: false });
     this.ingredientModel = mongoose.model("Ingredient", ingredientSchema);
   }
 
