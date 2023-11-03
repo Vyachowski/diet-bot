@@ -8,12 +8,12 @@ bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
 
-
   bot.sendMessage(chatId, `Привет, пользователь! Твой ID: ${userId}. ID чата: ${chatId}`).then(() => true);
 });
 
 bot.onText(/\/menu/, async (msg) => {
   const currentMenu = await diet.getCurrentMenu();
   const currentMenuText = JSON.stringify(currentMenu.breakfast);
+
   bot.sendMessage(msg.chat.id, `${currentMenuText}`).then(() => true);
 });
