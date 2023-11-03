@@ -17,28 +17,7 @@ class Database {
     ];
   }
 
-  async connect() {
-    try {
-      await mongoose.connect(this.connectionUri);
-      this.initModels();
-      return true;
-    } catch (error) {
-      throw new Error(`Error connecting to the database: ${error.message}`);
-    }
-  }
-
-  // eslint-disable-next-line
-  async disconnect() {
-    try {
-      await mongoose.disconnect();
-      return true;
-    } catch (error) {
-      throw new Error(
-        `Error disconnecting from the database: ${error.message}`,
-      );
-    }
-  }
-
+  // MODELS INITIALIZING
   initModels() {
     const dishSchema = new mongoose.Schema({
       name: {
@@ -91,6 +70,30 @@ class Database {
     this.ingredientModel = mongoose.model("Ingredient", ingredientSchema);
   }
 
+  // CONNECTION API
+  async connect() {
+    try {
+      await mongoose.connect(this.connectionUri);
+      this.initModels();
+      return true;
+    } catch (error) {
+      throw new Error(`Error connecting to the database: ${error.message}`);
+    }
+  }
+
+  // eslint-disable-next-line
+  async disconnect() {
+    try {
+      await mongoose.disconnect();
+      return true;
+    } catch (error) {
+      throw new Error(
+        `Error disconnecting from the database: ${error.message}`,
+      );
+    }
+  }
+
+  // DISH API
   async getRandomDishForMeal(meal) {
     if (!this.meals.includes(meal)) {
       throw new Error(`Select one of the valid meal types: ${this.meals}`);
@@ -122,6 +125,7 @@ class Database {
     }
   }
 
+  // INGREDIENT API
   async setNewIngredient(ingredient) {
     try {
       await this.ingredientModel.create(ingredient);
@@ -133,6 +137,7 @@ class Database {
     }
   }
 
+  // MENU API
   async setBasicMenu(basicMenu) {
     const promises = basicMenu.map(async (dish) => {
       try {
@@ -149,22 +154,7 @@ class Database {
     return true;
   }
 
-  async setBasicIngredients(basicIngredients) {
-    const promises = basicIngredients.map(async (ingredient) => {
-      try {
-        await this.setNewIngredient(ingredient);
-        return true;
-      } catch (error) {
-        throw new Error(
-          `Error setting data to the database: ${error.message}`,
-        );
-      }
-    });
-
-    await Promise.all(promises);
-    return true;
-  }
-
+  // CURRENT MENU API
   async setCurrentMenu(menu) {
     try {
       await this.currentMenuModel.create(menu);
@@ -178,8 +168,7 @@ class Database {
 
   async getCurrentMenu() {
     try {
-      const currentMenu = await this.currentMenuModel.findOne({}, '-_id -__v',);
-      return currentMenu;
+      return await this.currentMenuModel.findOne({}, '-_id -__v',);
     } catch (error) {
       throw new Error(
         `Error setting data to the database: ${error.message}`,
