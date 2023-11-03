@@ -14,19 +14,19 @@ class Diet {
     let newMenu = {};
 
     for (const meal of meals) {
-      newMenu[meal] = await this.db.getRandomDishForMeal(meal);
+      newMenu[meal] = await this.db.getRandomDish(meal);
     }
-    await this.db.setCurrentMenu(newMenu);
+    await this.db.setMenu(newMenu);
 
     return newMenu;
   }
 
-  async getCurrentMenu() {
-    return await this.db.getCurrentMenu();
+  async getMenu() {
+    return await this.db.getMenu();
   }
 
   // GROCERY LIST API
-  async getGroceryListForCurrentMenu() {
+  async getGroceryListForMenu() {
     const {breakfast, snack, lunch, afternoonSnack, dinner} = await this.db.getCurrentMenu();
     const currentMenu = {breakfast, snack, lunch, afternoonSnack, dinner};
     let notUniqueIngredients = [];
@@ -41,7 +41,14 @@ class Diet {
       return accumulator;
     }, {});
 
-    return uniqueIngredients;
+    const uniqueIngredientsMultipliedByDietDuration = Object.entries(uniqueIngredients)
+      .map(([ingredient, value]) => [ingredient, (value * 3)]);
+    const groceryList = Object.fromEntries(uniqueIngredientsMultipliedByDietDuration);
+
+    console.log(uniqueIngredients);
+    console.log(uniqueIngredientsMultipliedByDietDuration);
+    console.log(groceryList);
+    // return uniqueIngredients;
   }
 
   // DISHES API

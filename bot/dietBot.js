@@ -17,7 +17,7 @@ bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id;
 
-  bot.sendMessage(chatId, `Привет, пользователь! Твой ID: ${userId}. ID чата: ${chatId}\n\n${welcomeMessage}`) .then(() => true);
+  bot.sendMessage(chatId, `ID: ${userId}. Chat ID: ${chatId}\n\n${welcomeMessage}`) .then(() => true);
 });
 
 bot.onText(/\/menu/, async (msg) => {
@@ -25,4 +25,14 @@ bot.onText(/\/menu/, async (msg) => {
   const currentMenuText = JSON.stringify(currentMenu.breakfast);
 
   bot.sendMessage(msg.chat.id, `${currentMenuText}`).then(() => true);
+});
+
+bot.onText(/\/grocery/, async (msg) => {
+
+  bot.sendMessage(msg.chat.id, `${'text'}`).then(() => true);
+});
+
+bot.onText(/\/dishes/, async (msg) => {
+
+  bot.sendMessage(msg.chat.id, `${'text'}`).then(() => true);
 });

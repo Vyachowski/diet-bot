@@ -15,6 +15,10 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
+# Tests folders
+__tests__
+__fixtures__
+
 # nyc test coverage
 .nyc_output
 

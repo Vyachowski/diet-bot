@@ -73,9 +73,11 @@ class Database {
   // CONNECTION API
   async connect() {
     try {
-      await mongoose.connect(this.connectionUri);
+      const connectionData = await mongoose.connect(this.connectionUri);
       this.initModels();
-      return true;
+      const connectedDBName = connectionData.connections[0].name;
+      const connectionStatus = connectionData.connections[0].readyState;
+      return {connectedDBName, connectionStatus};
     } catch (error) {
       throw new Error(`Error connecting to the database: ${error.message}`);
     }
@@ -94,7 +96,40 @@ class Database {
   }
 
   // DISH API
-  async getRandomDishForMeal(meal) {
+  async setNewDish(dish) {
+    try {
+      await this.dishModel.create(dish);
+      return true;
+    } catch (error) {
+      throw new Error(
+        `Error setting data to the database: ${error.message}`,
+      );
+    }
+  }
+
+  async setBasicDishesSet(basicDishesList) {
+    if (!basicDishesList || !Array.isArray(basicDishesList) || basicDishesList.length === 0) {
+      throw new Error(
+        `Invalid input: basicDishesList should be a non-empty array.`,
+      );
+    }
+
+    const promises = basicDishesList.map(async (dish) => {
+      try {
+        await this.setNewDish(dish);
+        return true;
+      } catch (error) {
+        throw new Error(
+          `Error setting data to the database: ${error.message}`,
+        );
+      }
+    });
+
+    await Promise.all(promises);
+    return true;
+  }
+
+  async getRandomDish(meal) {
     if (!this.meals.includes(meal)) {
       throw new Error(`Select one of the valid meal types: ${this.meals}`);
     }
@@ -114,19 +149,23 @@ class Database {
     return randomMeal;
   }
 
-  async setNewDish(dish) {
+  async getAllDishes() {
+    let allDishes;
+
     try {
-      await this.dishModel.create(dish);
-      return true;
+      allDishes = await this.dishModel.find({}, '-__v');
+
     } catch (error) {
       throw new Error(
-        `Error setting data to the database: ${error.message}`,
+        `Error fetching data from the database: ${error.message}`,
       );
     }
+
+    return allDishes;
   }
 
   // INGREDIENT API
-  async setNewIngredient(ingredient) {
+  async setIngredient(ingredient) {
     try {
       await this.ingredientModel.create(ingredient);
       return true;
@@ -138,24 +177,7 @@ class Database {
   }
 
   // MENU API
-  async setBasicMenu(basicMenu) {
-    const promises = basicMenu.map(async (dish) => {
-      try {
-        await this.setNewDish(dish);
-        return true;
-      } catch (error) {
-        throw new Error(
-          `Error setting data to the database: ${error.message}`,
-        );
-      }
-    });
-
-    await Promise.all(promises);
-    return true;
-  }
-
-  // CURRENT MENU API
-  async setCurrentMenu(menu) {
+  async setMenu(menu) {
     try {
       await this.currentMenuModel.create(menu);
       return true;
@@ -166,9 +188,9 @@ class Database {
     }
   }
 
-  async getCurrentMenu() {
+  async getMenu() {
     try {
-      return await this.currentMenuModel.findOne({}, '-_id -__v',);
+      return await this.currentMenuModel.find({}, '-_id -__v');
     } catch (error) {
       throw new Error(
         `Error setting data to the database: ${error.message}`,
