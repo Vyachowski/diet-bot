@@ -188,7 +188,7 @@ const chickenAvocadoToastLunch = {
 // Afternoon snack
 const lemonPossetAfternoonSnack = {
   name: "Lemon Posset",
-  course: ["afternoon snack"],
+  course: ["afternoonSnack"],
   ingredients: [
     ["lemon", 1],
     ["sugar", 50],
@@ -223,7 +223,8 @@ const grilledSalmonDinner = {
     ["olive oil", 15],
     ["garlic powder", 5],
     ["lemon zest", 5],
-    ["salt and pepper, to taste"],
+    ["salt", 2],
+    ["pepper", 2]
   ],
   cookingTimeInMinutes: 20,
   nutrients: {
@@ -309,7 +310,7 @@ const tunaPastaDinner = {
 };
 
 // Export menu
-const defaultMenu = [
+const basicMenu = [
   peanutOvernightOatsBreakfast,
   appleOvernightOatsBreakfast,
   bananaOvernightOatsBreakfast,
@@ -323,4 +324,4 @@ const defaultMenu = [
   tunaPastaDinner,
 ];
 
-export default defaultMenu;
+export default basicMenu;

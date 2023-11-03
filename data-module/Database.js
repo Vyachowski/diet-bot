@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
-import defaultMenu from "./defaultMenu.js";
 
 class Database {
   constructor() {
     this.connectionUri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/diet-bot?retryWrites=true&w=majority`;
-    this.meals = ["breakfast", "snack", "lunch", "afternoon snack", "dinner"];
+    this.meals = ["breakfast", "snack", "lunch", "afternoonSnack", "dinner"];
     this.shopDepartments = [
       "fresh",
       "chips",
@@ -41,7 +40,7 @@ class Database {
   }
 
   initModels() {
-    const mealSchema = new mongoose.Schema({
+    const dishSchema = new mongoose.Schema({
       name: {
         type: String,
         required: true,
@@ -71,7 +70,7 @@ class Database {
         required: false,
       },
     });
-    this.mealModel = mongoose.model("Meal", mealSchema);
+    this.dishModel = mongoose.model("Dish", dishSchema);
 
     const currentMenuSchema = new mongoose.Schema({
       breakfast: Object,
@@ -92,7 +91,7 @@ class Database {
     this.ingredientModel = mongoose.model("Ingredient", ingredientSchema);
   }
 
-  async getRandomMealByType(meal) {
+  async getRandomDishForMeal(meal) {
     if (!this.meals.includes(meal)) {
       throw new Error(`Select one of the valid meal types: ${this.meals}`);
     }
@@ -100,7 +99,7 @@ class Database {
     let randomMeal;
 
     try {
-      const mealsByType = await this.mealModel.find({ course: meal });
+      const mealsByType = await this.dishModel.find({ course: meal });
       const randomMealNumber = Math.floor(Math.random() * mealsByType.length);
       randomMeal = mealsByType[randomMealNumber];
     } catch (error) {
@@ -114,7 +113,7 @@ class Database {
 
   async setNewDish(dish) {
     try {
-      await this.mealModel.create(dish);
+      await this.dishModel.create(dish);
       return true;
     } catch (error) {
       throw new Error(
@@ -123,10 +122,37 @@ class Database {
     }
   }
 
-  async setDefaultMenu() {
-    const promises = defaultMenu.map(async (dish) => {
+  async setNewIngredient(ingredient) {
+    try {
+      await this.ingredientModel.create(ingredient);
+      return true;
+    } catch (error) {
+      throw new Error(
+        `Error setting data to the database: ${error.message}`,
+      );
+    }
+  }
+
+  async setBasicMenu(basicMenu) {
+    const promises = basicMenu.map(async (dish) => {
       try {
         await this.setNewDish(dish);
+        return true;
+      } catch (error) {
+        throw new Error(
+          `Error setting data to the database: ${error.message}`,
+        );
+      }
+    });
+
+    await Promise.all(promises);
+    return true;
+  }
+
+  async setBasicIngredients(basicIngredients) {
+    const promises = basicIngredients.map(async (ingredient) => {
+      try {
+        await this.setNewIngredient(ingredient);
         return true;
       } catch (error) {
         throw new Error(
@@ -143,6 +169,17 @@ class Database {
     try {
       await this.currentMenuModel.create(menu);
       return true;
+    } catch (error) {
+      throw new Error(
+        `Error setting data to the database: ${error.message}`,
+      );
+    }
+  }
+
+  async getCurrentMenu() {
+    try {
+      const currentMenu = await this.currentMenuModel.findOne({}, '-_id -__v',);
+      return currentMenu;
     } catch (error) {
       throw new Error(
         `Error setting data to the database: ${error.message}`,
