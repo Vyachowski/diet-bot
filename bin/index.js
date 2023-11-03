@@ -42,7 +42,7 @@ class Diet {
     }, {});
 
     const uniqueIngredientsMultipliedByDietDuration = Object.entries(uniqueIngredients)
-      .map(([ingredient, value]) => [ingredient, (value * 3)]);
+      .map(([ingredient, value]) => [ingredient, (Number(value) * 3)]);
     const groceryList = Object.fromEntries(uniqueIngredientsMultipliedByDietDuration);
 
     console.log(uniqueIngredients);
