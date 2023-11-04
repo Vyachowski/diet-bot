@@ -52,7 +52,7 @@ class Diet {
   }
 
   // DISHES API
-  // Nothing is here...
+  // Nothing is here, but will be...
 }
 
 export default Diet;
