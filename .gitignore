@@ -173,3 +173,4 @@ default_settings
 __fixtures__/
 __tests__/
 coverage/
+package-lock.json
