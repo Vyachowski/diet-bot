@@ -97,6 +97,12 @@ class Database {
 
   // DISH API
   async setNewDish(dish) {
+    if (!dish || typeof dish !== 'object' || Object.keys(dish).length === 0) {
+      throw new Error(
+        `Invalid input: dish should be an non-empty object.`,
+      );
+    }
+
     try {
       await this.dishModel.create(dish);
       return true;
