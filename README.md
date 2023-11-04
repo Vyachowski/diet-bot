@@ -1,29 +1,31 @@
-# Simple diet bot
+# Bity Smarty 
 
-Easy-to-use helper for maintain a healthy diet. Bot uses your favorite dishes list and provides you 
-menu for a 3 days and a grocery list for this menu.
+Easy-to-use helper for maintain a healthy diet.
 
 ## Description
 
 Telegram bot with favourite meals, that can provide a weekly grocery list and menu for a week.
 
 - [x] Your own menu with favorite meals
-- [x] Get a grocery list for easy shopping
+- [ ] Get a grocery list for easy shopping
 - [ ] Maintain calorie intake
 
 ## Getting Started
 
-The easiest way to use a deployed bot is directly [from telegram](https://t.me/bity_smarty_bot), but you can also deploy to your own server. 
-<!-- Here is a way to create a copy -->
+Now only available from a Node.js...
 
 ### Dependencies
 
+JS version:
 * Node.js
-* Telegraf
+
+Python version:
+* Postgresql
+* Python3
 
 ### Executing program
 
-[Telegram bot is available now!](https://t.me/bity_smarty_bot)
+Telegram bot will be available soon...
 
 ## Authors
 
@@ -34,14 +36,16 @@ Slava Haikin
 
 ## Version History
 
-* v1.1
-    * Adding recipes to dishes
-    * Adding new recipes via telegram interface
-* v1.0
-    * Initial Release
+* 0.2
+    * Basic Menu with one variant for every meal
+    * Telegram bot with ability to provide a grocery list and menu
+    * Not a production release
+* 0.1
+    * A hackathon version
     * On-demand grocery list
     * On-demand menu for a week
     * JSON files with a data
+    * Not a production release
 
 ## License
 

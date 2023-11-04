@@ -27,7 +27,7 @@ class Diet {
 
   // GROCERY LIST API
   async getGroceryListForMenu() {
-    const {breakfast, snack, lunch, afternoonSnack, dinner} = await this.db.getCurrentMenu();
+    const {breakfast, snack, lunch, afternoonSnack, dinner} = await this.db.getMenu();
     const currentMenu = {breakfast, snack, lunch, afternoonSnack, dinner};
     let notUniqueIngredients = [];
     let uniqueIngredients;
