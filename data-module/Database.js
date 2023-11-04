@@ -17,8 +17,50 @@ class Database {
     ];
   }
 
-  // MODELS INITIALIZING
+  // CONNECTION API
+  async connect() {
+    try {
+      const connectionData = await mongoose.connect(this.connectionUri);
+      const connectedDBName = connectionData.connections[0].name;
+      const connectionStatus = connectionData.connections[0].readyState;
+      return {connectedDBName, connectionStatus};
+    } catch (error) {
+      throw new Error(`Error connecting to the database: ${error.message}`);
+    }
+  }
+
+  // eslint-disable-next-line
+  async disconnect() {
+    try {
+      await mongoose.disconnect();
+      return true;
+    } catch (error) {
+      throw new Error(
+        `Error disconnecting from the database: ${error.message}`,
+      );
+    }
+  }
+
+  // INITIALIZE API
   initModels() {
+    const userSchema = new mongoose.Schema(
+      {
+        userId: {
+          type: Number,
+          required: true,
+        },
+        dishesList: {
+          type: Array,
+          required: true,
+        },
+        settings: {
+          type: Object,
+          required: false,
+        }
+      }
+    )
+    this.userModel = mongoose.model("User", userSchema);
+
     const dishSchema = new mongoose.Schema({
       name: {
         type: String,
@@ -70,28 +112,11 @@ class Database {
     this.ingredientModel = mongoose.model("Ingredient", ingredientSchema);
   }
 
-  // CONNECTION API
-  async connect() {
+  async initialize() {
     try {
-      const connectionData = await mongoose.connect(this.connectionUri);
       this.initModels();
-      const connectedDBName = connectionData.connections[0].name;
-      const connectionStatus = connectionData.connections[0].readyState;
-      return {connectedDBName, connectionStatus};
     } catch (error) {
       throw new Error(`Error connecting to the database: ${error.message}`);
-    }
-  }
-
-  // eslint-disable-next-line
-  async disconnect() {
-    try {
-      await mongoose.disconnect();
-      return true;
-    } catch (error) {
-      throw new Error(
-        `Error disconnecting from the database: ${error.message}`,
-      );
     }
   }
 
