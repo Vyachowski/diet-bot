@@ -1,4 +1,4 @@
-import Database from "../data-module/Database.js";
+import Database from "../database/Database.js";
 // import basicMenu from "../data-module/basicMenu.js";
 
 class Diet {
