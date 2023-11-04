@@ -3,7 +3,8 @@
 
 First of all this project was created for educational purposes, so I will not use a lot of third-party libraries (like lodash).
 
-The main goal of this project is to create a special bot that can provide an international menu, that can be cooked with a small amount of time (less than an hour per day).
+The main goal of this project is to create a special bot that can provide an international menu,
+that can be cooked with a small amount of time (less than an hour per day).
 Also, this diet should be healthy, including all recommended nutrients and tasty of course :)
 
 Some restrictions for this project:
@@ -45,7 +46,7 @@ Placed in folder `bot/`
 
 ## Roadmap
 
-### Version 0.2 – Basic functionality
+### Version 0.2 – Basic functionality (Pre-release)
 
 #### Features:
 1. Provide a 3-days menu from preloaded set to database
@@ -58,4 +59,6 @@ Placed in folder `bot/`
 * Create a data module with preloaded menu
 * Create a part of data access module with ability to provide a data
 * Telegram bot that fetch a data and display it in a bot
-* Third-party API (spoonacular) connector 
+* Third-party API (spoonacular) connector
+
+### Version 0.1 – DI Bootcamp Hackathon version (Pre-release)
