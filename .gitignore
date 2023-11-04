@@ -173,5 +173,3 @@ default_settings
 __fixtures__/
 __tests__/
 coverage/
-users
-*.xmind
