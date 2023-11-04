@@ -21,7 +21,7 @@ bot.onText(/\/start/, (msg) => {
 });
 
 bot.onText(/\/menu/, async (msg) => {
-  const currentMenu = await diet.getCurrentMenu();
+  const currentMenu = await diet.getMenu();
   const currentMenuText = JSON.stringify(currentMenu.breakfast);
 
   bot.sendMessage(msg.chat.id, `${currentMenuText}`).then(() => true);
