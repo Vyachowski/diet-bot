@@ -39,11 +39,13 @@ Slava Haikin
 * 0.2
     * Basic Menu with one variant for every meal
     * Telegram bot with ability to provide a grocery list and menu
+    * Not a production release
 * 0.1
-    * Initial Release
+    * A hackathon version
     * On-demand grocery list
     * On-demand menu for a week
     * JSON files with a data
+    * Not a production release
 
 ## License
 
