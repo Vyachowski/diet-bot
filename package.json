@@ -2,13 +2,16 @@
   "name": "bity-smarty",
   "version": "1.0.0",
   "description": "Bity Smarty – a small bot for providing a week diet and grocery list",
-  "main": "bin/index.js",
+  "main": "src/index.js",
+  "bin": {
+    "bot": "bin/bot.js"
+  },
   "type": "module",
   "engines": {
     "node": ">=21.1.0"
   },
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --detectOpenHandles --env-file=.env",
+    "test": "npx jest --detectOpenHandles --env-file=.env",
     "lint": "eslint bin",
     "lint:fix": "eslint --fix bin && prettier --write \"bin/**/*.js\"",
     "start": "node --env-file=.env bin/index.js",
