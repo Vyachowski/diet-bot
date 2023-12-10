@@ -1,11 +1,48 @@
-import {DataTypes, Sequelize} from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
 
-// Models
+// Basic variables
+const meals = ["breakfast", "snack", "lunch", "afternoonSnack", "dinner"];
+const shopDepartments = [
+  "fresh",
+  "chips",
+  "cheese",
+  "meat",
+  "fish",
+  "grocery",
+  "bread",
+  "dairy",
+  "frozen",
+  "beverages",
+];
+
+// Connection
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: 'database.sqlite3'
+  storage: 'diet_bot.sqlite3'
 });
 
+// Synchronization
+const syncModels = async() => {
+  try {
+    await sequelize.sync();
+  } catch (error) {
+    throw new Error(`Error while synchronizing models: ${error.message}`);
+  }
+}
+
+// Disconnection
+const disconnect = async() => {
+  try {
+    await sequelize.close();
+    return true;
+  } catch (error) {
+    throw new Error(
+      `Error disconnecting from the database: ${error.message}`,
+    );
+  }
+}
+
+// Models
 const User = sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER,
@@ -24,7 +61,7 @@ const User = sequelize.define('User', {
   },
 });
 
-const CurrentMenu = sequelize.define('CurrentMenu', {
+const Menu = sequelize.define('Menu', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -53,7 +90,7 @@ const CurrentMenu = sequelize.define('CurrentMenu', {
   },
 })
 
-const Dish = sequelize.define('Dish', {
+const Recipe = sequelize.define('Recipe', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -109,77 +146,36 @@ const Ingredient = sequelize.define('Ingredient', {
 });
 
 // Relations
-User.hasOne(CurrentMenu, {
+User.hasOne(Menu, {
   foreignKey: 'userId',
   onDelete: 'CASCADE',
 })
 
-CurrentMenu.belongsTo(User, {
+Menu.belongsTo(User, {
   foreignKey: 'userId',
 })
 
+Menu.belongsToMany(Recipe, { through: 'MenusDishes' });
+Recipe.belongsToMany(Menu, { through: 'MenusDishes' });
 
+Recipe.belongsToMany(Ingredient, { through: 'RecipeIngredients' });
+Ingredient.belongsToMany(Recipe, { through: 'RecipeIngredients' });
 
-const connectionUri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/diet-bot?retryWrites=true&w=majority`;
-const meals = ["breakfast", "snack", "lunch", "afternoonSnack", "dinner"];
-const shopDepartments = [
-  "fresh",
-  "chips",
-  "cheese",
-  "meat & fish",
-  "grocery",
-  "bread",
-  "dairy products",
-  "frozen products",
-  "beverages",
-];
-
-const connect = async() => {
+// User API
+const setUser = async (userId) => {
   try {
-    const connectionData = await mongoose.connect(this.connectionUri);
-    const connectedDBName = connectionData.connections[0].name;
-    const connectionStatus = connectionData.connections[0].readyState;
-    return {connectedDBName, connectionStatus};
-  } catch (error) {
-    throw new Error(`Error connecting to the database: ${error.message}`);
-  }
-}
-
-const disconnect = async () => {
-  try {
-    await mongoose.disconnect();
+    // connect to database
+    await connectDB();
+    await createNewUser(userName, userId);
     return true;
   } catch (error) {
-    throw new Error(
-      `Error disconnecting from the database: ${error.message}`,
-    );
+    throw new Error(`User creation has failed: ${error.message}`);
   }
 }
-
-const initModels = () => {
-  const userModel = mongoose.model("User", userSchema);
-  const dishModel = mongoose.model("Dish", dishSchema);
-  const currentMenuModel = mongoose.model("CurrentMenu", currentMenuSchema);
-  const ingredientModel = mongoose.model("Ingredient", ingredientSchema);
-}
-
-const initialize = async () => {
+// Menu API
+const setMenu = async (menu) => {
   try {
-    initModels();
-  } catch (error) {
-    throw new Error(`Error connecting to the database: ${error.message}`);
-  }
-}
-
-const setNewDish = async (dish) => {
-  if (!dish || typeof dish !== 'object' || Object.keys(dish).length === 0) {
-    throw new Error(
-      `Invalid input: dish should be an non-empty object.`,
-    );
-  }
-
-  try {
-    await this.dishModel.create(dish);
+    await Menu.create(menu);
     return true;
   } catch (error) {
     throw new Error(
@@ -188,16 +184,44 @@ const setNewDish = async (dish) => {
   }
 }
 
-const setBasicDishesSet = async (basicDishesList) => {
-  if (!basicDishesList || !Array.isArray(basicDishesList) || basicDishesList.length === 0) {
+const getMenu = async (userId) => {
+  try {
+    return await Menu.findOne(userId);
+  } catch (error) {
+    throw new Error(
+      `Error getting menu: ${error.message}`,
+    );
+  }
+}
+
+// Recipe API
+const setRecipe = async (dish) => {
+  if (!dish || typeof dish !== 'object' || Object.keys(dish).length === 0) {
+    throw new Error(
+      `Invalid input: dish should be an non-empty object.`,
+    );
+  }
+
+  try {
+    await Recipe.create(dish);
+    return true;
+  } catch (error) {
+    throw new Error(
+      `Error setting data to the database: ${error.message}`,
+    );
+  }
+}
+
+const setBasicRecipes = async (basicRecipes) => {
+  if (!basicRecipes || !Array.isArray(basicRecipes) || basicRecipes.length === 0) {
     throw new Error(
       `Invalid input: basicDishesList should be a non-empty array.`,
     );
   }
 
-  const promises = basicDishesList.map(async (dish) => {
+  const promises = basicRecipes.map(async (dish) => {
     try {
-      await setNewDish(dish);
+      await setNewRecipe(dish);
       return true;
     } catch (error) {
       throw new Error(
@@ -210,7 +234,7 @@ const setBasicDishesSet = async (basicDishesList) => {
   return true;
 }
 
-const getRandomDish = async (meal) => {
+const getRandomRecipe = async (meal) => {
   if (!meals.includes(meal)) {
     throw new Error(`Select one of the valid meal types: ${meals}`);
   }
@@ -218,7 +242,7 @@ const getRandomDish = async (meal) => {
   let randomMeal;
 
   try {
-    const mealsByType = await dishModel.find({ course: meal });
+    const mealsByType = await Recipe.findOne({ course: meal });
     const randomMealNumber = Math.floor(Math.random() * mealsByType.length);
     randomMeal = mealsByType[randomMealNumber];
   } catch (error) {
@@ -234,7 +258,7 @@ const getAllDishes = async () => {
   let allDishes;
 
   try {
-    allDishes = await dishModel.find({}, '-__v');
+    allDishes = await Recipe.findAll();
 
   } catch (error) {
     throw new Error(
@@ -245,10 +269,10 @@ const getAllDishes = async () => {
   return allDishes;
 }
 
-// INGREDIENT API
+// Ingredient API
 const setIngredient = async (ingredient) => {
   try {
-    await ingredientModel.create(ingredient);
+    await Ingredient.create(ingredient);
     return true;
   } catch (error) {
     throw new Error(
@@ -257,24 +281,20 @@ const setIngredient = async (ingredient) => {
   }
 }
 
-// MENU API
-const setMenu = async () => {
-  try {
-    await currentMenuModel.create(menu);
-    return true;
-  } catch (error) {
-    throw new Error(
-      `Error setting data to the database: ${error.message}`,
-    );
-  }
-}
-
-const getMenu = async () => {
-  try {
-    return await currentMenuModel.find({}, '-_id -__v');
-  } catch (error) {
-    throw new Error(
-      `Error setting data to the database: ${error.message}`,
-    );
-  }
-}
+export {
+  sequelize,
+  syncModels,
+  disconnect,
+  User,
+  Menu,
+  Recipe,
+  Ingredient,
+  setUser,
+  setMenu,
+  getMenu,
+  setRecipe,
+  setBasicRecipes,
+  getRandomRecipe,
+  getAllDishes,
+  setIngredient,
+};

@@ -8,18 +8,11 @@ const featureMessage = 'Here is 5 main features of this bot:\n' +
   '4. Most recipes can be easily stored in the fridge or in the freezer\n' +
   '5. I can make it even tastier – It is completely free :)'
 const getIntroMessage = (type) => type === 'welcome' ? welcomeMessage : featureMessage;
-// TODO: Create user with user ID in database
-const setNewUser = async (userId) => {
-  try {
-    // connect to database
-    await connectDB();
-    await createNewUser(userName, userId);
-    return true;
-  } catch (error) {
-    throw new Error(`User creation has failed: ${error.message}`);
-  }
-}
-// TODO: Provide a new menu
+// Initialize app
+// Connect to DB
+// Save or identify user
+
+// Provide a new menu
 const getMenu = async(userId) => {
   try {
     const currentMenu = await getCurrentMenu(userId);
@@ -29,7 +22,7 @@ const getMenu = async(userId) => {
   }
 }
 
-// TODO: Provide a grocery list based on current menu
+// Provide a grocery list based on current menu
 const getGroceryList = async(userId) => {
   try {
     const currentMenu = await getCurrentMenu(userId);
@@ -42,7 +35,7 @@ const getGroceryList = async(userId) => {
   }
 }
 
-// TODO: Reset a menu
+// Reset a menu
 const resetMenu = async(userId) => {
   try {
     await removeCurrentMenu();
@@ -54,7 +47,6 @@ const resetMenu = async(userId) => {
 
 export {
   getIntroMessage,
-  setNewUser,
   getMenu,
   getGroceryList,
   resetMenu,
