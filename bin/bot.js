@@ -1,8 +1,6 @@
-import TelegramBot from 'node-telegram-bot-api';
-import Diet from "../bin/index.js";
+import {Telegraf} from "telegraf";
 
-const diet = new Diet();
-const bot = new TelegramBot(process.env.BOT_TOKEN, {polling: true});
+const bot = new Telegraf(process.env.BOT_TOKEN);
 const welcomeMessage =
   'Hi! Let me introduce you Bity Smarty – ' +
   'a special bot that can provide a healthy diet and a grocery list for your next shopping.\n\n' +

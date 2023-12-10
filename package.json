@@ -45,6 +45,6 @@
   "dependencies": {
     "mongodb": "6.2",
     "mongoose": "^7.6.3",
-    "node-telegram-bot-api": "^0.64.0"
+    "telegraf": "^4.15.3"
   }
 }

@@ -1,5 +1,30 @@
-import Database from "../database/Database.js";
-// import basicMenu from "../data-module/basicMenu.js";
+// TODO: Create user with user ID
+// TODO: Create user config
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const menuDuration = 3
 const kitchenEquipment = ['multiCooker'];
 const menuDuration = menuDuration;
@@ -7,19 +32,19 @@ const kitchenEquipment = kitchenEquipment;
 const db = new Database();
 
 const createRandomMenu = async() => {
-  const meals = this.db.meals;
+  const meals = db.meals;
   let newMenu = {};
 
   for (const meal of meals) {
     newMenu[meal] = await this.db.getRandomDish(meal);
   }
-  await this.db.setMenu(newMenu);
+  await db.setMenu(newMenu);
 
   return newMenu;
 }
 
 const getMenu = async() => {
-  return await this.db.getMenu();
+  return await db.getMenu();
 }
 
 // GROCERY LIST API
@@ -48,4 +73,4 @@ const getGroceryListForMenu = async() => {
   // return uniqueIngredients;
 }
 
-// TODO:
+
