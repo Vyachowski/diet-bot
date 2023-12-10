@@ -1,19 +1,5 @@
 import { DataTypes, Sequelize } from 'sequelize';
 
-// Basic variables
-const shopDepartments = [
-  "fresh",
-  "chips",
-  "cheese",
-  "meat",
-  "fish",
-  "grocery",
-  "bread",
-  "dairy",
-  "frozen",
-  "beverages",
-];
-
 // Connection
 const sequelize = new Sequelize({
   dialect: 'sqlite',

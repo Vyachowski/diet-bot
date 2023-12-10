@@ -60,7 +60,19 @@ const provideMenu = async(userId) => {
 
 // Provide a grocery list based on current menu
 const getGroceryListForMenu = async() => {
-  const {breakfast, snack, lunch, afternoonSnack, dinner} = await this.db.getMenu();
+  const shopDepartments = [
+    "fresh",
+    "chips",
+    "cheese",
+    "meat",
+    "fish",
+    "grocery",
+    "bread",
+    "dairy",
+    "frozen",
+    "beverages",
+  ];
+  const {breakfast, snack, lunch, afternoonSnack, dinner} = getMenu();
   const currentMenu = {breakfast, snack, lunch, afternoonSnack, dinner};
   let notUniqueIngredients = [];
   let uniqueIngredients;
@@ -78,9 +90,6 @@ const getGroceryListForMenu = async() => {
     .map(([ingredient, value]) => [ingredient, (Number(value) * 3)]);
   const groceryList = Object.fromEntries(uniqueIngredientsMultipliedByDietDuration);
 
-  console.log(uniqueIngredients);
-  console.log(uniqueIngredientsMultipliedByDietDuration);
-  console.log(groceryList);
   return uniqueIngredients;
 }
 const provideGroceryList = async(userId) => {

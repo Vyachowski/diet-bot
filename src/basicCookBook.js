@@ -310,7 +310,7 @@ const tunaPastaDinner = {
 };
 
 // Export menu
-const basicDishesList = [
+const basicCookBook = [
   peanutOvernightOatsBreakfast,
   appleOvernightOatsBreakfast,
   bananaOvernightOatsBreakfast,
@@ -324,4 +324,4 @@ const basicDishesList = [
   tunaPastaDinner,
 ];
 
-export default basicDishesList;
+export default basicCookBook;
