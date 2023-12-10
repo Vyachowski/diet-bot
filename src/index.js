@@ -12,142 +12,50 @@ const getIntroMessage = (type) => type === 'welcome' ? welcomeMessage : featureM
 const setNewUser = async (userId) => {
   try {
     // connect to database
-    // write a new user with parameters (name, userId, currentMenu = undefined)
+    await connectDB();
+    await createNewUser(userName, userId);
     return true;
-  } catch (e) {
-    console.error('User creation has failed. ', e);
-    throw new Error(e);
+  } catch (error) {
+    throw new Error(`User creation has failed: ${error.message}`);
   }
 }
-// TODO: Provide a new week menu
-const isCurrentMenuExist = async (userId) => {
+// TODO: Provide a new menu
+const getMenu = async(userId) => {
   try {
-    // connect to database
-    // get new random menu from dishes
-    // rewrite a user config with – currentMenu(date)
-    return true;
-  } catch (e) {
-    console.error('Menu creation has failed. ', e);
-    throw new Error(e);
-  }
-}
-const setNewMenu = async (userId) => {
-  try {
-    // connect to database
-    // get new random menu from dishes
-    // rewrite a user config with – currentMenu(date)
-    return true;
-  } catch (e) {
-    console.error('Menu creation has failed. ', e);
-    throw new Error(e);
-  }
-}
-const getCurrentMenu = async (userId) => {
-  try {
-    // connect to database
-    // get new random menu from dishes
-    // rewrite a user config with – currentMenu(date)
-    return true;
-  } catch (e) {
-    console.error('Menu creation has failed. ', e);
-    throw new Error(e);
-  }
-}
-
-// TODO: Remove current menu
-const removeCurrentMenu = () => {
-  try {
-    // connect to database
-    // get new random menu from dishes
-    // rewrite a user config with – currentMenu(date)
-    return true;
-  } catch (e) {
-    console.error('Menu creation has failed. ', e);
-    throw new Error(e);
+    const currentMenu = await getCurrentMenu(userId);
+    return (!currentMenu ? await setNewMenu() : currentMenu);
+  } catch (error) {
+    throw new Error(`Menu creation has failed: ${error.message}`);
   }
 }
 
 // TODO: Provide a grocery list based on current menu
-const getCurrentGroceryList = async (userId) => {
+const getGroceryList = async(userId) => {
   try {
-    // connect to database
-    // get new random menu from dishes
-    // rewrite a user config with – currentMenu(date)
-    return true;
-  } catch (e) {
-    console.error('Menu creation has failed. ', e);
-    throw new Error(e);
+    const currentMenu = await getCurrentMenu(userId);
+    if (!currentMenu) {
+      return 'You should create a menu first';
+    }
+    return getGroceryListForMenu(currentMenu);
+  } catch (error) {
+    throw new Error(`Grocery list creation has failed: ${error.message}`);
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const menuDuration = 3
-const kitchenEquipment = ['multiCooker'];
-const menuDuration = menuDuration;
-const kitchenEquipment = kitchenEquipment;
-const db = new Database();
-
-const createRandomMenu = async() => {
-  const meals = db.meals;
-  let newMenu = {};
-
-  for (const meal of meals) {
-    newMenu[meal] = await this.db.getRandomDish(meal);
+// TODO: Reset a menu
+const resetMenu = async(userId) => {
+  try {
+    await removeCurrentMenu();
+    return await getMenu();
+  } catch (error) {
+    throw new Error(`Menu reset has failed: ${error.message}`);
   }
-  await db.setMenu(newMenu);
-
-  return newMenu;
 }
 
-const getMenu = async() => {
-  return await db.getMenu();
+export {
+  getIntroMessage,
+  setNewUser,
+  getMenu,
+  getGroceryList,
+  resetMenu,
 }
-
-// GROCERY LIST API
-const getGroceryListForMenu = async() => {
-  const {breakfast, snack, lunch, afternoonSnack, dinner} = await this.db.getMenu();
-  const currentMenu = {breakfast, snack, lunch, afternoonSnack, dinner};
-  let notUniqueIngredients = [];
-  let uniqueIngredients;
-
-  for (const meal in currentMenu) {
-    notUniqueIngredients = notUniqueIngredients.concat(currentMenu[meal]['ingredients']);
-  }
-
-  uniqueIngredients = notUniqueIngredients.reduce((accumulator, [ingredient, amount]) => {
-    accumulator[ingredient] = (accumulator[ingredient] || 0) + amount;
-    return accumulator;
-  }, {});
-
-  const uniqueIngredientsMultipliedByDietDuration = Object.entries(uniqueIngredients)
-    .map(([ingredient, value]) => [ingredient, (Number(value) * 3)]);
-  const groceryList = Object.fromEntries(uniqueIngredientsMultipliedByDietDuration);
-
-  console.log(uniqueIngredients);
-  console.log(uniqueIngredientsMultipliedByDietDuration);
-  console.log(groceryList);
-  // return uniqueIngredients;
-}
-
-

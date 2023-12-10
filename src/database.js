@@ -1,4 +1,124 @@
-import mongoose from "mongoose";
+import {DataTypes, Sequelize} from 'sequelize';
+
+// Models
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: 'database.sqlite3'
+});
+
+const User = sequelize.define('User', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+  telegramId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    unique: true,
+  },
+  fullName: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+});
+
+const CurrentMenu = sequelize.define('CurrentMenu', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+  breakfast: {
+    type: DataTypes.JSON,
+    allowNull: false,
+  },
+  snack: {
+    type: DataTypes.JSON,
+    allowNull: false,
+  },
+  lunch: {
+    type: DataTypes.JSON,
+    allowNull: false,
+  },
+  afternoonSnack: {
+    type: DataTypes.JSON,
+    allowNull: false,
+  },
+  dinner: {
+    type: DataTypes.JSON,
+    allowNull: false,
+  },
+})
+
+const Dish = sequelize.define('Dish', {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  course: {
+    type: DataTypes.ARRAY,
+    allowNull: false
+  },
+  ingredients: {
+    type: DataTypes.ARRAY,
+    allowNull: false
+  },
+  recipe: {
+    type: DataTypes.ARRAY,
+    allowNull: false
+  },
+  energy: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
+  nutrients: {
+    type: DataTypes.JSON,
+    allowNull: true,
+  },
+  storageTimeInHours: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  }
+})
+
+const Ingredient = sequelize.define('Ingredient', {
+  name: {
+    type: DataTypes.STRING
+  },
+  energy: {
+    type: DataTypes.INTEGER,
+  },
+  alternateMeasureUnit: {
+    type: DataTypes.ARRAY(DataTypes.STRING),
+  },
+  unitsConversionRate: {
+    type: DataTypes.FLOAT,
+  },
+  department: {
+    type: DataTypes.STRING,
+  }
+});
+
+// Relations
+User.hasOne(CurrentMenu, {
+  foreignKey: 'userId',
+  onDelete: 'CASCADE',
+})
+
+CurrentMenu.belongsTo(User, {
+  foreignKey: 'userId',
+})
+
+
 
 const connectionUri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/diet-bot?retryWrites=true&w=majority`;
 const meals = ["breakfast", "snack", "lunch", "afternoonSnack", "dinner"];
