@@ -1,7 +1,6 @@
 import { DataTypes, Sequelize } from 'sequelize';
 
 // Basic variables
-const meals = ["breakfast", "snack", "lunch", "afternoonSnack", "dinner"];
 const shopDepartments = [
   "fresh",
   "chips",
@@ -161,58 +160,51 @@ Recipe.belongsToMany(Menu, { through: 'MenusDishes' });
 Recipe.belongsToMany(Ingredient, { through: 'RecipeIngredients' });
 Ingredient.belongsToMany(Recipe, { through: 'RecipeIngredients' });
 
-// User API
-const setUser = async (userId) => {
-  try {
-    // connect to database
-    await connectDB();
-    await createNewUser(userName, userId);
-    return true;
-  } catch (error) {
-    throw new Error(`User creation has failed: ${error.message}`);
-  }
-}
-// Menu API
-const setMenu = async (menu) => {
-  try {
-    await Menu.create(menu);
-    return true;
-  } catch (error) {
-    throw new Error(
-      `Error setting data to the database: ${error.message}`,
-    );
-  }
-}
 
-const getMenu = async (userId) => {
-  try {
-    return await Menu.findOne(userId);
-  } catch (error) {
-    throw new Error(
-      `Error getting menu: ${error.message}`,
-    );
-  }
-}
-
-// Recipe API
-const setRecipe = async (dish) => {
-  if (!dish || typeof dish !== 'object' || Object.keys(dish).length === 0) {
-    throw new Error(
-      `Invalid input: dish should be an non-empty object.`,
-    );
+// Data API
+const getData = async(model, id) => {
+  if (!['Menu', 'Recipe', 'Ingredient', 'User'].includes(model)) {
+    throw new Error('Invalid model type');
   }
 
   try {
-    await Recipe.create(dish);
-    return true;
+    switch (model) {
+      case 'Menu':
+        return await Menu.findOne(id);
+      case 'Recipe':
+        return id ? await Recipe.findOne(id) : await Recipe.findAll();
+      case 'Ingredient':
+        return id ? await Ingredient.findOne(id) : await Ingredient.findAll();
+      default:
+        return await User.findOne(id);
+    }
   } catch (error) {
-    throw new Error(
-      `Error setting data to the database: ${error.message}`,
-    );
+    throw new Error(`Data retrieving failed: ${error.message}`);
   }
 }
 
-const setBasicRecipes = async (basicRecipes) => {
+const setData = async(model, data) => {
+  if (!['Menu', 'Recipe', 'Ingredient', 'User'].includes(model)) {
+    throw new Error('Invalid model type');
+  }
+
+  try {
+    switch (model) {
+      case 'Menu':
+        return await Menu.create(data);
+      case 'Recipe':
+        return await Recipe.create(data);
+      case 'Ingredient':
+        return await Ingredient.create(data);
+      default:
+        return await User.findOne(data.telegramId, data.name);
+    }
+  } catch (error) {
+    throw new Error(`Data retrieving failed: ${error.message}`);
+  }
+}
+
+const restoreBasicCookbook = async (basicRecipes) => {
   if (!basicRecipes || !Array.isArray(basicRecipes) || basicRecipes.length === 0) {
     throw new Error(
       `Invalid input: basicDishesList should be a non-empty array.`,
@@ -221,7 +213,7 @@ const setBasicRecipes = async (basicRecipes) => {
 
   const promises = basicRecipes.map(async (dish) => {
     try {
-      await setNewRecipe(dish);
+      await setData(dish);
       return true;
     } catch (error) {
       throw new Error(
@@ -234,53 +226,6 @@ const setBasicRecipes = async (basicRecipes) => {
   return true;
 }
 
-const getRandomRecipe = async (meal) => {
-  if (!meals.includes(meal)) {
-    throw new Error(`Select one of the valid meal types: ${meals}`);
-  }
-
-  let randomMeal;
-
-  try {
-    const mealsByType = await Recipe.findOne({ course: meal });
-    const randomMealNumber = Math.floor(Math.random() * mealsByType.length);
-    randomMeal = mealsByType[randomMealNumber];
-  } catch (error) {
-    throw new Error(
-      `Error fetching data from the database: ${error.message}`,
-    );
-  }
-
-  return randomMeal;
-}
-
-const getAllDishes = async () => {
-  let allDishes;
-
-  try {
-    allDishes = await Recipe.findAll();
-
-  } catch (error) {
-    throw new Error(
-      `Error fetching data from the database: ${error.message}`,
-    );
-  }
-
-  return allDishes;
-}
-
-// Ingredient API
-const setIngredient = async (ingredient) => {
-  try {
-    await Ingredient.create(ingredient);
-    return true;
-  } catch (error) {
-    throw new Error(
-      `Error setting data to the database: ${error.message}`,
-    );
-  }
-}
-
 export {
   sequelize,
   syncModels,
@@ -289,12 +234,6 @@ export {
   Menu,
   Recipe,
   Ingredient,
-  setUser,
-  setMenu,
-  getMenu,
-  setRecipe,
-  setBasicRecipes,
-  getRandomRecipe,
-  getAllDishes,
-  setIngredient,
+  getData,
+  setData,
 };
