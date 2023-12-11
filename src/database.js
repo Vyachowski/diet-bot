@@ -53,26 +53,6 @@ const Menu = sequelize.define('Menu', {
     primaryKey: true,
     allowNull: false,
   },
-  breakfast: {
-    type: DataTypes.JSON,
-    allowNull: false,
-  },
-  snack: {
-    type: DataTypes.JSON,
-    allowNull: false,
-  },
-  lunch: {
-    type: DataTypes.JSON,
-    allowNull: false,
-  },
-  afternoonSnack: {
-    type: DataTypes.JSON,
-    allowNull: false,
-  },
-  dinner: {
-    type: DataTypes.JSON,
-    allowNull: false,
-  },
 })
 
 const Recipe = sequelize.define('Recipe', {
@@ -87,15 +67,15 @@ const Recipe = sequelize.define('Recipe', {
     allowNull: false,
   },
   course: {
-    type: DataTypes.ARRAY,
+    type: DataTypes.ARRAY(DataTypes.STRING),
     allowNull: false
   },
   ingredients: {
-    type: DataTypes.ARRAY,
+    type: DataTypes.ARRAY(DataTypes.STRING),
     allowNull: false
   },
   recipe: {
-    type: DataTypes.ARRAY,
+    type: DataTypes.ARRAY(DataTypes.STRING),
     allowNull: false
   },
   energy: {
@@ -140,8 +120,8 @@ Menu.belongsTo(User, {
   foreignKey: 'userId',
 })
 
-Menu.belongsToMany(Recipe, { through: 'MenusDishes' });
-Recipe.belongsToMany(Menu, { through: 'MenusDishes' });
+Menu.belongsToMany(Recipe, { through: 'MenusRecipes' });
+Recipe.belongsToMany(Menu, { through: 'MenusRecipes' });
 
 Recipe.belongsToMany(Ingredient, { through: 'RecipeIngredients' });
 Ingredient.belongsToMany(Recipe, { through: 'RecipeIngredients' });
@@ -193,13 +173,13 @@ const setData = async(model, data) => {
 const restoreBasicCookbook = async (basicRecipes) => {
   if (!basicRecipes || !Array.isArray(basicRecipes) || basicRecipes.length === 0) {
     throw new Error(
-      `Invalid input: basicDishesList should be a non-empty array.`,
+      `Invalid input: Basic recipes should be a non-empty array.`,
     );
   }
 
-  const promises = basicRecipes.map(async (dish) => {
+  const promises = basicRecipes.map(async(recipe) => {
     try {
-      await setData(dish);
+      await setData(recipe);
       return true;
     } catch (error) {
       throw new Error(
