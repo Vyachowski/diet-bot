@@ -97,12 +97,22 @@ const Recipe = sequelize.define('Recipe', {
     allowNull: false,
     unique: true,
   },
+  type: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      isIn: {
+        args: ['recipe', 'product'],
+        msg: 'Meal must be "recipe" or "product"',
+      },
+    },
+  },
   apiId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     unique: true,
   },
-  course: {
+  meal: {
     type: DataTypes.ARRAY(DataTypes.STRING),
     allowNull: false,
     validate: {
