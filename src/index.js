@@ -1,5 +1,3 @@
-import {getData, setData} from "./database.js";
-
 // Get welcome messages
 const getIntroMessage = (type) => {
   const welcomeMessage =
@@ -60,18 +58,6 @@ const provideMenu = async(userId) => {
 
 // Provide a grocery list based on current menu
 const getGroceryListForMenu = async() => {
-  const shopDepartments = [
-    "fresh",
-    "chips",
-    "cheese",
-    "meat",
-    "fish",
-    "grocery",
-    "bread",
-    "dairy",
-    "frozen",
-    "beverages",
-  ];
   const {breakfast, snack, lunch, afternoonSnack, dinner} = getMenu();
   const currentMenu = {breakfast, snack, lunch, afternoonSnack, dinner};
   let notUniqueIngredients = [];

@@ -1,5 +1,20 @@
 import { DataTypes, Sequelize } from 'sequelize';
 
+// Basic data
+const meals = ["breakfast", "snack", "lunch", "afternoonSnack", "dinner"];
+const shopDepartments = [
+  "fresh",
+  "chips",
+  "cheese",
+  "meat",
+  "fish",
+  "grocery",
+  "bread",
+  "dairy",
+  "frozen",
+  "beverages",
+];
+
 // Connection
 const sequelize = new Sequelize({
   dialect: 'sqlite',
@@ -44,16 +59,31 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false
   },
-});
-
-const Menu = sequelize.define('Menu', {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-    allowNull: false,
+  menuCreated: {
+    type: DataTypes.DATE,
+    allowNull: true,
   },
-})
+  breakfastId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  snackId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  lunchId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  afternoonSnackId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  dinnerId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+});
 
 const Recipe = sequelize.define('Recipe', {
   id: {
@@ -65,141 +95,107 @@ const Recipe = sequelize.define('Recipe', {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
+  },
+  apiId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    unique: true,
   },
   course: {
     type: DataTypes.ARRAY(DataTypes.STRING),
-    allowNull: false
-  },
-  ingredients: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
-    allowNull: false
-  },
-  recipe: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
-    allowNull: false
-  },
-  energy: {
-    type: DataTypes.FLOAT,
-    allowNull: true,
-  },
-  nutrients: {
-    type: DataTypes.JSON,
-    allowNull: true,
-  },
-  storageTimeInHours: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-  }
-})
-
-const Ingredient = sequelize.define('Ingredient', {
-  name: {
-    type: DataTypes.STRING
-  },
-  energy: {
-    type: DataTypes.INTEGER,
-  },
-  alternateMeasureUnit: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
-  },
-  unitsConversionRate: {
-    type: DataTypes.FLOAT,
-  },
-  department: {
-    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      isArrayOfMeals(value) {
+        if (!Array.isArray(value)) {
+          throw new Error('Course must be an array.');
+        }
+        if (value.length === 0) {
+          throw new Error('Course array cannot be empty.');
+        }
+        if (!value.every(meal => meals.includes(meal))) {
+          throw new Error(`Course must be an array of: ${meals.join(', ')}`);
+        }
+      },
+    }
   }
 });
 
-// Relations
-User.hasOne(Menu, {
-  foreignKey: 'userId',
-  onDelete: 'CASCADE',
-})
-
-Menu.belongsTo(User, {
-  foreignKey: 'userId',
-})
-
-Menu.belongsToMany(Recipe, { through: 'MenusRecipes' });
-Recipe.belongsToMany(Menu, { through: 'MenusRecipes' });
-
-Recipe.belongsToMany(Ingredient, { through: 'RecipeIngredients' });
-Ingredient.belongsToMany(Recipe, { through: 'RecipeIngredients' });
 
 
 // Data API
-const getData = async(model, id) => {
-  if (!['Menu', 'Recipe', 'Ingredient', 'User'].includes(model)) {
-    throw new Error('Invalid model type');
-  }
-
-  try {
-    switch (model) {
-      case 'Menu':
-        return await Menu.findOne(id);
-      case 'Recipe':
-        return id ? await Recipe.findOne(id) : await Recipe.findAll();
-      case 'Ingredient':
-        return id ? await Ingredient.findOne(id) : await Ingredient.findAll();
-      default:
-        return await User.findOne(id);
-    }
-  } catch (error) {
-    throw new Error(`Data retrieving failed: ${error.message}`);
-  }
-}
-
-const setData = async(model, data) => {
-  if (!['Menu', 'Recipe', 'Ingredient', 'User'].includes(model)) {
-    throw new Error('Invalid model type');
-  }
-
-  try {
-    switch (model) {
-      case 'Menu':
-        return await Menu.create(data);
-      case 'Recipe':
-        return await Recipe.create(data);
-      case 'Ingredient':
-        return await Ingredient.create(data);
-      default:
-        return await User.findOne(data.telegramId, data.name);
-    }
-  } catch (error) {
-    throw new Error(`Data retrieving failed: ${error.message}`);
-  }
-}
-
-const restoreBasicCookbook = async (basicRecipes) => {
-  if (!basicRecipes || !Array.isArray(basicRecipes) || basicRecipes.length === 0) {
-    throw new Error(
-      `Invalid input: Basic recipes should be a non-empty array.`,
-    );
-  }
-
-  const promises = basicRecipes.map(async(recipe) => {
-    try {
-      await setData(recipe);
-      return true;
-    } catch (error) {
-      throw new Error(
-        `Error setting data to the database: ${error.message}`,
-      );
-    }
-  });
-
-  await Promise.all(promises);
-  return true;
-}
-
-export {
-  sequelize,
-  syncModels,
-  disconnect,
-  User,
-  Menu,
-  Recipe,
-  Ingredient,
-  getData,
-  setData,
-};
+// const getData = async(model, id) => {
+//   if (!['Menu', 'Recipe', 'Ingredient', 'User'].includes(model)) {
+//     throw new Error('Invalid model type');
+//   }
+//
+//   try {
+//     switch (model) {
+//       case 'Menu':
+//         return await Menu.findOne(id);
+//       case 'Recipe':
+//         return id ? await Recipe.findOne(id) : await Recipe.findAll();
+//       case 'Ingredient':
+//         return id ? await Ingredient.findOne(id) : await Ingredient.findAll();
+//       default:
+//         return await User.findOne(id);
+//     }
+//   } catch (error) {
+//     throw new Error(`Data retrieving failed: ${error.message}`);
+//   }
+// }
+//
+// const setData = async(model, data) => {
+//   if (!['Menu', 'Recipe', 'Ingredient', 'User'].includes(model)) {
+//     throw new Error('Invalid model type');
+//   }
+//
+//   try {
+//     switch (model) {
+//       case 'Menu':
+//         return await Menu.create(data);
+//       case 'Recipe':
+//         return await Recipe.create(data);
+//       case 'Ingredient':
+//         return await Ingredient.create(data);
+//       default:
+//         return await User.findOne(data.telegramId, data.name);
+//     }
+//   } catch (error) {
+//     throw new Error(`Data retrieving failed: ${error.message}`);
+//   }
+// }
+//
+// const restoreBasicCookbook = async (basicRecipes) => {
+//   if (!basicRecipes || !Array.isArray(basicRecipes) || basicRecipes.length === 0) {
+//     throw new Error(
+//       `Invalid input: Basic recipes should be a non-empty array.`,
+//     );
+//   }
+//
+//   const promises = basicRecipes.map(async(recipe) => {
+//     try {
+//       await setData(recipe);
+//       return true;
+//     } catch (error) {
+//       throw new Error(
+//         `Error setting data to the database: ${error.message}`,
+//       );
+//     }
+//   });
+//
+//   await Promise.all(promises);
+//   return true;
+// }
+//
+// export {
+//   sequelize,
+//   syncModels,
+//   disconnect,
+//   User,
+//   Menu,
+//   Recipe,
+//   Ingredient,
+//   getData,
+//   setData,
+// };
