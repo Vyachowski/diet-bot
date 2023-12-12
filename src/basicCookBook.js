@@ -2,7 +2,7 @@
 // Breakfasts
 const peanutOvernightOatsBreakfast = {
   name: "Peanut Butter & Jelly Overnight Oats",
-  course: ["breakfast"],
+  meal: ["breakfast"],
   ingredients: [
     ["rolled oats", 50],
     ["milk", 100],
@@ -33,7 +33,7 @@ const peanutOvernightOatsBreakfast = {
 
 const appleOvernightOatsBreakfast = {
   name: "Apple pie Overnight Oats",
-  course: ["breakfast"],
+  meal: ["breakfast"],
   ingredients: [
     ["rolled oats", 50],
     ["milk", 100],
@@ -64,7 +64,7 @@ const appleOvernightOatsBreakfast = {
 
 const bananaOvernightOatsBreakfast = {
   name: "Banana & Nutella Overnight Oats",
-  course: ["breakfast"],
+  meal: ["breakfast"],
   ingredients: [
     ["rolled oats", 50],
     ["milk", 100],
@@ -96,7 +96,7 @@ const bananaOvernightOatsBreakfast = {
 // Snacks
 const bambaSnack = {
   name: "Bamba",
-  course: ["snack"],
+  meal: ["snack"],
   ingredients: [["bamba", 80]],
   nutrients: {
     calories: 427,
@@ -112,7 +112,7 @@ const bambaSnack = {
 
 const peanutsSnack = {
   name: "Fried Peanuts",
-  course: ["snack"],
+  meal: ["snack"],
   ingredients: [["peanuts", 44]],
   nutrients: {
     calories: 237,
@@ -129,7 +129,7 @@ const peanutsSnack = {
 // Lunch
 const chickenSaladLunch = {
   name: "Light Chicken Salad",
-  course: ["lunch"],
+  meal: ["lunch"],
   ingredients: [
     ["cooked chicken breast", 200],
     ["mixed greens (spinach, lettuce, arugula)", 150],
@@ -158,7 +158,7 @@ const chickenSaladLunch = {
 
 const chickenAvocadoToastLunch = {
   name: "Chicken Avocado Toast",
-  course: ["lunch"],
+  meal: ["lunch"],
   ingredients: [
     ["cooked chicken breast, shredded", 150],
     ["avocado, mashed", 1],
@@ -189,7 +189,7 @@ const chickenAvocadoToastLunch = {
 // Afternoon snack
 const lemonPossetAfternoonSnack = {
   name: "Lemon Posset",
-  course: ["afternoonSnack"],
+  meal: ["afternoonSnack"],
   ingredients: [
     ["lemon", 1],
     ["sugar", 50],
@@ -215,7 +215,7 @@ const lemonPossetAfternoonSnack = {
 // Dinner
 const grilledSalmonDinner = {
   name: "Grilled Salmon with Vegetables",
-  course: ["dinner"],
+  meal: ["dinner"],
   ingredients: [
     ["salmon fillet", 150],
     ["asparagus spears", 100],
@@ -246,7 +246,7 @@ const grilledSalmonDinner = {
 
 const panFriedCodDinner = {
   name: "Pan-Fried Cod with Lemon Sauce",
-  course: ["dinner"],
+  meal: ["dinner"],
   ingredients: [
     ["cod fillet", 200],
     ["all-purpose flour", 50],
@@ -277,7 +277,7 @@ const panFriedCodDinner = {
 
 const tunaPastaDinner = {
   name: "Tuna Pasta with Tomato Sauce",
-  course: ["dinner"],
+  meal: ["dinner"],
   ingredients: [
     ["canned tuna in water, drained", 200],
     ["spaghetti or your favorite pasta", 150],
@@ -309,6 +309,44 @@ const tunaPastaDinner = {
   ],
   storageTimeInHours: 48,
 };
+
+const basicRecipes = [
+  {
+    id: 1,
+    apiId: 1705909,
+    name: 'bananaOvernightOats',
+    isDone: false,
+    meal: ['breakfast'],
+  },
+  {
+    id: 2,
+    apiId: 1705909,
+    name: 'bamba',
+    isDone: false,
+    meal: ['snack'],
+  },
+  {
+    id: 3,
+    apiId: 1705909,
+    name: 'bananaOvernightOats',
+    isDone: false,
+    meal: ['lunch'],
+  },
+  {
+    id: 4,
+    apiId: 1705909,
+    name: 'bananaOvernightOats',
+    isDone: false,
+    meal: ['afternoonSnack'],
+  },
+  {
+    id: 5,
+    apiId: 1705909,
+    name: 'bananaOvernightOats',
+    isDone: false,
+    meal: ['dinner'],
+  },
+];
 
 // Export menu
 const basicCookBook = [

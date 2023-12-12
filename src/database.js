@@ -93,6 +93,11 @@ const Recipe = sequelize.define('Recipe', {
     primaryKey: true,
     allowNull: false,
   },
+  apiId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    unique: true,
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -101,11 +106,6 @@ const Recipe = sequelize.define('Recipe', {
   isDone: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-  },
-  apiId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    unique: true,
   },
   meal: {
     type: DataTypes.ARRAY(DataTypes.STRING),
@@ -125,8 +125,6 @@ const Recipe = sequelize.define('Recipe', {
     }
   }
 });
-
-
 
 // Database API
 const getDataById = async(model, id) => {
@@ -196,6 +194,7 @@ const deleteDataById = async(model, id) => {
     throw new Error(`Data retrieving failed: ${error.message}`);
   }
 }
+
 // Spoonacular API
 const getRecipeById = async() => {
 
@@ -203,7 +202,7 @@ const getRecipeById = async() => {
     method: 'GET',
     url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch',
     params: {
-      query: 'banana overnight oats',
+      query: 'one pot chicken rice',
       type: 'main course',
     },
     headers: {
@@ -225,7 +224,6 @@ const getRecipeById = async() => {
   };
 
   try {
-    console.log(options.headers["X-RapidAPI-Host"]);
     const response = await axios.request(optionsSearch);
     console.log(response.data);
   } catch (error) {

@@ -7,7 +7,7 @@ const getIntroMessage = (type) => {
     '2. No complex equipment. Just a multi cooker to start!\n' +
     '3. Healthy diet with fancy recipes that looks great\n' +
     '4. Most recipes can be easily stored in the fridge or in the freezer\n' +
-    '5. I can make it even tastier – It is completely free :)'
+    '5. And to make it even tastier – It is completely free :)'
   return (type === 'welcome' ? welcomeMessage : featureMessage);
 }
 
