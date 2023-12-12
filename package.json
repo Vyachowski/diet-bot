@@ -15,7 +15,7 @@
     "lint": "eslint bin",
     "lint:fix": "eslint --fix bin && prettier --write \"bin/**/*.js\"",
     "start": "node --env-file=.env bin/index.js",
-    "dev": "nodemon"
+    "dev": "nodemon --env-file=.env"
   },
   "repository": {
     "type": "git",
@@ -43,6 +43,7 @@
     "prettier": "3.0.3"
   },
   "dependencies": {
+    "axios": "^1.6.2",
     "grammy": "^1.19.2",
     "sequelize": "^6.35.1",
     "sqlite3": "^5.1.6"

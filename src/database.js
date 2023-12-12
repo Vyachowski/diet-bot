@@ -1,4 +1,5 @@
 import { DataTypes, Sequelize } from 'sequelize';
+import axios from 'axios';
 
 // Basic data
 const meals = ["breakfast", "snack", "lunch", "afternoonSnack", "dinner"];
@@ -97,15 +98,9 @@ const Recipe = sequelize.define('Recipe', {
     allowNull: false,
     unique: true,
   },
-  type: {
-    type: DataTypes.STRING,
+  isDone: {
+    type: DataTypes.BOOLEAN,
     allowNull: false,
-    validate: {
-      isIn: {
-        args: ['recipe', 'product'],
-        msg: 'Meal must be "recipe" or "product"',
-      },
-    },
   },
   apiId: {
     type: DataTypes.INTEGER,
@@ -133,79 +128,142 @@ const Recipe = sequelize.define('Recipe', {
 
 
 
-// Data API
-// const getData = async(model, id) => {
-//   if (!['Menu', 'Recipe', 'Ingredient', 'User'].includes(model)) {
-//     throw new Error('Invalid model type');
-//   }
-//
-//   try {
-//     switch (model) {
-//       case 'Menu':
-//         return await Menu.findOne(id);
-//       case 'Recipe':
-//         return id ? await Recipe.findOne(id) : await Recipe.findAll();
-//       case 'Ingredient':
-//         return id ? await Ingredient.findOne(id) : await Ingredient.findAll();
-//       default:
-//         return await User.findOne(id);
-//     }
-//   } catch (error) {
-//     throw new Error(`Data retrieving failed: ${error.message}`);
-//   }
-// }
-//
-// const setData = async(model, data) => {
-//   if (!['Menu', 'Recipe', 'Ingredient', 'User'].includes(model)) {
-//     throw new Error('Invalid model type');
-//   }
-//
-//   try {
-//     switch (model) {
-//       case 'Menu':
-//         return await Menu.create(data);
-//       case 'Recipe':
-//         return await Recipe.create(data);
-//       case 'Ingredient':
-//         return await Ingredient.create(data);
-//       default:
-//         return await User.findOne(data.telegramId, data.name);
-//     }
-//   } catch (error) {
-//     throw new Error(`Data retrieving failed: ${error.message}`);
-//   }
-// }
-//
-// const restoreBasicCookbook = async (basicRecipes) => {
-//   if (!basicRecipes || !Array.isArray(basicRecipes) || basicRecipes.length === 0) {
-//     throw new Error(
-//       `Invalid input: Basic recipes should be a non-empty array.`,
-//     );
-//   }
-//
-//   const promises = basicRecipes.map(async(recipe) => {
-//     try {
-//       await setData(recipe);
-//       return true;
-//     } catch (error) {
-//       throw new Error(
-//         `Error setting data to the database: ${error.message}`,
-//       );
-//     }
-//   });
-//
-//   await Promise.all(promises);
-//   return true;
-// }
-//
-// export {
-//   sequelize,
-//   syncModels,
-//   disconnect,
-//   User,
-//   Menu,
-//   Recipe,
-//   Ingredient,
-//   getData,
-//   setData,
-// };
+// Database API
+const getDataById = async(model, id) => {
+  if (!['Menu', 'Recipe', 'Ingredient', 'User'].includes(model)) {
+    throw new Error('Invalid model type');
+  }
+
+  try {
+    switch (model) {
+      case 'Recipe':
+        return id ? await Recipe.findOne(id) : await Recipe.findAll();
+      default:
+        return await User.findOne(id);
+    }
+  } catch (error) {
+    throw new Error(`Data retrieving failed: ${error.message}`);
+  }
+}
+
+const setData = async(model, data) => {
+  if (!['Menu', 'Recipe', 'Ingredient', 'User'].includes(model)) {
+    throw new Error('Invalid model type');
+  }
+
+  try {
+    switch (model) {
+      case 'Recipe':
+        return await Recipe.create(data);
+      default:
+        return await User.create(data);
+    }
+  } catch (error) {
+    throw new Error(`Data retrieving failed: ${error.message}`);
+  }
+}
+
+const updateDataById = async(model, data, id) => {
+  if (!['Menu', 'Recipe', 'Ingredient', 'User'].includes(model)) {
+    throw new Error('Invalid model type');
+  }
+
+  try {
+    switch (model) {
+      case 'Recipe':
+        return await Recipe.update(data);
+      default:
+        return await User.update(data);
+    }
+  } catch (error) {
+    throw new Error(`Data retrieving failed: ${error.message}`);
+  }
+}
+
+const deleteDataById = async(model, id) => {
+  if (!['Menu', 'Recipe', 'Ingredient', 'User'].includes(model)) {
+    throw new Error('Invalid model type');
+  }
+
+  try {
+    switch (model) {
+      case 'Recipe':
+        return await Recipe.update(data);
+      default:
+        return await User.update(data);
+    }
+  } catch (error) {
+    throw new Error(`Data retrieving failed: ${error.message}`);
+  }
+}
+// Spoonacular API
+const getRecipeById = async() => {
+
+  const optionsSearch = {
+    method: 'GET',
+    url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch',
+    params: {
+      query: 'banana overnight oats',
+      type: 'main course',
+    },
+    headers: {
+      'X-RapidAPI-Key': process.env.RAPID_API_KEY,
+      'X-RapidAPI-Host': process.env.RAPID_API_HOST,
+    }
+  };
+  const options = {
+    method: 'GET',
+    url: 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch',
+    params: {
+      query: 'banana overnight oats',
+      type: 'main course',
+    },
+    headers: {
+      'X-RapidAPI-Key': process.env.RAPID_API_KEY,
+      'X-RapidAPI-Host': process.env.RAPID_API_HOST,
+    }
+  };
+
+  try {
+    console.log(options.headers["X-RapidAPI-Host"]);
+    const response = await axios.request(optionsSearch);
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+getRecipeById().then(r => console.log('Works!'));
+const restoreBasicRecipes = async(basicRecipes) => {
+  if (!basicRecipes || !Array.isArray(basicRecipes) || basicRecipes.length === 0) {
+    throw new Error(
+      `Invalid input: Basic recipes should be a non-empty array.`,
+    );
+  }
+
+  const promises = basicRecipes.map(async(recipe) => {
+    try {
+      await setData('Recipe', recipe);
+      return true;
+    } catch (error) {
+      throw new Error(
+        `Error setting data to the database: ${error.message}`,
+      );
+    }
+  });
+
+  await Promise.all(promises);
+  return true;
+}
+
+export {
+  sequelize,
+  syncModels,
+  disconnect,
+  User,
+  Recipe,
+  getDataById,
+  setData,
+  updateDataById,
+  deleteDataById,
+};

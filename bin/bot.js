@@ -1,3 +1,4 @@
+#!/usr/bin/env node --env-file=.env
 import { Bot } from "grammy";
 
 const bot = new Bot(process.env.BOT_TOKEN);
