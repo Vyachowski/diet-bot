@@ -11,7 +11,7 @@ const getIntroMessage = (type) => {
   return (type === 'welcome' ? welcomeMessage : featureMessage);
 }
 
-// Initialize app
+// Initialize app: Check if user exist or not and if not – create a new one
 const initialize = async(userId, fullName) => {
   try {
     const isUserExist = getData('User', userId);
@@ -21,8 +21,8 @@ const initialize = async(userId, fullName) => {
   }
 }
 
-// Provide a new menu
-const getRandomRecipe = async (meal) => {
+// Provide a new menu: For every meal fetch all variants, choose one for every and summarize it to menu object
+const getRandomRecipeByMealType = async (meal) => {
   const meals = ["breakfast", "snack", "lunch", "afternoonSnack", "dinner"];
   if (!meals.includes(meal)) {
     throw new Error(`Select one of the valid meal types: ${meals}`);
